@@ -1,12 +1,13 @@
 import 'package:flutter/material.dart';
 import 'package:prestamos/src/design/colors_design.dart';
 
-class InputDesignEnterprise extends StatelessWidget {
+class DesignInput extends StatelessWidget {
   final String hintText;
   final TextInputType textInputType;
   final bool? obscureText;
   final void Function(String)? onChanged;
   final String? Function(String?)? validator;
+  final void Function(String)? onFieldSubmitted;
   final TextEditingController? controller;
   final bool? enabled;
   final int? minLines;
@@ -16,7 +17,7 @@ class InputDesignEnterprise extends StatelessWidget {
   final TextAlign? textAlign;
   final FocusNode? focusNode;
 
-  const InputDesignEnterprise({
+  const DesignInput({
     required this.hintText,
     required this.textInputType,
     this.onChanged,
@@ -24,6 +25,7 @@ class InputDesignEnterprise extends StatelessWidget {
     this.obscureText,
     this.fillColor,
     this.enabled,
+    this.onFieldSubmitted,
     this.minLines,
     this.controller,
     this.textCapitalization,
@@ -37,6 +39,7 @@ class InputDesignEnterprise extends StatelessWidget {
     return TextFormField(
       onChanged: onChanged,
       validator: validator,
+      onFieldSubmitted: onFieldSubmitted,
       style: TextStyle(fontSize: fontSize),
       obscureText: obscureText ?? false,
       keyboardType: textInputType,
@@ -50,7 +53,6 @@ class InputDesignEnterprise extends StatelessWidget {
       textAlignVertical: TextAlignVertical.top,
       enabled: enabled ?? true,
       cursorColor: DesignColors.dark,
-      // cursorHeight: 20,
       cursorWidth: 3,
       decoration: InputDecoration(
         filled: true,
