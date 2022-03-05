@@ -6,6 +6,14 @@
 	<string>$(DEVELOPMENT_LANGUAGE)</string>
 	<key>CFBundleDisplayName</key>
 	<string>Prestamos</string>
+	<!-- PERMISSIONS -->
+	<key>NSPhotoLibraryUsageDescription</key>
+	<string>Permite el acceso a tu carrete</string>
+	<key>NSCameraUsageDescription</key>
+	<string>Permite el acceso a tu camara</string>
+	<key>NSMicrophoneUsageDescription</key>
+	<string>Permite el uso del microfono para grabar videos</string>
+	<!--  -->
 	<key>CFBundleExecutable</key>
 	<string>$(EXECUTABLE_NAME)</string>
 	<key>CFBundleIdentifier</key>

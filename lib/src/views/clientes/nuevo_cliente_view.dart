@@ -3,13 +3,14 @@ import 'package:prestamos/src/design/buttons_design.dart';
 import 'package:prestamos/src/design/colors_design.dart';
 import 'package:prestamos/src/design/input_design.dart';
 import 'package:prestamos/src/design/texts.dart';
+import 'package:prestamos/src/utils/picker_utils.dart';
 
 class NuevoClienteView extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        backgroundColor: DesignColors.pink,
+        backgroundColor: DesignColors.dark,
         title: DesignText('Nuevo cliente'),
         elevation: 0,
       ),
@@ -19,12 +20,17 @@ class NuevoClienteView extends StatelessWidget {
           child: Column(
             children: [
               Center(
-                child: Container(
-                  width: 100,
-                  height: 100,
-                  decoration: BoxDecoration(
-                    shape: BoxShape.circle,
-                    color: DesignColors.pink.withOpacity(0.5),
+                child: GestureDetector(
+                  onTap: () {
+                    PickerUtils.pickImage();
+                  },
+                  child: Container(
+                    width: 100,
+                    height: 100,
+                    decoration: BoxDecoration(
+                      shape: BoxShape.circle,
+                      color: DesignColors.dark.withOpacity(0.5),
+                    ),
                   ),
                 ),
               ),
@@ -73,7 +79,7 @@ class NuevoClienteView extends StatelessWidget {
                 width: double.infinity,
                 height: 50,
                 child: DesignText('Guardar'),
-                color: DesignColors.pink,
+                color: DesignColors.dark,
                 primary: Colors.white,
                 onPressed: () {},
               ),

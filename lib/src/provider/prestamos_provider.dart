@@ -29,21 +29,24 @@ class PrestamosProvider extends ChangeNotifier {
   }
 
   List<PrestamosRowInterface> generateRows() {
-    final now = DateTime.now();
+    DateTime now = DateTime.now();
     List<PrestamosRowInterface> list = [];
 
     final pagosDe = monto / duracion;
 
+    now = now.add(Duration(days: 7));
     for (var i = 0; i < duracion; i++) {
+      final newDate = DateTime(now.year, now.month, now.day);
+
       final dataRow = PrestamosRowInterface(
-        date: DateTime.parse(now.toIso8601String()),
+        date: newDate,
         capital: pagosDe,
         interes: pagosDe * interes,
         cuotas: pagosDe + (pagosDe * interes),
       );
 
       list.add(dataRow);
-      now.add(Duration(days: 7));
+      now = now.add(Duration(days: 7));
     }
 
     return list;
@@ -56,5 +59,6 @@ class PrestamosRowInterface {
   final double interes;
   final double cuotas;
 
-  PrestamosRowInterface({required this.date, required this.capital, required this.interes, required this.cuotas});
+  PrestamosRowInterface(
+      {required this.date, required this.capital, required this.interes, required this.cuotas});
 }
