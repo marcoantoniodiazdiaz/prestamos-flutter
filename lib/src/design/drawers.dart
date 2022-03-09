@@ -3,6 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:prestamos/src/design/colors_design.dart';
 import 'package:prestamos/src/design/texts.dart';
+import 'package:prestamos/src/views/ajustes/ajustes_view.dart';
 import 'package:prestamos/src/views/clientes/nuevo_cliente_view.dart';
 import 'package:prestamos/src/views/prestamos/nuevo_prestamo_view.dart';
 
@@ -41,6 +42,69 @@ class DrawerDesign extends StatelessWidget {
             onPress: () {
               Get.back();
               Get.to(() => NuevoClienteView());
+            },
+          ),
+          _ListTile(
+            title: 'Consultas',
+            subtitle: 'Crear y ver información de clientes',
+            icon: FeatherIcons.sliders,
+            onPress: () {
+              Get.back();
+              Get.to(() => NuevoClienteView());
+            },
+          ),
+          _ListTile(
+            title: 'Caja',
+            subtitle: 'Crear y ver información de clientes',
+            icon: FeatherIcons.inbox,
+            onPress: () {
+              Get.back();
+              Get.to(() => NuevoClienteView());
+            },
+          ),
+          _ListTile(
+            title: 'Atrasos',
+            subtitle: 'Crear y ver información de clientes',
+            icon: FeatherIcons.skipBack,
+            onPress: () {
+              Get.back();
+              Get.to(() => NuevoClienteView());
+            },
+          ),
+          _ListTile(
+            title: 'Cartera',
+            subtitle: 'Crear y ver información de clientes',
+            icon: FeatherIcons.creditCard,
+            onPress: () {
+              Get.back();
+              Get.to(() => NuevoClienteView());
+            },
+          ),
+          _ListTile(
+            title: 'Gastos',
+            subtitle: 'Crear y ver información de clientes',
+            icon: FeatherIcons.arrowDown,
+            onPress: () {
+              Get.back();
+              Get.to(() => NuevoClienteView());
+            },
+          ),
+          _ListTile(
+            title: 'Empleados',
+            subtitle: 'Crear y ver información de clientes',
+            icon: FeatherIcons.users,
+            onPress: () {
+              Get.back();
+              Get.to(() => NuevoClienteView());
+            },
+          ),
+          _ListTile(
+            title: 'Ajustes',
+            subtitle: 'Edita los ajustes de la app',
+            icon: FeatherIcons.settings,
+            onPress: () {
+              Get.back();
+              Get.to(() => AjustesView());
             },
           ),
           _ListTile(

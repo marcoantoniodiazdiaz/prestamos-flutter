@@ -24,7 +24,8 @@ class PickerUtils {
                   Expanded(
                     child: IconButton(
                       onPressed: () async {
-                        await _picker.pickImage(source: ImageSource.camera);
+                        final file = await _picker.pickImage(source: ImageSource.camera);
+                        image = file;
                       },
                       icon: Icon(FeatherIcons.camera, size: 30),
                     ),
@@ -32,7 +33,8 @@ class PickerUtils {
                   Expanded(
                     child: IconButton(
                       onPressed: () async {
-                        await _picker.pickImage(source: ImageSource.gallery);
+                        final file = await _picker.pickImage(source: ImageSource.gallery);
+                        image = file;
                       },
                       icon: Icon(FeatherIcons.archive, size: 30),
                     ),
