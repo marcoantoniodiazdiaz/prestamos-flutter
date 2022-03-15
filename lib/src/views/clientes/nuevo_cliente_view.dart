@@ -24,32 +24,36 @@ class NuevoClienteView extends StatelessWidget {
         child: SingleChildScrollView(
           child: Column(
             children: [
-              Center(
-                child: GestureDetector(
-                  onTap: () async {
-                    final file = await PickerUtils.pickImage();
+              Row(
+                children: [
+                  GestureDetector(
+                    onTap: () async {
+                      final file = await PickerUtils.pickImage();
 
-                    if (file != null) {
-                      clientesProvider.profileSelected = File(file.path);
-                    }
-                  },
-                  child: Container(
-                    width: 100,
-                    height: 100,
-                    decoration: BoxDecoration(
-                      shape: BoxShape.circle,
-                      color: DesignColors.dark.withOpacity(0.5),
+                      if (file != null) {
+                        clientesProvider.profileSelected = File(file.path);
+                      }
+                    },
+                    child: Container(
+                      width: 100,
+                      height: 100,
+                      decoration: BoxDecoration(
+                        shape: BoxShape.circle,
+                        color: DesignColors.dark.withOpacity(0.5),
+                      ),
                     ),
                   ),
-                ),
+                  SizedBox(width: 10),
+                  Flexible(
+                    child: DesignInput(
+                      hintText: 'Nombre completo',
+                      textInputType: TextInputType.text,
+                      textCapitalization: TextCapitalization.words,
+                    ),
+                  ),
+                ],
               ),
               SizedBox(height: 20),
-              DesignInput(
-                hintText: 'Nombre completo',
-                textInputType: TextInputType.text,
-                textCapitalization: TextCapitalization.words,
-              ),
-              SizedBox(height: 7.5),
               DesignInput(
                 hintText: 'Dirección',
                 textInputType: TextInputType.streetAddress,

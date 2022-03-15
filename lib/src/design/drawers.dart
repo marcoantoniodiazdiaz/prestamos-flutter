@@ -4,6 +4,7 @@ import 'package:get/get.dart';
 import 'package:prestamos/src/design/colors_design.dart';
 import 'package:prestamos/src/design/texts.dart';
 import 'package:prestamos/src/views/ajustes/ajustes_view.dart';
+import 'package:prestamos/src/views/clientes/clientes_menu.dart';
 import 'package:prestamos/src/views/clientes/nuevo_cliente_view.dart';
 import 'package:prestamos/src/views/prestamos/nuevo_prestamo_view.dart';
 
@@ -41,7 +42,8 @@ class DrawerDesign extends StatelessWidget {
             icon: FeatherIcons.user,
             onPress: () {
               Get.back();
-              Get.to(() => NuevoClienteView());
+              // Get.to(() => NuevoClienteView());
+              Get.to(() => ClientesMenu());
             },
           ),
           _ListTile(
@@ -54,7 +56,7 @@ class DrawerDesign extends StatelessWidget {
             },
           ),
           _ListTile(
-            title: 'Caja',
+            title: 'Cuentas',
             subtitle: 'Crear y ver información de clientes',
             icon: FeatherIcons.inbox,
             onPress: () {
