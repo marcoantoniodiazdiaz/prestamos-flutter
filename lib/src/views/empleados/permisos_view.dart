@@ -3,6 +3,10 @@ import 'package:prestamos/src/design/colors_design.dart';
 import 'package:prestamos/src/design/texts.dart';
 
 class PermisosView extends StatelessWidget {
+  final String username;
+
+  const PermisosView({required this.username});
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -13,6 +17,13 @@ class PermisosView extends StatelessWidget {
       ),
       body: ListView(
         children: [
+          SizedBox(height: 10),
+          ListTile(
+            leading: CircleAvatar(
+              radius: 23,
+            ),
+            title: DesignText('Permisos de $username'),
+          ),
           ListTile(
             title: DesignText('Administrativos'),
             trailing: Switch.adaptive(value: true, onChanged: (v) {}, activeColor: Color(0xff3A664A)),

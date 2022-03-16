@@ -6,6 +6,7 @@ import 'package:prestamos/src/design/texts.dart';
 import 'package:prestamos/src/views/ajustes/ajustes_view.dart';
 import 'package:prestamos/src/views/clientes/clientes_menu.dart';
 import 'package:prestamos/src/views/clientes/nuevo_cliente_view.dart';
+import 'package:prestamos/src/views/empleados/empleados_menu.dart';
 import 'package:prestamos/src/views/prestamos/nuevo_prestamo_view.dart';
 
 class DrawerDesign extends StatelessWidget {
@@ -93,11 +94,11 @@ class DrawerDesign extends StatelessWidget {
           ),
           _ListTile(
             title: 'Empleados',
-            subtitle: 'Crear y ver información de clientes',
+            subtitle: 'Crear y ver información de empleados',
             icon: FeatherIcons.users,
             onPress: () {
               Get.back();
-              Get.to(() => NuevoClienteView());
+              Get.to(() => EmpleadosMenuView());
             },
           ),
           _ListTile(

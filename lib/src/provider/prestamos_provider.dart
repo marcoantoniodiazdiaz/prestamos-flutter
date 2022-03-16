@@ -59,6 +59,10 @@ class PrestamosRowInterface {
   final double interes;
   final double cuotas;
 
-  PrestamosRowInterface(
-      {required this.date, required this.capital, required this.interes, required this.cuotas});
+  PrestamosRowInterface({
+    required this.date,
+    required this.capital,
+    required this.interes,
+    required this.cuotas,
+  });
 }

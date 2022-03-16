@@ -3,7 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:prestamos/src/design/colors_design.dart';
 import 'package:prestamos/src/design/texts.dart';
-import 'package:prestamos/src/views/ajustes/permisos_view.dart';
+import 'package:prestamos/src/views/empleados/permisos_view.dart';
 
 class AjustesView extends StatelessWidget {
   @override
@@ -31,12 +31,12 @@ class AjustesView extends StatelessWidget {
               icon: FeatherIcons.info,
               onTap: () {},
             ),
-            _FlatItem(
-              title: 'Permisos',
-              subtitle: 'Determina el porcentaje de comisión por pagos tardios',
-              icon: FeatherIcons.edit,
-              onTap: () => Get.to(() => PermisosView()),
-            ),
+            // _FlatItem(
+            //   title: 'Permisos',
+            //   subtitle: 'Determina el porcentaje de comisión por pagos tardios',
+            //   icon: FeatherIcons.edit,
+            //   onTap: () => Get.to(() => PermisosView()),
+            // ),
             _FlatItem(
               title: 'Cambiar contraseña',
               subtitle: 'Determina el porcentaje de comisión por pagos tardios',

@@ -7,6 +7,7 @@ import 'package:prestamos/src/design/input_design.dart';
 import 'package:prestamos/src/design/texts.dart';
 import 'package:prestamos/src/provider/prestamos_provider.dart';
 import 'package:prestamos/src/utils/date_utils.dart';
+import 'package:prestamos/src/utils/parsers_utils.dart';
 import 'package:provider/provider.dart';
 
 class NuevoPrestamoView extends StatelessWidget {
@@ -150,9 +151,9 @@ class _Tabla extends StatelessWidget {
                 selected: true,
                 cells: [
                   DataCell(DesignText(DesignUtils.dateShort(e.date))),
-                  DataCell(DesignText(e.capital.toStringAsFixed(2))),
-                  DataCell(DesignText(e.interes.toStringAsFixed(2))),
-                  DataCell(DesignText(e.cuotas.toStringAsFixed(2))),
+                  DataCell(DesignText(ParsersUtils.money(e.capital))),
+                  DataCell(DesignText(ParsersUtils.money(e.interes))),
+                  DataCell(DesignText(ParsersUtils.money(e.cuotas))),
                 ],
               );
             }).toList(),
