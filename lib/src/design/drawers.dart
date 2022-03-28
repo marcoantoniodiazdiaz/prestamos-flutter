@@ -6,8 +6,10 @@ import 'package:prestamos/src/design/texts.dart';
 import 'package:prestamos/src/views/ajustes/ajustes_view.dart';
 import 'package:prestamos/src/views/clientes/clientes_menu.dart';
 import 'package:prestamos/src/views/clientes/nuevo_cliente_view.dart';
+import 'package:prestamos/src/views/cuentas/cuentas_view.dart';
 import 'package:prestamos/src/views/empleados/empleados_menu.dart';
 import 'package:prestamos/src/views/prestamos/nuevo_prestamo_view.dart';
+import 'package:prestamos/src/widgets/misc_widgets.dart';
 
 class DrawerDesign extends StatelessWidget {
   @override
@@ -17,14 +19,7 @@ class DrawerDesign extends StatelessWidget {
       child: Column(
         children: [
           SizedBox(height: 70),
-          Container(
-            width: 80,
-            height: 80,
-            decoration: BoxDecoration(
-              color: DesignColors.green,
-              shape: BoxShape.circle,
-            ),
-          ),
+          MiscWidgets.avatarWithLetter('M', 40, DesignColors.green),
           SizedBox(height: 10),
           DesignText('Marco Antonio Diaz', color: Colors.white, fontSize: 15),
           SizedBox(height: 20),
@@ -49,7 +44,7 @@ class DrawerDesign extends StatelessWidget {
           ),
           _ListTile(
             title: 'Consultas',
-            subtitle: 'Crear y ver información de clientes',
+            subtitle: 'Mostrar información filtrada por campos',
             icon: FeatherIcons.sliders,
             onPress: () {
               Get.back();
@@ -58,16 +53,16 @@ class DrawerDesign extends StatelessWidget {
           ),
           _ListTile(
             title: 'Cuentas',
-            subtitle: 'Crear y ver información de clientes',
+            subtitle: 'Crear y ver cuentas generadas',
             icon: FeatherIcons.inbox,
             onPress: () {
               Get.back();
-              Get.to(() => NuevoClienteView());
+              Get.to(() => CuentasView());
             },
           ),
           _ListTile(
             title: 'Atrasos',
-            subtitle: 'Crear y ver información de clientes',
+            subtitle: 'Revisar pagos tardios y retrasados',
             icon: FeatherIcons.skipBack,
             onPress: () {
               Get.back();
@@ -76,7 +71,7 @@ class DrawerDesign extends StatelessWidget {
           ),
           _ListTile(
             title: 'Cartera',
-            subtitle: 'Crear y ver información de clientes',
+            subtitle: 'Mostrar todas las entradas/salidas de dinero',
             icon: FeatherIcons.creditCard,
             onPress: () {
               Get.back();
@@ -85,7 +80,7 @@ class DrawerDesign extends StatelessWidget {
           ),
           _ListTile(
             title: 'Gastos',
-            subtitle: 'Crear y ver información de clientes',
+            subtitle: 'Mostrar gastos realizados',
             icon: FeatherIcons.arrowDown,
             onPress: () {
               Get.back();

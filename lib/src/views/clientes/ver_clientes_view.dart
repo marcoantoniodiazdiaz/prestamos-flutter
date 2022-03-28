@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:prestamos/src/design/colors_design.dart';
 import 'package:prestamos/src/design/texts.dart';
+import 'package:prestamos/src/pipes/image_pipe.dart';
 
 class VerClientesView extends StatelessWidget {
   @override
@@ -19,6 +20,7 @@ class VerClientesView extends StatelessWidget {
             title: DesignText('Marco Diaz'),
             leading: CircleAvatar(
               radius: 23,
+              backgroundImage: ImagePipes.assetOrNetwork(),
             ),
           );
         },

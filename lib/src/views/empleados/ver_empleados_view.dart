@@ -23,6 +23,7 @@ class VerEmpleadosView extends StatelessWidget {
             leading: CircleAvatar(
               radius: 23,
             ),
+            onTap: () {},
             subtitle: DesignText('Manten pulsado para editar'),
             trailing: DesignTextButton(
               width: 80,
