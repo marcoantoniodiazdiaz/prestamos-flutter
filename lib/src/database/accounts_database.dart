@@ -28,4 +28,20 @@ class AccountsDatabase {
 
     return decodedResp;
   }
+
+  static Future<bool> put(Map<String, dynamic> data) async {
+    final resp = await DioInstance.dio.put('${DioInstance.server}/accounts', data: data);
+
+    final decodedResp = resp.data;
+
+    return decodedResp;
+  }
+
+  static Future<bool> delete(int id) async {
+    final resp = await DioInstance.dio.delete('${DioInstance.server}/accounts/$id');
+
+    final decodedResp = resp.data;
+
+    return decodedResp;
+  }
 }
