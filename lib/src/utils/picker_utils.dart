@@ -9,10 +9,7 @@ class PickerUtils {
     final ImagePicker _picker = ImagePicker();
     XFile? image;
 
-    // if (image != null) {
-    //   print(image.path);
-    // }
-    await showCupertinoModalBottomSheet(
+    showCupertinoModalBottomSheet(
       context: Get.context!,
       builder: (_) {
         return Material(

@@ -38,7 +38,7 @@ class ClientsDatabase {
 
     final decodedResp = resp.data;
 
-    return decodedResp;
+    return decodedResp['ok'];
   }
 
   static Future<bool> put(Map<String, dynamic> data) async {
@@ -46,7 +46,7 @@ class ClientsDatabase {
 
     final decodedResp = resp.data;
 
-    return decodedResp;
+    return decodedResp['ok'];
   }
 
   static Future<bool> delete(int id) async {
@@ -54,6 +54,6 @@ class ClientsDatabase {
 
     final decodedResp = resp.data;
 
-    return decodedResp;
+    return decodedResp['ok'];
   }
 }
