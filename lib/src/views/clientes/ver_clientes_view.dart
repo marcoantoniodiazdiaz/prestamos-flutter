@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:prestamos/src/design/colors_design.dart';
+import 'package:flutter/services.dart';
 import 'package:prestamos/src/design/texts.dart';
 import 'package:prestamos/src/pipes/image_pipe.dart';
 import 'package:prestamos/src/provider/clientes_provider.dart';
@@ -11,8 +11,10 @@ class VerClientesView extends StatelessWidget {
     final clientsProvider = Provider.of<ClientesProvider>(context);
     return Scaffold(
       appBar: AppBar(
-        backgroundColor: DesignColors.dark,
-        title: DesignText('Todos los clientes'),
+        backgroundColor: Colors.transparent,
+        title: DesignText('Todos los clientes', fontWeight: FontWeight.bold),
+        systemOverlayStyle: SystemUiOverlayStyle.dark,
+        foregroundColor: Colors.black,
         elevation: 0,
       ),
       body: ListView.builder(
@@ -22,7 +24,7 @@ class VerClientesView extends StatelessWidget {
           return ListTile(
             onLongPress: () {},
             title: DesignText(clientsProvider.clients[i].name),
-            subtitle: DesignText('Pulsa para editar'),
+            subtitle: DesignText('Pulsa para ver opciones'),
             leading: CircleAvatar(
               radius: 23,
               backgroundImage: ImagePipes.assetOrNetwork(url: clientsProvider.clients[i].image),

@@ -1,16 +1,23 @@
 import 'package:feather_icons/feather_icons.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
+import 'package:get/get.dart';
+import 'package:modal_bottom_sheet/modal_bottom_sheet.dart';
 import 'package:prestamos/src/design/buttons_design.dart';
 import 'package:prestamos/src/design/colors_design.dart';
 import 'package:prestamos/src/design/input_design.dart';
 import 'package:prestamos/src/design/texts.dart';
+import 'package:prestamos/src/models/clients_model.dart';
+import 'package:prestamos/src/pipes/image_pipe.dart';
 import 'package:prestamos/src/provider/prestamos_provider.dart';
 import 'package:prestamos/src/utils/date_utils.dart';
 import 'package:prestamos/src/utils/parsers_utils.dart';
 import 'package:provider/provider.dart';
 
 class NuevoPrestamoView extends StatelessWidget {
+  final ClientsModel client;
+
+  NuevoPrestamoView({required this.client});
   final now = DateTime.now().toIso8601String();
 
   @override
@@ -25,8 +32,10 @@ class NuevoPrestamoView extends StatelessWidget {
           child: Icon(FeatherIcons.check),
         ),
         appBar: AppBar(
-          backgroundColor: DesignColors.dark,
-          title: DesignText('Nuevo prestamo'),
+          backgroundColor: Colors.transparent,
+          title: DesignText('Nuevo prestamo', fontWeight: FontWeight.bold),
+          systemOverlayStyle: SystemUiOverlayStyle.dark,
+          foregroundColor: Colors.black,
           elevation: 0,
         ),
         body: Container(
@@ -37,21 +46,17 @@ class NuevoPrestamoView extends StatelessWidget {
               children: [
                 Row(
                   children: [
-                    Container(
-                      width: 75,
-                      height: 75,
-                      decoration: BoxDecoration(
-                        shape: BoxShape.circle,
-                        color: DesignColors.dark.withOpacity(0.5),
-                      ),
+                    CircleAvatar(
+                      radius: 35,
+                      backgroundImage: ImagePipes.assetOrNetwork(url: client.image),
                     ),
                     SizedBox(width: 10),
                     Column(
                       crossAxisAlignment: CrossAxisAlignment.start,
                       children: [
-                        DesignText('Marco Antonio Diaz Diaz', fontWeight: FontWeight.bold, fontSize: 18),
+                        DesignText(client.name, fontWeight: FontWeight.bold, fontSize: 18),
                         SizedBox(height: 2.5),
-                        DesignText('Desde: $now', fontStyle: FontStyle.italic),
+                        DesignText('Desde: ${DesignUtils.dateShort(client.createdAt)}', fontStyle: FontStyle.italic),
                       ],
                     )
                   ],
@@ -162,4 +167,40 @@ class _Tabla extends StatelessWidget {
       );
     });
   }
+}
+
+showClientsForLoan(List<ClientsModel> clients) {
+  return showCupertinoModalBottomSheet(
+    context: Get.context!,
+    builder: (_) {
+      return Material(
+        child: Container(
+          padding: EdgeInsets.all(20),
+          child: Column(
+            crossAxisAlignment: CrossAxisAlignment.start,
+            mainAxisSize: MainAxisSize.min,
+            children: [
+              DesignText('Clientes', fontWeight: FontWeight.bold),
+              ...clients.map(
+                (e) {
+                  return ListTile(
+                    contentPadding: EdgeInsets.zero,
+                    dense: true,
+                    leading: CircleAvatar(
+                      backgroundImage: ImagePipes.assetOrNetwork(url: e.image),
+                    ),
+                    title: DesignText(e.name, fontWeight: FontWeight.bold),
+                    subtitle: DesignText(DesignUtils.dateShortWithHour(e.createdAt)),
+                    onTap: () {
+                      Get.to(() => NuevoPrestamoView(client: e));
+                    },
+                  );
+                },
+              ),
+            ],
+          ),
+        ),
+      );
+    },
+  );
 }

@@ -4,6 +4,11 @@ class DesignUtils {
     return '${time.day}-${intToMonthShort(time.month)}-${time.year}';
   }
 
+  static String dateShortWithHour(DateTime time) {
+    time = time.toLocal();
+    return '${time.day}-${intToMonthShort(time.month)}-${time.year} ${_hourNormalize(time.hour, time.minute)}';
+  }
+
   static String intToMonthShort(int number) {
     final months = {
       1: 'ene',
@@ -22,4 +27,11 @@ class DesignUtils {
 
     return months[number]!;
   }
+}
+
+String _hourNormalize(int hour, int minute) {
+  if (hour <= 12) return '$hour:$minute A.M.';
+  hour -= 12;
+
+  return '$hour:$minute P.M.';
 }

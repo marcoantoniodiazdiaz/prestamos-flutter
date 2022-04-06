@@ -5,7 +5,6 @@ class PhonesModel {
     required this.type,
     required this.createdAt,
     required this.updatedAt,
-    required this.clientId,
   });
 
   int id;
@@ -13,7 +12,6 @@ class PhonesModel {
   int type;
   DateTime createdAt;
   DateTime updatedAt;
-  int clientId;
 
   factory PhonesModel.fromJson(Map<String, dynamic> json) => PhonesModel(
         id: json["id"],
@@ -21,7 +19,6 @@ class PhonesModel {
         type: json["type"],
         createdAt: DateTime.parse(json["createdAt"]),
         updatedAt: DateTime.parse(json["updatedAt"]),
-        clientId: json["clientId"],
       );
 
   Map<String, dynamic> toJson() => {
@@ -30,6 +27,5 @@ class PhonesModel {
         "type": type,
         "createdAt": createdAt.toIso8601String(),
         "updatedAt": updatedAt.toIso8601String(),
-        "clientId": clientId,
       };
 }

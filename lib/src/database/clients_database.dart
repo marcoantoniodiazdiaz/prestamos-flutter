@@ -3,11 +3,11 @@ import 'package:prestamos/src/models/clients_model.dart';
 
 class ClientsDatabase {
   static Future<List<ClientsModel>> get() async {
-    final resp = await DioInstance.dio.get(
+    final resp = await DioInstance.get(
       '${DioInstance.server}/clients',
     );
 
-    final decodedResp = resp.data;
+    final decodedResp = resp?.data;
 
     if (decodedResp['data'] == null) return [];
 
@@ -22,11 +22,11 @@ class ClientsDatabase {
   }
 
   static Future<ClientsModel?> fk(int id) async {
-    final resp = await DioInstance.dio.get(
+    final resp = await DioInstance.get(
       '${DioInstance.server}/clients/$id',
     );
 
-    final decodedResp = resp.data;
+    final decodedResp = resp?.data;
 
     if (decodedResp['data'] == null) return null;
 

@@ -1,16 +1,30 @@
 import 'package:flutter/material.dart';
+import 'package:prestamos/src/database/loans_database.dart';
+import 'package:prestamos/src/models/loans_model.dart';
 
 class PrestamosProvider extends ChangeNotifier {
+  PrestamosProvider() {
+    init();
+  }
+
   TextEditingController montoController = TextEditingController();
   TextEditingController interesController = TextEditingController();
   TextEditingController cuotaController = TextEditingController();
   TextEditingController duracionController = TextEditingController();
+
+  List<LoansModel> _loans = [];
+  List<LoansModel> get loans => _loans;
 
   double monto = 0.0;
   double interes = 0.0;
   double duracion = 0.0;
 
   List<PrestamosRowInterface> rows = [];
+
+  init() async {
+    _loans = await LoansDatabase.get();
+    notifyListeners();
+  }
 
   execute() {
     try {

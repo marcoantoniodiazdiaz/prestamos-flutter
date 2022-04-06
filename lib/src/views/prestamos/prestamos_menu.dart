@@ -4,18 +4,23 @@ import 'package:flutter/services.dart';
 import 'package:get/get.dart';
 import 'package:prestamos/src/design/colors_design.dart';
 import 'package:prestamos/src/design/texts.dart';
+import 'package:prestamos/src/provider/clientes_provider.dart';
 import 'package:prestamos/src/views/clientes/nuevo_cliente_view.dart';
 import 'package:prestamos/src/views/clientes/ver_clientes_view.dart';
+import 'package:prestamos/src/views/prestamos/nuevo_prestamo_view.dart';
+import 'package:prestamos/src/views/prestamos/ver_prestamos_view.dart';
+import 'package:provider/provider.dart';
 
-class ClientesMenu extends StatelessWidget {
-  const ClientesMenu({Key? key}) : super(key: key);
+class PrestamosMenu extends StatelessWidget {
+  const PrestamosMenu({Key? key}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
+    final clientsProvider = Provider.of<ClientesProvider>(context);
     return Scaffold(
       appBar: AppBar(
         backgroundColor: Colors.transparent,
-        title: DesignText('Clientes', fontWeight: FontWeight.bold),
+        title: DesignText('Prestamos', fontWeight: FontWeight.bold),
         systemOverlayStyle: SystemUiOverlayStyle.dark,
         foregroundColor: Colors.black,
         elevation: 0,
@@ -24,16 +29,18 @@ class ClientesMenu extends StatelessWidget {
         padding: EdgeInsets.all(15),
         children: [
           _FlatItem(
-            onTap: () => Get.to(() => VerClientesView()),
-            title: 'Ver clientes',
-            subtitle: 'Administra tus clientes registrados',
-            icon: FeatherIcons.users,
+            onTap: () => Get.to(() => VerPrestamosView()),
+            title: 'Ver prestamos',
+            subtitle: 'Administra y visualiza tus prestamos',
+            icon: FeatherIcons.dollarSign,
           ),
           _FlatItem(
-            onTap: () => Get.to(() => NuevoClienteView()),
-            title: 'Nuevo cliente',
-            subtitle: 'Registrar nuevo cliente',
-            icon: FeatherIcons.userPlus,
+            onTap: () {
+              showClientsForLoan(clientsProvider.clients);
+            },
+            title: 'Nuevo prestamo',
+            subtitle: 'Registra un nuevo prestamo realizado',
+            icon: FeatherIcons.plus,
           ),
         ],
       ),

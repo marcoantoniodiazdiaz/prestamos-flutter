@@ -2,6 +2,7 @@ import 'dart:io';
 
 import 'package:feather_icons/feather_icons.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 import 'package:prestamos/src/design/buttons_design.dart';
 import 'package:prestamos/src/design/colors_design.dart';
 import 'package:prestamos/src/design/input_design.dart';
@@ -16,8 +17,10 @@ class NuevoClienteView extends StatelessWidget {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        backgroundColor: DesignColors.dark,
-        title: DesignText('Nuevo cliente'),
+        backgroundColor: Colors.transparent,
+        title: DesignText('Nuevo cliente', fontWeight: FontWeight.bold),
+        systemOverlayStyle: SystemUiOverlayStyle.dark,
+        foregroundColor: Colors.black,
         elevation: 0,
       ),
       body: Container(
