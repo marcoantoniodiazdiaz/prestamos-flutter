@@ -2,21 +2,15 @@ import 'package:feather_icons/feather_icons.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:get/get.dart';
-import 'package:prestamos/src/design/colors_design.dart';
-import 'package:prestamos/src/design/texts.dart';
-import 'package:prestamos/src/provider/clientes_provider.dart';
-import 'package:prestamos/src/views/clientes/nuevo_cliente_view.dart';
-import 'package:prestamos/src/views/clientes/ver_clientes_view.dart';
+import 'package:prestamos/src/design/designs.dart';
 import 'package:prestamos/src/views/prestamos/nuevo_prestamo_view.dart';
 import 'package:prestamos/src/views/prestamos/ver_prestamos_view.dart';
-import 'package:provider/provider.dart';
 
 class PrestamosMenu extends StatelessWidget {
   const PrestamosMenu({Key? key}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
-    final clientsProvider = Provider.of<ClientesProvider>(context);
     return Scaffold(
       appBar: AppBar(
         backgroundColor: Colors.transparent,
@@ -36,7 +30,7 @@ class PrestamosMenu extends StatelessWidget {
           ),
           _FlatItem(
             onTap: () {
-              showClientsForLoan(clientsProvider.clients);
+              Get.to(() => SelectUserForNewLoan());
             },
             title: 'Nuevo prestamo',
             subtitle: 'Registra un nuevo prestamo realizado',

@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
-import 'package:prestamos/src/design/texts.dart';
+import 'package:prestamos/src/design/designs.dart';
 import 'package:prestamos/src/pipes/image_pipe.dart';
 import 'package:prestamos/src/provider/clientes_provider.dart';
 import 'package:provider/provider.dart';

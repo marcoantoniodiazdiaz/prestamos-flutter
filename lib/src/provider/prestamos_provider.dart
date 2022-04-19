@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
-import 'package:prestamos/src/database/loans_database.dart';
-import 'package:prestamos/src/models/loans_model.dart';
+import 'package:prestamos/src/database/database.dart';
+import 'package:prestamos/src/models/models.dart';
+import 'package:prestamos/src/utils/snackbars_utils.dart';
 
 class PrestamosProvider extends ChangeNotifier {
   PrestamosProvider() {
@@ -12,12 +13,20 @@ class PrestamosProvider extends ChangeNotifier {
   TextEditingController cuotaController = TextEditingController();
   TextEditingController duracionController = TextEditingController();
 
+  int _concurrency = 0;
+  int get concurrency => _concurrency;
+  set concurrency(int i) {
+    _concurrency = i;
+    notifyListeners();
+  }
+
   List<LoansModel> _loans = [];
   List<LoansModel> get loans => _loans;
 
   double monto = 0.0;
   double interes = 0.0;
   double duracion = 0.0;
+  double cuota = 0.0;
 
   List<PrestamosRowInterface> rows = [];
 
@@ -32,7 +41,7 @@ class PrestamosProvider extends ChangeNotifier {
       interes = double.parse(interesController.text);
       duracion = double.parse(duracionController.text);
 
-      final cuota = monto + (monto * interes);
+      cuota = monto + (monto * (interes / 100));
       cuotaController.text = cuota.toString();
 
       rows = generateRows();
@@ -55,8 +64,8 @@ class PrestamosProvider extends ChangeNotifier {
       final dataRow = PrestamosRowInterface(
         date: newDate,
         capital: pagosDe,
-        interes: pagosDe * interes,
-        cuotas: pagosDe + (pagosDe * interes),
+        interes: pagosDe * (interes / 100),
+        cuotas: pagosDe + (pagosDe * (interes / 100)),
       );
 
       list.add(dataRow);
@@ -64,6 +73,19 @@ class PrestamosProvider extends ChangeNotifier {
     }
 
     return list;
+  }
+
+  createLoan(int clientId) async {
+    final Map<String, dynamic> data = {
+      'concurrency': _concurrency,
+      'amount': monto,
+      'duration': duracion,
+      'fee': cuota,
+      'interest': interes,
+      'clientId': clientId,
+    };
+
+    await LoansDatabase.post(data);
   }
 }
 

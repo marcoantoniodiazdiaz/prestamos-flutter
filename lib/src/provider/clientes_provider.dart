@@ -13,6 +13,9 @@ class ClientesProvider extends ChangeNotifier {
   List<ClientsModel> _clients = [];
   List<ClientsModel> get clients => _clients;
 
+  List<ClientsModel> _filtered = [];
+  List<ClientsModel> get filtered => _filtered;
+
   late File _profileSelected;
   File get profileSelected => _profileSelected;
   set profileSelected(File i) {
@@ -22,6 +25,16 @@ class ClientesProvider extends ChangeNotifier {
 
   reload() async {
     _clients = await ClientsDatabase.get();
+    _filtered = _clients;
+    notifyListeners();
+  }
+
+  findClient(String v) {
+    if (v.isEmpty) return _clients;
+
+    _filtered = _clients.where((e) {
+      return e.name.toLowerCase().contains(v.toLowerCase());
+    }).toList();
     notifyListeners();
   }
 

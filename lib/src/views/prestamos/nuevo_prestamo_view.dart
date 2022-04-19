@@ -2,17 +2,12 @@ import 'package:feather_icons/feather_icons.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:get/get.dart';
-import 'package:modal_bottom_sheet/modal_bottom_sheet.dart';
-import 'package:prestamos/src/design/buttons_design.dart';
-import 'package:prestamos/src/design/colors_design.dart';
-import 'package:prestamos/src/design/input_design.dart';
-import 'package:prestamos/src/design/texts.dart';
-import 'package:prestamos/src/models/clients_model.dart';
+import 'package:prestamos/src/design/designs.dart';
+import 'package:prestamos/src/models/models.dart';
 import 'package:prestamos/src/pipes/image_pipe.dart';
-import 'package:prestamos/src/provider/prestamos_provider.dart';
+import 'package:prestamos/src/provider/providers.dart';
 import 'package:prestamos/src/utils/date_utils.dart';
 import 'package:prestamos/src/utils/parsers_utils.dart';
-import 'package:provider/provider.dart';
 
 class NuevoPrestamoView extends StatelessWidget {
   final ClientsModel client;
@@ -41,6 +36,7 @@ class NuevoPrestamoView extends StatelessWidget {
         body: Container(
           padding: EdgeInsets.all(15),
           child: SingleChildScrollView(
+            physics: BouncingScrollPhysics(),
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
@@ -62,57 +58,49 @@ class NuevoPrestamoView extends StatelessWidget {
                   ],
                 ),
                 SizedBox(height: 20),
-                Row(
-                  children: [
-                    Flexible(
-                      child: DropdownButton<String>(
-                        items: const [
-                          DropdownMenuItem(child: DesignText('Quincenal'), value: 'Quincenal'),
-                          DropdownMenuItem(child: DesignText('Semanal'), value: 'Semanal'),
-                        ],
-                        onChanged: (v) {},
-                        isExpanded: true,
-                        value: 'Quincenal',
-                      ),
-                    ),
-                    SizedBox(width: 5),
-                    Flexible(
-                      child: DesignInput(
-                        hintText: 'Duración',
-                        textInputType: TextInputType.numberWithOptions(decimal: false, signed: false),
-                        controller: prestamosProvider.duracionController,
-                      ),
-                    ),
-                  ],
+                Container(
+                  padding: EdgeInsets.symmetric(vertical: 10, horizontal: 15),
+                  decoration: BoxDecoration(
+                    borderRadius: BorderRadius.circular(15),
+                    color: DesignColors.dark.withOpacity(0.06),
+                  ),
+                  child: DropdownButton<int>(
+                    items: const [
+                      DropdownMenuItem(child: DesignText('Quincenal'), value: 0),
+                      DropdownMenuItem(child: DesignText('Semanal'), value: 1),
+                    ],
+                    underline: SizedBox(),
+                    onChanged: (int? v) {
+                      prestamosProvider.concurrency = v!;
+                    },
+                    isExpanded: true,
+                    value: prestamosProvider.concurrency,
+                  ),
                 ),
                 SizedBox(height: 10),
-                Row(
-                  children: [
-                    Flexible(
-                      child: DesignInput(
-                        hintText: 'Monto',
-                        textInputType: TextInputType.numberWithOptions(decimal: false, signed: false),
-                        controller: prestamosProvider.montoController,
-                      ),
-                    ),
-                    SizedBox(width: 5),
-                    Flexible(
-                      child: DesignInput(
-                        hintText: '% Interes',
-                        textInputType: TextInputType.number,
-                        controller: prestamosProvider.interesController,
-                      ),
-                    ),
-                    SizedBox(width: 5),
-                    Flexible(
-                      child: DesignInput(
-                        hintText: 'Cuota',
-                        textInputType: TextInputType.numberWithOptions(decimal: false, signed: false),
-                        controller: prestamosProvider.cuotaController,
-                        enabled: false,
-                      ),
-                    ),
-                  ],
+                DesignInput(
+                  hintText: 'Duración',
+                  textInputType: TextInputType.numberWithOptions(decimal: false, signed: false),
+                  controller: prestamosProvider.duracionController,
+                ),
+                SizedBox(height: 10),
+                DesignInput(
+                  hintText: 'Monto',
+                  textInputType: TextInputType.numberWithOptions(decimal: false, signed: false),
+                  controller: prestamosProvider.montoController,
+                ),
+                SizedBox(height: 10),
+                DesignInput(
+                  hintText: '% Interes',
+                  textInputType: TextInputType.number,
+                  controller: prestamosProvider.interesController,
+                ),
+                SizedBox(height: 10),
+                DesignInput(
+                  hintText: 'Cuota',
+                  textInputType: TextInputType.numberWithOptions(decimal: false, signed: false),
+                  controller: prestamosProvider.cuotaController,
+                  enabled: false,
                 ),
                 SizedBox(height: 10),
                 _Tabla(),
@@ -120,10 +108,12 @@ class NuevoPrestamoView extends StatelessWidget {
                 DesignTextButton(
                   width: double.infinity,
                   height: 50,
-                  child: DesignText('Guardar'),
+                  child: DesignText('Guardar prestamo'),
                   color: DesignColors.dark,
                   primary: Colors.white,
-                  onPressed: () {},
+                  onPressed: () {
+                    prestamosProvider.createLoan(client.id);
+                  },
                 ),
                 SizedBox(height: 100),
               ],
@@ -169,38 +159,52 @@ class _Tabla extends StatelessWidget {
   }
 }
 
-showClientsForLoan(List<ClientsModel> clients) {
-  return showCupertinoModalBottomSheet(
-    context: Get.context!,
-    builder: (_) {
-      return Material(
-        child: Container(
-          padding: EdgeInsets.all(20),
-          child: Column(
-            crossAxisAlignment: CrossAxisAlignment.start,
-            mainAxisSize: MainAxisSize.min,
-            children: [
-              DesignText('Clientes', fontWeight: FontWeight.bold),
-              ...clients.map(
-                (e) {
-                  return ListTile(
-                    contentPadding: EdgeInsets.zero,
-                    dense: true,
-                    leading: CircleAvatar(
-                      backgroundImage: ImagePipes.assetOrNetwork(url: e.image),
-                    ),
-                    title: DesignText(e.name, fontWeight: FontWeight.bold),
-                    subtitle: DesignText(DesignUtils.dateShortWithHour(e.createdAt)),
-                    onTap: () {
-                      Get.to(() => NuevoPrestamoView(client: e));
-                    },
-                  );
-                },
-              ),
-            ],
-          ),
+class SelectUserForNewLoan extends StatelessWidget {
+  @override
+  Widget build(BuildContext context) {
+    final clientsProvider = Provider.of<ClientesProvider>(context);
+    return Scaffold(
+      appBar: AppBar(
+        backgroundColor: Colors.transparent,
+        title: DesignText('Selecciona el cliente', fontWeight: FontWeight.bold),
+        systemOverlayStyle: SystemUiOverlayStyle.dark,
+        foregroundColor: Colors.black,
+        elevation: 0,
+      ),
+      body: SingleChildScrollView(
+        padding: EdgeInsets.all(20),
+        child: Column(
+          crossAxisAlignment: CrossAxisAlignment.start,
+          mainAxisSize: MainAxisSize.min,
+          children: [
+            DesignInput(
+              hintText: 'Buscar',
+              textInputType: TextInputType.text,
+              textCapitalization: TextCapitalization.words,
+              icon: Icon(FeatherIcons.search),
+              onChanged: (String v) {
+                clientsProvider.findClient(v);
+              },
+            ),
+            ...clientsProvider.filtered.map(
+              (e) {
+                return ListTile(
+                  contentPadding: EdgeInsets.zero,
+                  dense: true,
+                  leading: CircleAvatar(
+                    backgroundImage: ImagePipes.assetOrNetwork(url: e.image),
+                  ),
+                  title: DesignText(e.name, fontWeight: FontWeight.bold),
+                  subtitle: DesignText(DesignUtils.dateShortWithHour(e.createdAt)),
+                  onTap: () {
+                    Get.to(() => NuevoPrestamoView(client: e));
+                  },
+                );
+              },
+            ),
+          ],
         ),
-      );
-    },
-  );
+      ),
+    );
+  }
 }

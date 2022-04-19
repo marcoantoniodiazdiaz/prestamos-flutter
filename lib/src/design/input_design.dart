@@ -16,6 +16,7 @@ class DesignInput extends StatelessWidget {
   final double? fontSize;
   final TextAlign? textAlign;
   final FocusNode? focusNode;
+  final Widget? icon;
 
   const DesignInput({
     required this.hintText,
@@ -32,6 +33,7 @@ class DesignInput extends StatelessWidget {
     this.fontSize,
     this.textAlign,
     this.focusNode,
+    this.icon,
   });
 
   @override
@@ -59,6 +61,7 @@ class DesignInput extends StatelessWidget {
         labelStyle: TextStyle(color: DesignColors.dark),
         fillColor: fillColor ?? DesignColors.dark.withOpacity(0.06),
         hintText: hintText,
+        icon: icon,
         labelText: hintText,
         border: OutlineInputBorder(
           borderRadius: BorderRadius.circular(10),

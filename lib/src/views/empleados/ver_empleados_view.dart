@@ -1,8 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-import 'package:prestamos/src/design/buttons_design.dart';
-import 'package:prestamos/src/design/colors_design.dart';
-import 'package:prestamos/src/design/texts.dart';
+import 'package:prestamos/src/design/designs.dart';
 import 'package:prestamos/src/views/empleados/permisos_view.dart';
 
 class VerEmpleadosView extends StatelessWidget {

@@ -53,11 +53,11 @@ class LoansDatabase {
   }
 
   static Future<bool> post(Map<String, dynamic> data) async {
-    final resp = await DioInstance.dio.post('${DioInstance.server}/loans', data: data);
+    final resp = await DioInstance.post('${DioInstance.server}/loans', data, onSuccess: 'Prestamo guardado con exito');
 
-    final decodedResp = resp.data;
+    final decodedResp = resp?.data;
 
-    return decodedResp;
+    return decodedResp['ok'];
   }
 
   static Future<bool> put(Map<String, dynamic> data) async {

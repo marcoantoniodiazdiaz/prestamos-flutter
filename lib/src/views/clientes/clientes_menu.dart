@@ -2,8 +2,7 @@ import 'package:feather_icons/feather_icons.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:get/get.dart';
-import 'package:prestamos/src/design/colors_design.dart';
-import 'package:prestamos/src/design/texts.dart';
+import 'package:prestamos/src/design/designs.dart';
 import 'package:prestamos/src/views/clientes/nuevo_cliente_view.dart';
 import 'package:prestamos/src/views/clientes/ver_clientes_view.dart';
 

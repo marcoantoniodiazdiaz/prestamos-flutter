@@ -3,15 +3,11 @@ import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:get/get.dart';
 import 'package:modal_bottom_sheet/modal_bottom_sheet.dart';
-import 'package:prestamos/src/design/buttons_design.dart';
-import 'package:prestamos/src/design/colors_design.dart';
-import 'package:prestamos/src/design/texts.dart';
-import 'package:prestamos/src/models/loans_model.dart';
-import 'package:prestamos/src/models/payments_model.dart';
+import 'package:prestamos/src/design/designs.dart';
+import 'package:prestamos/src/models/models.dart';
 import 'package:prestamos/src/pipes/image_pipe.dart';
-import 'package:prestamos/src/provider/prestamos_provider.dart';
+import 'package:prestamos/src/provider/providers.dart';
 import 'package:prestamos/src/utils/date_utils.dart';
-import 'package:provider/provider.dart';
 
 class VerPrestamosView extends StatelessWidget {
   @override

@@ -1,12 +1,9 @@
 import 'package:feather_icons/feather_icons.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-import 'package:prestamos/src/design/colors_design.dart';
-import 'package:prestamos/src/design/texts.dart';
-import 'package:prestamos/src/views/clientes/nuevo_cliente_view.dart';
+import 'package:prestamos/src/design/designs.dart';
 import 'package:prestamos/src/views/cuentas/nueva_cuenta_view.dart';
 import 'package:prestamos/src/views/cuentas/ver_cuentas_view.dart';
-import 'package:prestamos/src/views/empleados/ver_empleados_view.dart';
 
 class CuentasView extends StatelessWidget {
   const CuentasView({Key? key}) : super(key: key);

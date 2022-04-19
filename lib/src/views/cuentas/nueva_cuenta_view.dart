@@ -1,12 +1,9 @@
-import 'dart:io';
-
 import 'package:flutter/material.dart';
 import 'package:prestamos/src/design/buttons_design.dart';
 import 'package:prestamos/src/design/colors_design.dart';
 import 'package:prestamos/src/design/input_design.dart';
 import 'package:prestamos/src/design/texts.dart';
 import 'package:prestamos/src/provider/clientes_provider.dart';
-import 'package:prestamos/src/utils/picker_utils.dart';
 import 'package:provider/provider.dart';
 
 class NuevaCuentaView extends StatelessWidget {

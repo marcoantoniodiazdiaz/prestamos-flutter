@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:prestamos/src/design/colors_design.dart';
-import 'package:prestamos/src/design/texts.dart';
+import 'package:prestamos/src/design/designs.dart';
 
 class PermisosView extends StatelessWidget {
   final String username;

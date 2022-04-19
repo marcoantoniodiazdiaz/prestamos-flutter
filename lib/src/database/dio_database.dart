@@ -51,4 +51,34 @@ class DioInstance {
 
     return null;
   }
+
+  static Future<Response<dynamic>?> post(String url, Map<String, dynamic> data, {required String onSuccess}) async {
+    try {
+      final resp = await DioInstance.dio.post(url, data: data);
+
+      if (resp.statusCode != 200) {
+        if (resp.data['err'] != null) {
+          SnackBarUtils.snackBarError(resp.data['err']);
+        }
+      } else {
+        SnackBarUtils.snackBarSuccess(onSuccess);
+      }
+
+      return resp;
+    } catch (e) {
+      if (e is DioError) {
+        if (e.type == DioErrorType.connectTimeout) {
+          SnackBarUtils.snackBarError('Tiempo de conexión agotado');
+        } else if (e.type == DioErrorType.receiveTimeout) {
+          SnackBarUtils.snackBarError('Tiempo de espera de petición agotado');
+        } else if (e.type == DioErrorType.response) {
+          if (e.response != null) {
+            SnackBarUtils.snackBarError(e.response?.data['err']);
+          }
+        }
+      }
+    }
+
+    return null;
+  }
 }

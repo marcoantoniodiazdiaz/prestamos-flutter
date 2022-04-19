@@ -3,14 +3,11 @@ import 'dart:io';
 import 'package:feather_icons/feather_icons.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
-import 'package:prestamos/src/design/buttons_design.dart';
-import 'package:prestamos/src/design/colors_design.dart';
-import 'package:prestamos/src/design/input_design.dart';
-import 'package:prestamos/src/design/texts.dart';
 import 'package:prestamos/src/middlewares/regex_exp.dart';
-import 'package:prestamos/src/provider/clientes_provider.dart';
+import 'package:prestamos/src/provider/providers.dart';
 import 'package:prestamos/src/utils/picker_utils.dart';
-import 'package:provider/provider.dart';
+
+import '../../design/designs.dart';
 
 class NuevoClienteView extends StatelessWidget {
   @override

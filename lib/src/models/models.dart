@@ -1,0 +1,10 @@
+export 'package:prestamos/src/models/accounts_model.dart';
+export 'package:prestamos/src/models/clients_model.dart';
+export 'package:prestamos/src/models/loans_model.dart';
+export 'package:prestamos/src/models/pawns_model.dart';
+export 'package:prestamos/src/models/payments_model.dart';
+export 'package:prestamos/src/models/permissions_model.dart';
+export 'package:prestamos/src/models/phones_model.dart';
+export 'package:prestamos/src/models/products_model.dart';
+export 'package:prestamos/src/models/transactions_model.dart';
+export 'package:prestamos/src/models/users_model.dart';
