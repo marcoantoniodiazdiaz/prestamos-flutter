@@ -6,3 +6,4 @@ export 'package:prestamos/src/database/pawns_database.dart';
 export 'package:prestamos/src/database/payments_database.dart';
 export 'package:prestamos/src/database/permissions_database.dart';
 export 'package:prestamos/src/database/transactions_database.dart';
+export 'package:prestamos/src/models/models.dart';

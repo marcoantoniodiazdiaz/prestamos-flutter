@@ -8,6 +8,9 @@ import 'package:prestamos/src/models/models.dart';
 import 'package:prestamos/src/pipes/image_pipe.dart';
 import 'package:prestamos/src/provider/providers.dart';
 import 'package:prestamos/src/utils/date_utils.dart';
+import 'package:prestamos/src/utils/parsers_utils.dart';
+import 'package:prestamos/src/utils/structures.dart';
+import 'package:prestamos/src/views/prestamos/registrar_pago_view.dart';
 
 class VerPrestamosView extends StatelessWidget {
   @override
@@ -110,7 +113,7 @@ class _Item extends StatelessWidget {
             mainAxisAlignment: MainAxisAlignment.spaceBetween,
             children: [
               DesignText('% de pagos', color: Colors.black54),
-              DesignText('55%', color: Colors.black54),
+              DesignText('${ParsersUtils.money(StructuresUtils.sum(model.payments.map((e) => e.transaction.amount)))}', color: Colors.black54),
             ],
           ),
           SizedBox(height: 10),
@@ -126,7 +129,8 @@ class _Item extends StatelessWidget {
                   ),
                 ),
                 Container(
-                  width: size.width * 0.82 * 0.5,
+                  width:
+                      size.width * 0.82 * ParsersUtils.getPercent(model.amount, StructuresUtils.sum(model.payments.map((e) => e.transaction.amount))),
                   height: 8,
                   decoration: BoxDecoration(
                     gradient: LinearGradient(
@@ -149,7 +153,7 @@ class _Item extends StatelessWidget {
                   child: DesignText('Registrar pago'),
                   color: Color(0xff1400FF),
                   primary: Colors.white,
-                  onPressed: () {},
+                  onPressed: () => Get.to(() => RegistrarPagoView(model: model)),
                 ),
               ),
               SizedBox(width: 5),

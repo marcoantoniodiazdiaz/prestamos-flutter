@@ -26,10 +26,10 @@ class LoansModel {
 
   int id;
   int concurrency;
-  int amount;
+  double amount;
   int duration;
-  int fee;
-  int interest;
+  double fee;
+  double interest;
   DateTime createdAt;
   DateTime updatedAt;
   ClientsModel client;
@@ -38,10 +38,10 @@ class LoansModel {
   factory LoansModel.fromJson(Map<String, dynamic> json) => LoansModel(
         id: json["id"],
         concurrency: json["concurrency"],
-        amount: json["amount"],
+        amount: json["amount"].toDouble(),
         duration: json["duration"],
-        fee: json["fee"],
-        interest: json["interest"],
+        fee: json["fee"].toDouble(),
+        interest: json["interest"].toDouble(),
         createdAt: DateTime.parse(json["createdAt"]),
         updatedAt: DateTime.parse(json["updatedAt"]),
         client: ClientsModel.fromJson(json["client"]),

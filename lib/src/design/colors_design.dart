@@ -6,4 +6,5 @@ class DesignColors {
   static const Color dark = Color.fromRGBO(34, 34, 34, 1);
   static const Color green = Color(0xff3A664A);
   static const Color yellow = Color(0xffFFCB66);
+  static const Color blue = Color(0xff1400FF);
 }

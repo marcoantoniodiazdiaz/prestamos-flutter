@@ -34,11 +34,11 @@ class PaymentsDatabase {
   }
 
   static Future<bool> post(Map<String, dynamic> data) async {
-    final resp = await DioInstance.dio.post('${DioInstance.server}/payments', data: data);
+    final resp = await DioInstance.post('${DioInstance.server}/payments', data, onSuccess: 'Pago registrado con exito');
 
-    final decodedResp = resp.data;
+    final decodedResp = resp?.data;
 
-    return decodedResp;
+    return decodedResp['ok'];
   }
 
   static Future<bool> put(Map<String, dynamic> data) async {

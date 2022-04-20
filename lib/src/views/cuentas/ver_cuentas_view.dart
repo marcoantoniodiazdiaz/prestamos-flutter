@@ -1,15 +1,21 @@
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 import 'package:prestamos/src/design/colors_design.dart';
 import 'package:prestamos/src/design/texts.dart';
+import 'package:prestamos/src/provider/accounts_provider.dart';
+import 'package:prestamos/src/provider/providers.dart';
 import 'package:prestamos/src/widgets/misc_widgets.dart';
 
 class VerCuentasView extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
+    final accountsProvider = Provider.of<AccountsProvider>(context);
     return Scaffold(
       appBar: AppBar(
-        backgroundColor: DesignColors.dark,
-        title: DesignText('Todos las cuentas'),
+        backgroundColor: Colors.transparent,
+        title: DesignText('Todos las cuentas', fontWeight: FontWeight.bold),
+        systemOverlayStyle: SystemUiOverlayStyle.dark,
+        foregroundColor: Colors.black,
         elevation: 0,
       ),
       body: ListView.builder(
@@ -17,23 +23,13 @@ class VerCuentasView extends StatelessWidget {
         physics: BouncingScrollPhysics(),
         itemBuilder: (_, index) {
           return ListTile(
-            title: DesignText('Tarjeta de credito'),
-            leading: MiscWidgets.avatarWithLetter('M', 25, DesignColors.green),
+            title: DesignText(accountsProvider.accounts[index].name),
+            leading: MiscWidgets.avatarWithLetter(accountsProvider.accounts[index].name[0], 25, DesignColors.green),
             onTap: () {},
             subtitle: DesignText('Manten pulsado para editar'),
-            // trailing: DesignTextButton(
-            //   width: 80,
-            //   height: 35,
-            //   child: DesignText('Permisos'),
-            //   color: DesignColors.green,
-            //   primary: Colors.white,
-            //   onPressed: () {
-            //     Get.to(() => PermisosView(username: 'Marco Diaz'));
-            //   },
-            // ),
           );
         },
-        itemCount: 20,
+        itemCount: accountsProvider.accounts.length,
       ),
     );
   }

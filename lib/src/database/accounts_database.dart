@@ -22,11 +22,11 @@ class AccountsDatabase {
   }
 
   static Future<bool> post(Map<String, dynamic> data) async {
-    final resp = await DioInstance.dio.post('${DioInstance.server}/accounts', data: data);
+    final resp = await DioInstance.post('${DioInstance.server}/accounts', data, onSuccess: 'Cuenta almacenada');
 
-    final decodedResp = resp.data;
+    final decodedResp = resp?.data;
 
-    return decodedResp;
+    return decodedResp['ok'];
   }
 
   static Future<bool> put(Map<String, dynamic> data) async {

@@ -10,14 +10,14 @@ class TransactionsModel {
   });
 
   int id;
-  int amount;
+  double amount;
   DateTime createdAt;
   DateTime updatedAt;
   AccountsModel account;
 
   factory TransactionsModel.fromJson(Map<String, dynamic> json) => TransactionsModel(
         id: json["id"],
-        amount: json["amount"],
+        amount: json["amount"].toDouble(),
         createdAt: DateTime.parse(json["createdAt"]),
         updatedAt: DateTime.parse(json["updatedAt"]),
         account: AccountsModel.fromJson(json["account"]),

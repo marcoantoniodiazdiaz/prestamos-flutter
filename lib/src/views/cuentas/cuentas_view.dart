@@ -1,5 +1,6 @@
 import 'package:feather_icons/feather_icons.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 import 'package:get/get.dart';
 import 'package:prestamos/src/design/designs.dart';
 import 'package:prestamos/src/views/cuentas/nueva_cuenta_view.dart';
@@ -12,8 +13,10 @@ class CuentasView extends StatelessWidget {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        backgroundColor: DesignColors.dark,
-        title: DesignText('Cuentas'),
+        backgroundColor: Colors.transparent,
+        title: DesignText('Cuentas', fontWeight: FontWeight.bold),
+        systemOverlayStyle: SystemUiOverlayStyle.dark,
+        foregroundColor: Colors.black,
         elevation: 0,
       ),
       body: ListView(

@@ -1,5 +1,6 @@
 import 'package:feather_icons/feather_icons.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 import 'package:get/get.dart';
 import 'package:prestamos/src/design/designs.dart';
 import 'package:prestamos/src/views/clientes/nuevo_cliente_view.dart';
@@ -12,8 +13,10 @@ class EmpleadosMenuView extends StatelessWidget {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        backgroundColor: DesignColors.dark,
-        title: DesignText('Empleados'),
+        backgroundColor: Colors.transparent,
+        title: DesignText('Empleados', fontWeight: FontWeight.bold),
+        systemOverlayStyle: SystemUiOverlayStyle.dark,
+        foregroundColor: Colors.black,
         elevation: 0,
       ),
       body: ListView(
@@ -30,14 +33,6 @@ class EmpleadosMenuView extends StatelessWidget {
             title: 'Nuevo empleado',
             subtitle: 'Registrar nuevo cliente',
             icon: FeatherIcons.userPlus,
-          ),
-          _FlatItem(
-            onTap: () {
-              // _showEmployees();
-            },
-            title: 'Permisos',
-            subtitle: 'Asigna y administra permisos para los empleads',
-            icon: FeatherIcons.edit,
           ),
         ],
       ),

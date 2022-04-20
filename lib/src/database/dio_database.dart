@@ -9,20 +9,20 @@ class DioInstance {
       // headers: <String, dynamic>{
       //   'token': UserPreferences().token,
       // },
-      validateStatus: (code) {
-        switch (code) {
-          case 200:
-            return true;
-          case 401:
-            SnackBarUtils.snackBarError('Carga de recurso denegada');
-            return false;
-          case 404:
-            SnackBarUtils.snackBarError('Recurso no encontrado');
-            return false;
-          default:
-            return true;
-        }
-      },
+      // validateStatus: (code) {
+      //   switch (code) {
+      //     case 200:
+      //       return true;
+      //     case 401:
+      //       SnackBarUtils.snackBarError('Carga de recurso denegada');
+      //       return false;
+      //     case 404:
+      //       SnackBarUtils.snackBarError('Recurso no encontrado');
+      //       return false;
+      //     default:
+      //       return true;
+      //   }
+      // },
     ),
   );
 
@@ -43,7 +43,11 @@ class DioInstance {
           SnackBarUtils.snackBarError('Tiempo de espera de petición agotado');
         } else if (e.type == DioErrorType.response) {
           if (e.response != null) {
-            SnackBarUtils.snackBarError(e.response?.data['err']);
+            if (e.response?.statusCode == 404) {
+              SnackBarUtils.snackBarError('Dirección de recurso no encontrada');
+            } else {
+              SnackBarUtils.snackBarError(e.response?.data['err']);
+            }
           }
         }
       }
