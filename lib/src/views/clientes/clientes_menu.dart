@@ -7,8 +7,6 @@ import 'package:prestamos/src/views/clientes/nuevo_cliente_view.dart';
 import 'package:prestamos/src/views/clientes/ver_clientes_view.dart';
 
 class ClientesMenu extends StatelessWidget {
-  const ClientesMenu({Key? key}) : super(key: key);
-
   @override
   Widget build(BuildContext context) {
     return Scaffold(

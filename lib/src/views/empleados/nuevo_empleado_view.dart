@@ -3,18 +3,20 @@ import 'dart:io';
 import 'package:feather_icons/feather_icons.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
-import 'package:prestamos/src/design/designs.dart';
 import 'package:prestamos/src/middlewares/regex_exp.dart';
 import 'package:prestamos/src/provider/providers.dart';
+import 'package:prestamos/src/provider/users_provider.dart';
 import 'package:prestamos/src/utils/picker_utils.dart';
 
-class NuevoClienteView extends StatelessWidget {
+import '../../design/designs.dart';
+
+class NuevoEmpleadoView extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
         backgroundColor: Colors.transparent,
-        title: DesignText('Nuevo cliente', fontWeight: FontWeight.bold),
+        title: DesignText('Nuevo empleado', fontWeight: FontWeight.bold),
         systemOverlayStyle: SystemUiOverlayStyle.dark,
         foregroundColor: Colors.black,
         elevation: 0,
@@ -32,10 +34,10 @@ class NuevoClienteView extends StatelessWidget {
 class _Form extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
-    final clientesProvider = Provider.of<ClientesProvider>(context);
+    final usersProvider = Provider.of<UsersProvider>(context);
     return Form(
       autovalidateMode: AutovalidateMode.onUserInteraction,
-      key: clientesProvider.formKey,
+      key: usersProvider.formKey,
       child: Column(
         children: [
           Row(
@@ -45,7 +47,7 @@ class _Form extends StatelessWidget {
                   final file = await PickerUtils.pickImage();
 
                   if (file != null) {
-                    clientesProvider.profileSelected = File(file.path);
+                    usersProvider.profileSelected = File(file.path);
                   }
                 },
                 child: Container(
@@ -64,7 +66,7 @@ class _Form extends StatelessWidget {
               Flexible(
                 child: DesignInput(
                   hintText: 'Nombre completo',
-                  onChanged: (String v) => clientesProvider.name = v,
+                  onChanged: (String v) => usersProvider.name = v,
                   validator: (String? v) {
                     if (v!.length < 5) return 'Nombre invalido';
                     return null;
@@ -77,68 +79,34 @@ class _Form extends StatelessWidget {
           ),
           SizedBox(height: 20),
           DesignInput(
-            hintText: 'Dirección',
-            textInputType: TextInputType.streetAddress,
-            validator: (String? v) {
-              if (v!.isEmpty) return 'Campo vacio';
-              return null;
-            },
-            onChanged: (String v) => clientesProvider.direction = v,
-            textCapitalization: TextCapitalization.characters,
-          ),
-          SizedBox(height: 7.5),
-          DesignInput(
-            hintText: 'Ciudad',
-            textInputType: TextInputType.text,
-            textCapitalization: TextCapitalization.characters,
-            validator: (String? v) {
-              if (v!.isEmpty) return 'Campo vacio';
-              return null;
-            },
-            onChanged: (String v) => clientesProvider.city = v,
-          ),
-          // SizedBox(height: 7.5),
-          // DesignInput(
-          //   hintText: 'Telefono',
-          //   onChanged: (String v) =>  = v,
-          //   textInputType: TextInputType.phone,
-          // ),
-          // SizedBox(height: 7.5),
-          // DesignInput(
-          //   hintText: 'Celular',
-          //   textInputType: TextInputType.phone,
-          // ),
-          SizedBox(height: 7.5),
-          DesignInput(
             hintText: 'Correo electronico',
-            onChanged: (String v) => clientesProvider.email = v,
             textInputType: TextInputType.emailAddress,
             validator: (String? v) {
               if (v!.isEmpty) return 'Campo vacio';
-              if (!RegexExpressions.email.hasMatch(v)) return 'Correo electronico invalido';
+              if (!RegexExpressions.email.hasMatch(v)) return 'Formato invalido';
               return null;
             },
+            onChanged: (String v) => usersProvider.email = v,
           ),
           SizedBox(height: 7.5),
           DesignInput(
-            hintText: 'Comentario',
-            textInputType: TextInputType.text,
-            onChanged: (String v) => clientesProvider.comment = v,
-            textCapitalization: TextCapitalization.characters,
+            hintText: 'Contraseña',
+            textInputType: TextInputType.visiblePassword,
             validator: (String? v) {
               if (v!.isEmpty) return 'Campo vacio';
+              if (v.length < 8) return 'Al menos 8 caracteres';
               return null;
             },
-            minLines: 3,
+            onChanged: (String v) => usersProvider.password = v,
           ),
           SizedBox(height: 7.5),
           DesignTextButton(
             width: double.infinity,
             height: 50,
             child: DesignText('Guardar'),
-            color: DesignColors.dark,
+            color: DesignColors.blue,
             primary: Colors.white,
-            onPressed: () => clientesProvider.post(),
+            onPressed: () => usersProvider.add(),
           ),
         ],
       ),

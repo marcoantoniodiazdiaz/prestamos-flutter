@@ -42,6 +42,7 @@ class DesignTextButton extends StatelessWidget {
   final Color color;
   final Color primary;
   final void Function() onPressed;
+  final double? elevation;
 
   const DesignTextButton({
     required this.width,
@@ -50,6 +51,7 @@ class DesignTextButton extends StatelessWidget {
     required this.color,
     required this.primary,
     required this.onPressed,
+    this.elevation,
   });
 
   @override
@@ -62,6 +64,7 @@ class DesignTextButton extends StatelessWidget {
         onPressed: onPressed,
         style: TextButton.styleFrom(
           primary: primary,
+          elevation: elevation,
           backgroundColor: color,
         ),
       ),

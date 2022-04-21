@@ -1,6 +1,7 @@
 import 'package:feather_icons/feather_icons.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
+import 'package:prestamos/src/database/preferences.dart';
 import 'package:prestamos/src/design/buttons_design.dart';
 import 'package:prestamos/src/design/drawers.dart';
 import 'package:prestamos/src/design/texts.dart';
@@ -39,7 +40,7 @@ class HomeView extends StatelessWidget {
                             SizedBox(height: 5),
                           ],
                         ),
-                        DesignText('Hola Marco', fontWeight: FontWeight.bold, fontSize: 25),
+                        DesignText('Hola ${UserPreferences.name}', fontWeight: FontWeight.bold, fontSize: 25),
                       ],
                     ),
                     CircleAvatar(radius: 25),

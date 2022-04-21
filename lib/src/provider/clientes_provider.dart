@@ -10,6 +10,9 @@ class ClientesProvider extends ChangeNotifier {
     reload();
   }
 
+  final formKey = GlobalKey<FormState>();
+  late String name, direction, city, email, comment;
+
   List<ClientsModel> _clients = [];
   List<ClientsModel> get clients => _clients;
 
@@ -38,14 +41,28 @@ class ClientesProvider extends ChangeNotifier {
     notifyListeners();
   }
 
-  post(Map<String, dynamic> data) async {
+  bool isValidForm() {
+    return formKey.currentState?.validate() ?? false;
+  }
+
+  post() async {
+    if (!isValidForm()) return false;
+
+    final Map<String, dynamic> data = {
+      'name': name,
+      'direction': direction,
+      'city': city,
+      'email': email,
+      'comment': comment,
+      'image': '',
+    };
+
     final resp = await ClientsDatabase.post(data);
 
     if (resp) {
-      SnackBarUtils.snackBarSuccess('Cliente añadido de forma satisfactoria');
       reload();
-    } else {
-      SnackBarUtils.snackBarError('Ocurrio un error al realizar la acción');
     }
+
+    return resp;
   }
 }

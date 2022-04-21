@@ -2,18 +2,22 @@ import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:get/get.dart';
 import 'package:google_fonts/google_fonts.dart';
+import 'package:prestamos/src/database/preferences.dart';
 import 'package:prestamos/src/provider/accounts_provider.dart';
+import 'package:prestamos/src/provider/auth_provider.dart';
 import 'package:prestamos/src/provider/clientes_provider.dart';
 import 'package:prestamos/src/provider/payments_provider.dart';
 import 'package:prestamos/src/provider/prestamos_provider.dart';
 import 'package:prestamos/src/provider/transactions_provider.dart';
 import 'package:prestamos/src/provider/users_provider.dart';
+import 'package:prestamos/src/views/auth/login_view.dart';
 import 'package:prestamos/src/views/home_view.dart';
 import 'package:provider/provider.dart';
 import 'package:provider/single_child_widget.dart';
 
-void main() {
+void main() async {
   WidgetsFlutterBinding.ensureInitialized();
+  await UserPreferences().initPrefs();
   SystemChrome.setSystemUIOverlayStyle(SystemUiOverlayStyle(
     statusBarColor: Colors.transparent, // transparent status bar
   ));
@@ -30,8 +34,8 @@ class MyApp extends StatelessWidget {
         debugShowCheckedModeBanner: false,
         title: 'Material App',
         theme: ThemeData(textTheme: GoogleFonts.montserratTextTheme()),
-        home: HomeView(),
-        // home: VerPrestamosView(),
+        // home: HomeView(),
+        home: LoginView(),
         defaultTransition: Transition.cupertino,
       ),
     );
@@ -43,6 +47,7 @@ List<SingleChildWidget> _providers() {
     ChangeNotifierProvider(create: (_) => PrestamosProvider()),
     ChangeNotifierProvider(create: (_) => AccountsProvider()),
     ChangeNotifierProvider(create: (_) => ClientesProvider()),
+    ChangeNotifierProvider(create: (_) => AuthProvider()),
     ChangeNotifierProvider(create: (_) => TransactionsProvider()),
     ChangeNotifierProvider(create: (_) => PaymentsProvider()),
     ChangeNotifierProvider(create: (_) => UsersProvider()),

@@ -77,7 +77,11 @@ class DioInstance {
           SnackBarUtils.snackBarError('Tiempo de espera de petición agotado');
         } else if (e.type == DioErrorType.response) {
           if (e.response != null) {
-            SnackBarUtils.snackBarError(e.response?.data['err']);
+            try {
+              SnackBarUtils.snackBarError(e.response?.data['err']);
+            } catch (e) {
+              SnackBarUtils.snackBarError('Error interno en el servidor');
+            }
           }
         }
       }

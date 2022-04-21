@@ -4,6 +4,7 @@ import 'package:flutter/services.dart';
 import 'package:get/get.dart';
 import 'package:prestamos/src/design/designs.dart';
 import 'package:prestamos/src/views/clientes/nuevo_cliente_view.dart';
+import 'package:prestamos/src/views/empleados/nuevo_empleado_view.dart';
 import 'package:prestamos/src/views/empleados/ver_empleados_view.dart';
 
 class EmpleadosMenuView extends StatelessWidget {
@@ -29,7 +30,7 @@ class EmpleadosMenuView extends StatelessWidget {
             icon: FeatherIcons.users,
           ),
           _FlatItem(
-            onTap: () => Get.to(() => NuevoClienteView()),
+            onTap: () => Get.to(() => NuevoEmpleadoView()),
             title: 'Nuevo empleado',
             subtitle: 'Registrar nuevo cliente',
             icon: FeatherIcons.userPlus,

@@ -3,11 +3,11 @@ import 'package:prestamos/src/models/transactions_model.dart';
 
 class TransactionsDatabase {
   static Future<List<TransactionsModel>> get() async {
-    final resp = await DioInstance.dio.get(
+    final resp = await DioInstance.get(
       '${DioInstance.server}/transactions',
     );
 
-    final decodedResp = resp.data;
+    final decodedResp = resp?.data;
 
     if (decodedResp['data'] == null) return [];
 
