@@ -5,7 +5,9 @@ import 'package:prestamos/src/database/preferences.dart';
 import 'package:prestamos/src/design/colors_design.dart';
 import 'package:prestamos/src/design/texts.dart';
 import 'package:prestamos/src/pipes/image_pipe.dart';
+import 'package:prestamos/src/utils/parsers_utils.dart';
 import 'package:prestamos/src/views/ajustes/ajustes_view.dart';
+import 'package:prestamos/src/views/auth/login_view.dart';
 import 'package:prestamos/src/views/clientes/clientes_menu.dart';
 import 'package:prestamos/src/views/clientes/nuevo_cliente_view.dart';
 import 'package:prestamos/src/views/cuentas/cuentas_view.dart';
@@ -28,7 +30,7 @@ class DrawerDesign extends StatelessWidget {
               backgroundImage: ImagePipes.assetOrNetwork(url: UserPreferences.photo),
             ),
             SizedBox(height: 10),
-            DesignText('Marco Antonio Diaz', color: Colors.black, fontSize: 15),
+            DesignText(ParsersUtils.capitalize(UserPreferences.name), color: Colors.black, fontSize: 15),
             SizedBox(height: 20),
             _ListTile(
               title: 'Prestamos',
@@ -117,8 +119,7 @@ class DrawerDesign extends StatelessWidget {
               subtitle: 'Cambiar de perfil',
               icon: FeatherIcons.logOut,
               onPress: () {
-                Get.back();
-                // Get.to(() => NuevoPrestamoView());
+                Get.offAll(() => LoginView());
               },
             ),
           ],

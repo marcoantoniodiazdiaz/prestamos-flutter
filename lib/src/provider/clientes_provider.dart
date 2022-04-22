@@ -2,9 +2,7 @@ import 'dart:io';
 
 import 'package:flutter/material.dart';
 import 'package:prestamos/src/database/clients_database.dart';
-import 'package:prestamos/src/database/preferences.dart';
 import 'package:prestamos/src/models/clients_model.dart';
-import 'package:prestamos/src/utils/snackbars_utils.dart';
 
 class ClientesProvider extends ChangeNotifier {
   ClientesProvider() {
@@ -69,13 +67,13 @@ class ClientesProvider extends ChangeNotifier {
     return resp;
   }
 
-  addPhone() async {
+  Future<bool> addPhone({required int clientId}) async {
     if (!isValidForm(phoneFormKey)) return false;
 
     final Map<String, dynamic> data = {
       'value': value,
       'type': 1,
-      'clientId': UserPreferences.id,
+      'clientId': clientId,
     };
 
     final resp = await ClientsDatabase.addPhone(data);

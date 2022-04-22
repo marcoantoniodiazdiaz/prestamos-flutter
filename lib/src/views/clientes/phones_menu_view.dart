@@ -1,6 +1,7 @@
 import 'package:feather_icons/feather_icons.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
+import 'package:get/get.dart';
 import 'package:prestamos/src/database/database.dart';
 import 'package:prestamos/src/design/designs.dart';
 import 'package:prestamos/src/provider/providers.dart';
@@ -16,7 +17,7 @@ class PhonesView extends StatelessWidget {
     return Scaffold(
       appBar: AppBar(
         backgroundColor: Colors.transparent,
-        title: DesignText('Todos los clientes', fontWeight: FontWeight.bold),
+        title: DesignText(model.name.toUpperCase(), fontWeight: FontWeight.bold),
         systemOverlayStyle: SystemUiOverlayStyle.dark,
         foregroundColor: Colors.black,
         elevation: 0,
@@ -51,7 +52,9 @@ class PhonesView extends StatelessWidget {
                     child: Icon(FeatherIcons.save),
                     color: DesignColors.green,
                     primary: Colors.white,
-                    onPressed: () => clientsProvider.addPhone(),
+                    onPressed: () async {
+                      await clientsProvider.addPhone(clientId: model.id);
+                    },
                   ),
                 ],
               ),

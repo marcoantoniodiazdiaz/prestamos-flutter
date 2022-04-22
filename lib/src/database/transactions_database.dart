@@ -8,7 +8,7 @@ class TransactionsDatabase {
     );
 
     final decodedResp = resp?.data;
-
+    if (decodedResp == null) return [];
     if (decodedResp['data'] == null) return [];
 
     List<TransactionsModel> items = [];

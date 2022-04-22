@@ -8,6 +8,7 @@ import 'package:prestamos/src/design/texts.dart';
 import 'package:prestamos/src/pipes/image_pipe.dart';
 import 'package:prestamos/src/provider/transactions_provider.dart';
 import 'package:prestamos/src/utils/date_utils.dart';
+import 'package:prestamos/src/utils/parsers_utils.dart';
 import 'package:provider/provider.dart';
 
 class HomeView extends StatelessWidget {
@@ -41,7 +42,11 @@ class HomeView extends StatelessWidget {
                             SizedBox(height: 5),
                           ],
                         ),
-                        DesignText('Hola ${UserPreferences.name}', fontWeight: FontWeight.bold, fontSize: 25),
+                        DesignText(
+                          'Hola ${ParsersUtils.capitalize(UserPreferences.name).split(' ')[0]}',
+                          fontWeight: FontWeight.bold,
+                          fontSize: 25,
+                        ),
                       ],
                     ),
                     CircleAvatar(
