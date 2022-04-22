@@ -66,6 +66,7 @@ class DesignTextButton extends StatelessWidget {
           primary: primary,
           elevation: elevation,
           backgroundColor: color,
+          shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(5)),
         ),
       ),
     );

@@ -34,7 +34,21 @@ class ClientsDatabase {
   }
 
   static Future<bool> post(Map<String, dynamic> data) async {
-    final resp = await DioInstance.post('${DioInstance.server}/clients', data, onSuccess: 'Cliente añadido de forma satistactoria');
+    final resp = await DioInstance.post('${DioInstance.server}/clients', data,
+        onSuccess: 'Cliente añadido de forma satistactoria');
+
+    final decodedResp = resp?.data;
+    if (decodedResp == null) return false;
+
+    return decodedResp['ok'];
+  }
+
+  static Future<bool> addPhone(Map<String, dynamic> data) async {
+    final resp = await DioInstance.post(
+      '${DioInstance.server}/phones',
+      data,
+      onSuccess: 'Telefono registrado con exito',
+    );
 
     final decodedResp = resp?.data;
     if (decodedResp == null) return false;

@@ -8,6 +8,7 @@ import 'package:prestamos/src/pipes/image_pipe.dart';
 import 'package:prestamos/src/provider/providers.dart';
 import 'package:prestamos/src/provider/users_provider.dart';
 import 'package:prestamos/src/utils/date_utils.dart';
+import 'package:prestamos/src/utils/loading_utils.dart';
 import 'package:prestamos/src/views/empleados/permisos_view.dart';
 
 class VerEmpleadosView extends StatelessWidget {
@@ -43,7 +44,8 @@ class VerEmpleadosView extends StatelessWidget {
               color: DesignColors.green,
               primary: Colors.white,
               onPressed: () {
-                Get.to(() => PermisosView(username: 'Marco Diaz'));
+                LoadingUtils.showLoading();
+                // Get.to(() => PermisosView(username: 'Marco Diaz'));
               },
             ),
           );

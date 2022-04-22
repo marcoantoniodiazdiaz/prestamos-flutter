@@ -1,4 +1,6 @@
 import 'package:dio/dio.dart';
+import 'package:get/get.dart' as getx;
+import 'package:prestamos/src/utils/loading_utils.dart';
 import 'package:prestamos/src/utils/snackbars_utils.dart';
 
 class DioInstance {
@@ -26,8 +28,8 @@ class DioInstance {
     ),
   );
 
-  static const String server = "http://192.168.0.19:7000/api";
-  static const String sockets = "http://192.168.0.19:7000";
+  static const String server = "http://192.168.0.15:7001/api";
+  static const String sockets = "http://192.168.0.15:7001";
   // static final String server = "https://crowncleanapi.host/api";
   // static final String sockets = "http://45.80.152.52:8000/";
 
@@ -56,9 +58,12 @@ class DioInstance {
     return null;
   }
 
-  static Future<Response<dynamic>?> post(String url, Map<String, dynamic> data, {required String onSuccess}) async {
+  static Future<Response<dynamic>?> post(String url, Map<String, dynamic> data,
+      {required String onSuccess}) async {
     try {
+      LoadingUtils.showLoading();
       final resp = await DioInstance.dio.post(url, data: data);
+      getx.Get.back(); // Request success, close loading
 
       if (resp.statusCode != 200) {
         if (resp.data['err'] != null) {
@@ -70,6 +75,7 @@ class DioInstance {
 
       return resp;
     } catch (e) {
+      getx.Get.back(); // Request failed, close loading
       if (e is DioError) {
         if (e.type == DioErrorType.connectTimeout) {
           SnackBarUtils.snackBarError('Tiempo de conexión agotado');

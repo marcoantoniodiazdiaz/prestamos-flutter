@@ -52,7 +52,8 @@ class NuevoPrestamoView extends StatelessWidget {
                       children: [
                         DesignText(client.name, fontWeight: FontWeight.bold, fontSize: 18),
                         SizedBox(height: 2.5),
-                        DesignText('Desde: ${DesignUtils.dateShort(client.createdAt)}', fontStyle: FontStyle.italic),
+                        DesignText('Desde: ${DesignUtils.dateShort(client.createdAt)}',
+                            fontStyle: FontStyle.italic),
                       ],
                     )
                   ],
@@ -194,7 +195,7 @@ class SelectUserForNewLoan extends StatelessWidget {
                   leading: CircleAvatar(
                     backgroundImage: ImagePipes.assetOrNetwork(url: e.image),
                   ),
-                  title: DesignText(e.name, fontWeight: FontWeight.bold),
+                  title: DesignText(e.name.toUpperCase(), fontWeight: FontWeight.bold),
                   subtitle: DesignText(DesignUtils.dateShortWithHour(e.createdAt)),
                   onTap: () {
                     Get.to(() => NuevoPrestamoView(client: e));

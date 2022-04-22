@@ -1,8 +1,10 @@
 import 'package:feather_icons/feather_icons.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:prestamos/src/database/preferences.dart';
 import 'package:prestamos/src/design/colors_design.dart';
 import 'package:prestamos/src/design/texts.dart';
+import 'package:prestamos/src/pipes/image_pipe.dart';
 import 'package:prestamos/src/views/ajustes/ajustes_view.dart';
 import 'package:prestamos/src/views/clientes/clientes_menu.dart';
 import 'package:prestamos/src/views/clientes/nuevo_cliente_view.dart';
@@ -21,7 +23,10 @@ class DrawerDesign extends StatelessWidget {
         child: Column(
           children: [
             SizedBox(height: 70),
-            MiscWidgets.avatarWithLetter('M', 40, DesignColors.green),
+            CircleAvatar(
+              radius: 40,
+              backgroundImage: ImagePipes.assetOrNetwork(url: UserPreferences.photo),
+            ),
             SizedBox(height: 10),
             DesignText('Marco Antonio Diaz', color: Colors.black, fontSize: 15),
             SizedBox(height: 20),

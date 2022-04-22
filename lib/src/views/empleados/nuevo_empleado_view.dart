@@ -92,6 +92,7 @@ class _Form extends StatelessWidget {
           DesignInput(
             hintText: 'Contraseña',
             textInputType: TextInputType.visiblePassword,
+            obscureText: true,
             validator: (String? v) {
               if (v!.isEmpty) return 'Campo vacio';
               if (v.length < 8) return 'Al menos 8 caracteres';

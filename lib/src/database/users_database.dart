@@ -33,7 +33,8 @@ class UsersDatabase {
   }
 
   static Future<bool> post(Map<String, dynamic> data) async {
-    final resp = await DioInstance.post('${DioInstance.server}/users', data, onSuccess: 'Empleado guardado con exito');
+    final resp =
+        await DioInstance.post('${DioInstance.server}/users', data, onSuccess: 'Empleado guardado con exito');
 
     final decodedResp = resp?.data;
     if (decodedResp == null) return false;
