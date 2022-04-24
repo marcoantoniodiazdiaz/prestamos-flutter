@@ -2,7 +2,9 @@ import 'package:feather_icons/feather_icons.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:get/get.dart';
+import 'package:modal_bottom_sheet/modal_bottom_sheet.dart';
 import 'package:prestamos/src/design/designs.dart';
+import 'package:prestamos/src/views/empenos/empeno_menu.dart';
 import 'package:prestamos/src/views/prestamos/nuevo_prestamo_view.dart';
 import 'package:prestamos/src/views/prestamos/ver_prestamos_view.dart';
 
@@ -20,6 +22,7 @@ class PrestamosMenu extends StatelessWidget {
         elevation: 0,
       ),
       body: ListView(
+        physics: BouncingScrollPhysics(),
         padding: EdgeInsets.all(15),
         children: [
           _FlatItem(
@@ -35,6 +38,19 @@ class PrestamosMenu extends StatelessWidget {
             title: 'Nuevo prestamo',
             subtitle: 'Registra un nuevo prestamo realizado',
             icon: FeatherIcons.plus,
+          ),
+          _FlatItem(
+            onTap: () {
+              showCupertinoModalBottomSheet(
+                context: context,
+                builder: (context) {
+                  return EmpenoMenu();
+                },
+              );
+            },
+            title: 'Nuevo empeño',
+            subtitle: 'Registra un nuevo empeño realizado',
+            icon: FeatherIcons.box,
           ),
         ],
       ),

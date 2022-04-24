@@ -18,6 +18,7 @@ class ClientesMenu extends StatelessWidget {
         elevation: 0,
       ),
       body: ListView(
+        physics: BouncingScrollPhysics(),
         padding: EdgeInsets.all(15),
         children: [
           _FlatItem(

@@ -18,6 +18,7 @@ class PermisosView extends StatelessWidget {
         elevation: 0,
       ),
       body: ListView(
+        physics: BouncingScrollPhysics(),
         children: [
           SizedBox(height: 10),
           ListTile(

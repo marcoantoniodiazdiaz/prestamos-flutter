@@ -6,12 +6,12 @@ import 'package:prestamos/src/database/preferences.dart';
 import 'package:prestamos/src/provider/accounts_provider.dart';
 import 'package:prestamos/src/provider/auth_provider.dart';
 import 'package:prestamos/src/provider/clientes_provider.dart';
+import 'package:prestamos/src/provider/expenses_provider.dart';
 import 'package:prestamos/src/provider/payments_provider.dart';
 import 'package:prestamos/src/provider/prestamos_provider.dart';
+import 'package:prestamos/src/provider/providers.dart';
 import 'package:prestamos/src/provider/transactions_provider.dart';
 import 'package:prestamos/src/provider/users_provider.dart';
-import 'package:prestamos/src/views/auth/login_view.dart';
-import 'package:prestamos/src/views/empleados/ver_empleados_view.dart';
 import 'package:prestamos/src/views/home_view.dart';
 import 'package:provider/provider.dart';
 import 'package:provider/single_child_widget.dart';
@@ -48,7 +48,9 @@ List<SingleChildWidget> _providers() {
     ChangeNotifierProvider(create: (_) => PrestamosProvider()),
     ChangeNotifierProvider(create: (_) => AccountsProvider()),
     ChangeNotifierProvider(create: (_) => ClientesProvider()),
+    ChangeNotifierProvider(create: (_) => ProductsProvider()),
     ChangeNotifierProvider(create: (_) => AuthProvider()),
+    ChangeNotifierProvider(create: (_) => ExpensesProvider()),
     ChangeNotifierProvider(create: (_) => TransactionsProvider()),
     ChangeNotifierProvider(create: (_) => PaymentsProvider()),
     ChangeNotifierProvider(create: (_) => UsersProvider()),

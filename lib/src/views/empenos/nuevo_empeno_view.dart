@@ -1,29 +1,23 @@
 import 'package:feather_icons/feather_icons.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
-import 'package:get/get.dart';
 import 'package:prestamos/src/database/database.dart';
 import 'package:prestamos/src/design/designs.dart';
 import 'package:prestamos/src/provider/providers.dart';
 
-class PhonesView extends StatelessWidget {
-  final ClientsModel model;
-
-  const PhonesView({required this.model});
-
+class NuevoEmpenoView extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
-    final clientsProvider = Provider.of<ClientesProvider>(context);
     return Scaffold(
       appBar: AppBar(
         backgroundColor: Colors.transparent,
-        title: DesignText(model.name.toUpperCase(), fontWeight: FontWeight.bold),
+        title: DesignText('Nuevo empeño', fontWeight: FontWeight.bold),
         systemOverlayStyle: SystemUiOverlayStyle.dark,
         foregroundColor: Colors.black,
         elevation: 0,
       ),
       body: Form(
-        key: clientsProvider.phoneFormKey,
+        // key: clientsProvider.phoneFormKey,
         autovalidateMode: AutovalidateMode.onUserInteraction,
         child: Column(
           children: [
@@ -35,7 +29,7 @@ class PhonesView extends StatelessWidget {
                     child: DesignInput(
                       hintText: 'Telefono/Celular',
                       textInputType: TextInputType.phone,
-                      onChanged: (v) => clientsProvider.value = v,
+                      // onChanged: (v) => clientsProvider.value = v,
                       validator: (v) {
                         if (v!.isEmpty) return 'Campo vacio';
                         if (!RegExp(r'[0-9]{10,}').hasMatch(v)) {
@@ -53,53 +47,15 @@ class PhonesView extends StatelessWidget {
                     color: DesignColors.green,
                     primary: Colors.white,
                     onPressed: () async {
-                      await clientsProvider.addPhone(clientId: model.id);
+                      // await clientsProvider.addPhone(clientId: model.id);
                     },
                   ),
                 ],
               ),
             ),
-            _PhoneList(clientId: model.id),
           ],
         ),
       ),
-    );
-  }
-}
-
-class _PhoneList extends StatelessWidget {
-  const _PhoneList({required this.clientId});
-
-  final int clientId;
-
-  @override
-  Widget build(BuildContext context) {
-    final clientsProvider = Provider.of<ClientesProvider>(context);
-    final phones = clientsProvider.clients.firstWhere((e) => e.id == clientId).phones;
-    return Expanded(
-      child: Builder(builder: (_) {
-        if (phones.isEmpty) {
-          return Center(child: DesignText('Sin telefonos registrados'));
-        } else {
-          return ListView.builder(
-            padding: EdgeInsets.symmetric(vertical: 10),
-            physics: BouncingScrollPhysics(),
-            itemBuilder: (_, i) {
-              return ListTile(
-                onLongPress: () {},
-                title: DesignText(phones[i].value),
-                subtitle: DesignText('Pulsa para llamar'),
-                leading: CircleAvatar(
-                  radius: 23,
-                  child: Icon(FeatherIcons.phone, color: Colors.white),
-                  backgroundColor: DesignColors.pink,
-                ),
-              );
-            },
-            itemCount: phones.length,
-          );
-        }
-      }),
     );
   }
 }

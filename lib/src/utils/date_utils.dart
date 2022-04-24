@@ -11,18 +11,18 @@ class DesignUtils {
 
   static String intToMonthShort(int number) {
     final months = {
-      1: 'ene',
-      2: 'feb',
-      3: 'mar',
-      4: 'abr',
-      5: 'may',
-      6: 'jun',
-      7: 'jul',
-      8: 'ago',
-      9: 'sep',
-      10: 'oct',
-      11: 'nov',
-      12: 'dic',
+      1: 'ENE',
+      2: 'FEB',
+      3: 'MAR',
+      4: 'ABR',
+      5: 'MAY',
+      6: 'JUN',
+      7: 'JUL',
+      8: 'AGO',
+      9: 'SEP',
+      10: 'OCT',
+      11: 'NOV',
+      12: 'DIC',
     };
 
     return months[number]!;

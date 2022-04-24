@@ -20,6 +20,7 @@ class HomeView extends StatelessWidget {
         drawer: DrawerDesign(),
         body: SafeArea(
           child: SingleChildScrollView(
+            physics: BouncingScrollPhysics(),
             padding: EdgeInsets.all(15),
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.start,
@@ -75,6 +76,7 @@ class _Transactions extends StatelessWidget {
   Widget build(BuildContext context) {
     final transactionsProvider = Provider.of<TransactionsProvider>(context);
     return ListView.builder(
+      physics: NeverScrollableScrollPhysics(),
       itemCount: transactionsProvider.transactions.length,
       shrinkWrap: true,
       itemBuilder: (BuildContext context, int index) {

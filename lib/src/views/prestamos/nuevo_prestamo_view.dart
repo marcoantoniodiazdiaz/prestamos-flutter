@@ -52,8 +52,7 @@ class NuevoPrestamoView extends StatelessWidget {
                       children: [
                         DesignText(client.name, fontWeight: FontWeight.bold, fontSize: 18),
                         SizedBox(height: 2.5),
-                        DesignText('Desde: ${DesignUtils.dateShort(client.createdAt)}',
-                            fontStyle: FontStyle.italic),
+                        DesignText('Desde: ${DesignUtils.dateShort(client.createdAt)}', fontStyle: FontStyle.italic),
                       ],
                     )
                   ],
@@ -132,6 +131,7 @@ class _Tabla extends StatelessWidget {
     final prestamosProvider = Provider.of<PrestamosProvider>(context);
     return LayoutBuilder(builder: (context, constraints) {
       return SingleChildScrollView(
+        physics: BouncingScrollPhysics(),
         scrollDirection: Axis.horizontal,
         child: ConstrainedBox(
           constraints: BoxConstraints(minWidth: constraints.minWidth),
@@ -173,6 +173,7 @@ class SelectUserForNewLoan extends StatelessWidget {
         elevation: 0,
       ),
       body: SingleChildScrollView(
+        physics: BouncingScrollPhysics(),
         padding: EdgeInsets.all(20),
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.start,

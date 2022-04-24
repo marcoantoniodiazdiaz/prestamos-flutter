@@ -3,19 +3,16 @@ import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:get/get.dart';
 import 'package:prestamos/src/design/designs.dart';
-import 'package:prestamos/src/views/clientes/nuevo_cliente_view.dart';
-import 'package:prestamos/src/views/empleados/nuevo_empleado_view.dart';
-import 'package:prestamos/src/views/empleados/ver_empleados_view.dart';
+import 'package:prestamos/src/views/gastos/nuevo_gasto_view.dart';
+import 'package:prestamos/src/views/gastos/ver_gastos_view.dart';
 
-class EmpleadosMenuView extends StatelessWidget {
-  const EmpleadosMenuView({Key? key}) : super(key: key);
-
+class GastosMenu extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
         backgroundColor: Colors.transparent,
-        title: DesignText('Empleados', fontWeight: FontWeight.bold),
+        title: DesignText('Gastos', fontWeight: FontWeight.bold),
         systemOverlayStyle: SystemUiOverlayStyle.dark,
         foregroundColor: Colors.black,
         elevation: 0,
@@ -25,15 +22,15 @@ class EmpleadosMenuView extends StatelessWidget {
         padding: EdgeInsets.all(15),
         children: [
           _FlatItem(
-            onTap: () => Get.to(() => VerEmpleadosView()),
-            title: 'Ver empleados',
-            subtitle: 'Administra tus empleados registrados',
+            onTap: () => Get.to(() => VerGastosView()),
+            title: 'Ver gastos',
+            subtitle: 'Administra tus gastos registrados',
             icon: FeatherIcons.users,
           ),
           _FlatItem(
-            onTap: () => Get.to(() => NuevoEmpleadoView()),
-            title: 'Nuevo empleado',
-            subtitle: 'Registrar nuevo cliente',
+            onTap: () => Get.to(() => NuevoGastoView()),
+            title: 'Nuevo gasto',
+            subtitle: 'Registrar nuevo gasto',
             icon: FeatherIcons.userPlus,
           ),
         ],
@@ -82,16 +79,3 @@ class _FlatItem extends StatelessWidget {
     );
   }
 }
-
-// _showEmployees() async {
-//   showCupertinoModalBottomSheet(
-//     context: Get.context!,
-//     builder: (context) {
-//       return Material(
-//         child: ListView.builder(itemBuilder: (_, i) {
-//           return ListTile();
-//         }),
-//       );
-//     },
-//   );
-// }

@@ -22,6 +22,7 @@ class NuevoClienteView extends StatelessWidget {
       body: Container(
         padding: EdgeInsets.all(15),
         child: SingleChildScrollView(
+          physics: BouncingScrollPhysics(),
           child: _Form(),
         ),
       ),

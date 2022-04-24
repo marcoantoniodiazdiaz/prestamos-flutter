@@ -1,5 +1,5 @@
 class ParsersUtils {
-  static money(double amount) {
+  static String money(double amount) {
     return '\$${amount.toStringAsFixed(2)}';
   }
 

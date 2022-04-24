@@ -2,7 +2,6 @@ import 'package:feather_icons/feather_icons.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:prestamos/src/database/preferences.dart';
-import 'package:prestamos/src/design/colors_design.dart';
 import 'package:prestamos/src/design/texts.dart';
 import 'package:prestamos/src/pipes/image_pipe.dart';
 import 'package:prestamos/src/utils/parsers_utils.dart';
@@ -12,8 +11,8 @@ import 'package:prestamos/src/views/clientes/clientes_menu.dart';
 import 'package:prestamos/src/views/clientes/nuevo_cliente_view.dart';
 import 'package:prestamos/src/views/cuentas/cuentas_view.dart';
 import 'package:prestamos/src/views/empleados/empleados_menu.dart';
+import 'package:prestamos/src/views/gastos/gastos_menu.dart';
 import 'package:prestamos/src/views/prestamos/prestamos_menu.dart';
-import 'package:prestamos/src/widgets/misc_widgets.dart';
 
 class DrawerDesign extends StatelessWidget {
   @override
@@ -75,7 +74,7 @@ class DrawerDesign extends StatelessWidget {
               icon: FeatherIcons.skipBack,
               onPress: () {
                 Get.back();
-                Get.to(() => NuevoClienteView());
+                // Get.to(() => AtrasosMenu());
               },
             ),
             _ListTile(
@@ -93,7 +92,7 @@ class DrawerDesign extends StatelessWidget {
               icon: FeatherIcons.arrowDown,
               onPress: () {
                 Get.back();
-                Get.to(() => NuevoClienteView());
+                Get.to(() => GastosMenu());
               },
             ),
             _ListTile(

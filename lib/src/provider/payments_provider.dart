@@ -1,7 +1,6 @@
 import 'package:flutter/widgets.dart';
 import 'package:get/get.dart';
 import 'package:prestamos/src/database/database.dart';
-import 'package:prestamos/src/models/loans_model.dart';
 import 'package:prestamos/src/provider/providers.dart';
 import 'package:prestamos/src/utils/snackbars_utils.dart';
 

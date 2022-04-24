@@ -21,6 +21,7 @@ class CuentasView extends StatelessWidget {
       ),
       body: ListView(
         padding: EdgeInsets.all(15),
+        physics: BouncingScrollPhysics(),
         children: [
           _FlatItem(
             onTap: () => Get.to(() => VerCuentasView()),
