@@ -50,6 +50,12 @@ class PrestamosMenu extends StatelessWidget {
             },
             title: 'Nuevo empeño',
             subtitle: 'Registra un nuevo empeño realizado',
+            icon: FeatherIcons.plusSquare,
+          ),
+          _FlatItem(
+            onTap: () => Get.to(() => VerPrestamosView()),
+            title: 'Inventario',
+            subtitle: 'Administra y visualiza tus productos',
             icon: FeatherIcons.box,
           ),
         ],

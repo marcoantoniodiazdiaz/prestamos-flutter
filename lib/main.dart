@@ -50,6 +50,7 @@ List<SingleChildWidget> _providers() {
     ChangeNotifierProvider(create: (_) => ClientesProvider()),
     ChangeNotifierProvider(create: (_) => ProductsProvider()),
     ChangeNotifierProvider(create: (_) => AuthProvider()),
+    ChangeNotifierProvider(create: (_) => EmpenosProvider()),
     ChangeNotifierProvider(create: (_) => ExpensesProvider()),
     ChangeNotifierProvider(create: (_) => TransactionsProvider()),
     ChangeNotifierProvider(create: (_) => PaymentsProvider()),

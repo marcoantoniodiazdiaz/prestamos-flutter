@@ -4,7 +4,8 @@ class DesignUtils {
     return '${time.day}-${intToMonthShort(time.month)}-${time.year}';
   }
 
-  static String dateShortWithHour(DateTime time) {
+  static String dateShortWithHour(DateTime? time) {
+    if (time == null) return 'No definida';
     time = time.toLocal();
     return '${time.day}-${intToMonthShort(time.month)}-${time.year} ${_hourNormalize(time.hour, time.minute)}';
   }

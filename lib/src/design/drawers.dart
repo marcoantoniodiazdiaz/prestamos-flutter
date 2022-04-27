@@ -6,6 +6,7 @@ import 'package:prestamos/src/design/texts.dart';
 import 'package:prestamos/src/pipes/image_pipe.dart';
 import 'package:prestamos/src/utils/parsers_utils.dart';
 import 'package:prestamos/src/views/ajustes/ajustes_view.dart';
+import 'package:prestamos/src/views/atrasos/atrasos_view.dart';
 import 'package:prestamos/src/views/auth/login_view.dart';
 import 'package:prestamos/src/views/clientes/clientes_menu.dart';
 import 'package:prestamos/src/views/clientes/nuevo_cliente_view.dart';
@@ -74,7 +75,7 @@ class DrawerDesign extends StatelessWidget {
               icon: FeatherIcons.skipBack,
               onPress: () {
                 Get.back();
-                // Get.to(() => AtrasosMenu());
+                Get.to(() => AtrasosView());
               },
             ),
             _ListTile(

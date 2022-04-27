@@ -113,7 +113,7 @@ class _Item extends StatelessWidget {
             mainAxisAlignment: MainAxisAlignment.spaceBetween,
             children: [
               DesignText('% de pagos', color: Colors.black54),
-              DesignText('${ParsersUtils.money(StructuresUtils.sum(model.payments.map((e) => e.transaction.amount)))}', color: Colors.black54),
+              DesignText(ParsersUtils.money(StructuresUtils.sum(model.payments.map((e) => e.transaction.amount))), color: Colors.black54),
             ],
           ),
           SizedBox(height: 10),

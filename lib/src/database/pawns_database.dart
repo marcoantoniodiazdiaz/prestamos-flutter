@@ -53,11 +53,12 @@ class PawnsDatabase {
   }
 
   static Future<bool> post(Map<String, dynamic> data) async {
-    final resp = await DioInstance.dio.post('${DioInstance.server}/pawns', data: data);
+    final resp = await DioInstance.post('${DioInstance.server}/pawns', data, onSuccess: 'Asociación generada');
 
-    final decodedResp = resp.data;
+    final decodedResp = resp?.data;
+    if (decodedResp == null) return false;
 
-    return decodedResp;
+    return decodedResp['ok'];
   }
 
   static Future<bool> put(Map<String, dynamic> data) async {

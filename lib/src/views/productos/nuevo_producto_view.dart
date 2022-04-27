@@ -35,7 +35,7 @@ class NuevoProductoView extends StatelessWidget {
                   DesignInput(
                     hintText: 'Nombre',
                     textInputType: TextInputType.text,
-                    textCapitalization: TextCapitalization.sentences,
+                    textCapitalization: TextCapitalization.characters,
                     onChanged: (String v) => productsProvider.name = v,
                     validator: (v) {
                       if (v == null) return 'Campo vacio';
@@ -47,7 +47,7 @@ class NuevoProductoView extends StatelessWidget {
                   DesignInput(
                     hintText: 'Descripción',
                     minLines: 3,
-                    textCapitalization: TextCapitalization.sentences,
+                    textCapitalization: TextCapitalization.characters,
                     textInputType: TextInputType.text,
                     onChanged: (String v) => productsProvider.description = v,
                     validator: (v) {
@@ -55,6 +55,15 @@ class NuevoProductoView extends StatelessWidget {
                       if (v.length < 10) return 'Campo demaciado corto';
                       return null;
                     },
+                  ),
+                  SizedBox(height: 10),
+                  DesignTextButton(
+                    width: double.infinity,
+                    height: 45,
+                    child: DesignText('Guardar producto'),
+                    color: DesignColors.dark,
+                    primary: Colors.white,
+                    onPressed: () => productsProvider.post(),
                   ),
                   SizedBox(height: 10),
                   Builder(

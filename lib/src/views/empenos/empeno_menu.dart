@@ -2,6 +2,7 @@ import 'package:feather_icons/feather_icons.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:prestamos/src/design/designs.dart';
+import 'package:prestamos/src/views/empenos/nuevo_empeno_view.dart';
 import 'package:prestamos/src/views/productos/nuevo_producto_view.dart';
 
 class EmpenoMenu extends StatelessWidget {
@@ -26,7 +27,10 @@ class EmpenoMenu extends StatelessWidget {
                 ),
                 color: DesignColors.green,
                 primary: Colors.white,
-                onPressed: () {},
+                onPressed: () {
+                  Get.back();
+                  Get.to(() => NuevoEmpenoView());
+                },
               ),
             ),
             SizedBox(width: 10),
