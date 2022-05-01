@@ -5,6 +5,7 @@ import 'package:get/get.dart';
 import 'package:modal_bottom_sheet/modal_bottom_sheet.dart';
 import 'package:prestamos/src/design/designs.dart';
 import 'package:prestamos/src/views/empenos/empeno_menu.dart';
+import 'package:prestamos/src/views/prestamos/inventario_view.dart';
 import 'package:prestamos/src/views/prestamos/nuevo_prestamo_view.dart';
 import 'package:prestamos/src/views/prestamos/ver_prestamos_view.dart';
 
@@ -53,7 +54,7 @@ class PrestamosMenu extends StatelessWidget {
             icon: FeatherIcons.plusSquare,
           ),
           _FlatItem(
-            onTap: () => Get.to(() => VerPrestamosView()),
+            onTap: () => Get.to(() => InventarioView()),
             title: 'Inventario',
             subtitle: 'Administra y visualiza tus productos',
             icon: FeatherIcons.box,

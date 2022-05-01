@@ -37,7 +37,7 @@ class ProductsProvider with ChangeNotifier {
 
   takeImage() async {
     final picker = ImagePicker();
-    final file = await picker.pickImage(source: ImageSource.camera, imageQuality: 20);
+    final file = await picker.pickImage(source: ImageSource.camera, imageQuality: 10);
 
     if (file == null) return;
     imagesTaken.add(File(file.path));

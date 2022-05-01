@@ -1,12 +1,15 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
+import 'package:prestamos/src/database/database.dart';
 import 'package:prestamos/src/design/designs.dart';
+import 'package:prestamos/src/provider/providers.dart';
 
 class AtrasosView extends StatelessWidget {
-  const AtrasosView({Key? key}) : super(key: key);
-
   @override
   Widget build(BuildContext context) {
+    final atrasosProvider = Provider.of<AtrasosProvider>(context);
+    final prestamosProvider = Provider.of<PrestamosProvider>(context);
+    final atrasos = atrasosProvider.getAtrasos(prestamosProvider.loans).where((e) => e.delayed).toList();
     return Scaffold(
       backgroundColor: Colors.white.withOpacity(0.97),
       appBar: AppBar(
@@ -16,23 +19,36 @@ class AtrasosView extends StatelessWidget {
         foregroundColor: Colors.black,
         elevation: 0,
       ),
-      body: SingleChildScrollView(
-        padding: EdgeInsets.all(5),
+      body: ListView.builder(
         physics: BouncingScrollPhysics(),
-        child: Column(
-          children: [
-            _Item(),
-          ],
-        ),
+        padding: EdgeInsets.all(15),
+        itemBuilder: (_, index) {
+          return _Item(loan: atrasos[index].loan);
+        },
+        itemCount: atrasos.length,
       ),
+      // body: SingleChildScrollView(
+      //   padding: EdgeInsets.all(15),
+      //   physics: BouncingScrollPhysics(),
+      //   child: Column(
+      //     children: [
+      //       _Item(),
+      //     ],
+      //   ),
+      // ),
     );
   }
 }
 
 class _Item extends StatelessWidget {
+  final LoansModel loan;
+
+  const _Item({required this.loan});
+
   @override
   Widget build(BuildContext context) {
     return Container(
+      margin: EdgeInsets.only(bottom: 10),
       decoration: BoxDecoration(
         color: Colors.white,
         borderRadius: BorderRadius.circular(10),
@@ -50,7 +66,7 @@ class _Item extends StatelessWidget {
                 child: Column(
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
-                    DesignText('MARCO ANTONIO DIAZ DIAZ', fontSize: 16, fontWeight: FontWeight.bold),
+                    DesignText(loan.client.name.toUpperCase(), fontSize: 16, fontWeight: FontWeight.bold),
                     SizedBox(height: 5),
                     DesignText('Prestamo por: \$2000.00', fontSize: 14),
                   ],

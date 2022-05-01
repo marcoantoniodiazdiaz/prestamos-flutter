@@ -28,8 +28,8 @@ class DioInstance {
     ),
   );
 
-  static const String server = "http://192.168.0.19:7001/api";
-  static const String sockets = "http://192.168.0.19:7001";
+  static const String server = "http://192.168.0.15:7001/api";
+  static const String sockets = "http://192.168.0.15:7001";
   // static final String server = "https://crowncleanapi.host/api";
   // static final String sockets = "http://45.80.152.52:8000/";
 
@@ -48,7 +48,11 @@ class DioInstance {
             if (e.response?.statusCode == 404) {
               SnackBarUtils.snackBarError('Dirección de recurso no encontrada');
             } else {
-              SnackBarUtils.snackBarError(e.response?.data['err']);
+              try {
+                SnackBarUtils.snackBarError(e.response?.data['err']);
+              } catch (e) {
+                SnackBarUtils.snackBarError('Error interno en el servidor');
+              }
             }
           }
         }
@@ -58,7 +62,8 @@ class DioInstance {
     return null;
   }
 
-  static Future<Response<dynamic>?> post(String url, Map<String, dynamic> data, {required String onSuccess}) async {
+  static Future<Response<dynamic>?> post(String url, Map<String, dynamic> data,
+      {required String onSuccess}) async {
     try {
       LoadingUtils.showLoading();
       final resp = await DioInstance.dio.post(url, data: data);

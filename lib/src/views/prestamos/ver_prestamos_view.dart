@@ -46,6 +46,7 @@ class _Item extends StatelessWidget {
   Widget build(BuildContext context) {
     final size = MediaQuery.of(context).size;
     return Container(
+      margin: EdgeInsets.only(bottom: 10),
       padding: EdgeInsets.all(15),
       width: double.infinity,
       decoration: BoxDecoration(
@@ -84,11 +85,13 @@ class _Item extends StatelessWidget {
                   children: [
                     DesignText('Cantidad', color: Colors.black54),
                     SizedBox(height: 7),
-                    DesignText('\$${model.amount.toStringAsFixed(2)}', fontWeight: FontWeight.bold, fontSize: 20),
+                    DesignText('\$${model.amount.toStringAsFixed(2)}',
+                        fontWeight: FontWeight.bold, fontSize: 20),
                     SizedBox(height: 20),
                     DesignText('Interes', color: Colors.black54),
                     SizedBox(height: 7),
-                    DesignText('${model.interest.toStringAsFixed(2)}%', fontWeight: FontWeight.bold, fontSize: 20),
+                    DesignText('${model.interest.toStringAsFixed(2)}%',
+                        fontWeight: FontWeight.bold, fontSize: 20),
                   ],
                 ),
               ),
@@ -98,7 +101,8 @@ class _Item extends StatelessWidget {
                   children: [
                     DesignText('Pago mensual', color: Colors.black54),
                     SizedBox(height: 7),
-                    DesignText('\$${model.fee.toStringAsFixed(2)}', fontWeight: FontWeight.bold, fontSize: 20),
+                    DesignText('\$${model.fee.toStringAsFixed(2)}',
+                        fontWeight: FontWeight.bold, fontSize: 20),
                     SizedBox(height: 20),
                     DesignText('Periodo', color: Colors.black54),
                     SizedBox(height: 7),
@@ -113,7 +117,9 @@ class _Item extends StatelessWidget {
             mainAxisAlignment: MainAxisAlignment.spaceBetween,
             children: [
               DesignText('% de pagos', color: Colors.black54),
-              DesignText(ParsersUtils.money(StructuresUtils.sum(model.payments.map((e) => e.transaction.amount))), color: Colors.black54),
+              DesignText(
+                  ParsersUtils.money(StructuresUtils.sum(model.payments.map((e) => e.transaction.amount))),
+                  color: Colors.black54),
             ],
           ),
           SizedBox(height: 10),
@@ -129,8 +135,10 @@ class _Item extends StatelessWidget {
                   ),
                 ),
                 Container(
-                  width:
-                      size.width * 0.82 * ParsersUtils.getPercent(model.amount, StructuresUtils.sum(model.payments.map((e) => e.transaction.amount))),
+                  width: size.width *
+                      0.82 *
+                      ParsersUtils.getPercent(
+                          model.amount, StructuresUtils.sum(model.payments.map((e) => e.transaction.amount))),
                   height: 8,
                   decoration: BoxDecoration(
                     gradient: LinearGradient(
@@ -198,7 +206,8 @@ _showPayments(List<PaymentsModel> payments) {
                     backgroundColor: Colors.green,
                     child: Icon(FeatherIcons.dollarSign, color: Colors.white),
                   ),
-                  title: DesignText('\$${e.transaction.amount.toStringAsFixed(2)}', fontWeight: FontWeight.bold),
+                  title:
+                      DesignText('\$${e.transaction.amount.toStringAsFixed(2)}', fontWeight: FontWeight.bold),
                   subtitle: DesignText(DesignUtils.dateShortWithHour(e.createdAt)),
                 );
               }),
