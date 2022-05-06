@@ -7,12 +7,20 @@
 	<key>CFBundleDisplayName</key>
 	<string>Prestamos</string>
 	<!-- PERMISSIONS -->
+	<key>LSApplicationQueriesSchemes</key>
+	<array>
+	<string>tel</string>
+	</array>
 	<key>NSPhotoLibraryUsageDescription</key>
 	<string>Permite el acceso a tu carrete</string>
 	<key>NSCameraUsageDescription</key>
 	<string>Permite el acceso a tu camara</string>
 	<key>NSMicrophoneUsageDescription</key>
 	<string>Permite el uso del microfono para grabar videos</string>
+	<key>NSLocationWhenInUseUsageDescription</key>
+	<string>This app needs access to location when open.</string>
+	<key>NSLocationAlwaysUsageDescription</key>
+	<string>This app needs access to location when in the background.</string>
 	<!--  -->
 	<key>CFBundleExecutable</key>
 	<string>$(EXECUTABLE_NAME)</string>

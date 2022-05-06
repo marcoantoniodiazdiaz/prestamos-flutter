@@ -1,7 +1,6 @@
 import 'package:feather_icons/feather_icons.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
-import 'package:get/get.dart';
 import 'package:prestamos/src/design/designs.dart';
 import 'package:prestamos/src/models/loans_model.dart';
 import 'package:prestamos/src/provider/payments_provider.dart';

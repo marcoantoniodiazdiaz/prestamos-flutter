@@ -10,6 +10,7 @@ import 'package:prestamos/src/provider/providers.dart';
 import 'package:prestamos/src/utils/date_utils.dart';
 import 'package:prestamos/src/utils/parsers_utils.dart';
 import 'package:prestamos/src/utils/structures.dart';
+import 'package:prestamos/src/views/prestamos/mapa_view.dart';
 import 'package:prestamos/src/views/prestamos/registrar_pago_view.dart';
 
 class VerPrestamosView extends StatelessWidget {
@@ -85,13 +86,11 @@ class _Item extends StatelessWidget {
                   children: [
                     DesignText('Cantidad', color: Colors.black54),
                     SizedBox(height: 7),
-                    DesignText('\$${model.amount.toStringAsFixed(2)}',
-                        fontWeight: FontWeight.bold, fontSize: 20),
+                    DesignText('\$${model.amount.toStringAsFixed(2)}', fontWeight: FontWeight.bold, fontSize: 20),
                     SizedBox(height: 20),
                     DesignText('Interes', color: Colors.black54),
                     SizedBox(height: 7),
-                    DesignText('${model.interest.toStringAsFixed(2)}%',
-                        fontWeight: FontWeight.bold, fontSize: 20),
+                    DesignText('${model.interest.toStringAsFixed(2)}%', fontWeight: FontWeight.bold, fontSize: 20),
                   ],
                 ),
               ),
@@ -101,8 +100,7 @@ class _Item extends StatelessWidget {
                   children: [
                     DesignText('Pago mensual', color: Colors.black54),
                     SizedBox(height: 7),
-                    DesignText('\$${model.fee.toStringAsFixed(2)}',
-                        fontWeight: FontWeight.bold, fontSize: 20),
+                    DesignText('\$${model.fee.toStringAsFixed(2)}', fontWeight: FontWeight.bold, fontSize: 20),
                     SizedBox(height: 20),
                     DesignText('Periodo', color: Colors.black54),
                     SizedBox(height: 7),
@@ -117,9 +115,7 @@ class _Item extends StatelessWidget {
             mainAxisAlignment: MainAxisAlignment.spaceBetween,
             children: [
               DesignText('% de pagos', color: Colors.black54),
-              DesignText(
-                  ParsersUtils.money(StructuresUtils.sum(model.payments.map((e) => e.transaction.amount))),
-                  color: Colors.black54),
+              DesignText(ParsersUtils.money(StructuresUtils.sum(model.payments.map((e) => e.transaction.amount))), color: Colors.black54),
             ],
           ),
           SizedBox(height: 10),
@@ -135,10 +131,8 @@ class _Item extends StatelessWidget {
                   ),
                 ),
                 Container(
-                  width: size.width *
-                      0.82 *
-                      ParsersUtils.getPercent(
-                          model.amount, StructuresUtils.sum(model.payments.map((e) => e.transaction.amount))),
+                  width:
+                      size.width * 0.82 * ParsersUtils.getPercent(model.amount, StructuresUtils.sum(model.payments.map((e) => e.transaction.amount))),
                   height: 8,
                   decoration: BoxDecoration(
                     gradient: LinearGradient(
@@ -193,25 +187,27 @@ _showPayments(List<PaymentsModel> payments) {
       return Material(
         child: Container(
           padding: EdgeInsets.all(20),
-          child: Column(
-            crossAxisAlignment: CrossAxisAlignment.start,
-            mainAxisSize: MainAxisSize.min,
-            children: [
-              DesignText('Historial de pagos', fontWeight: FontWeight.bold),
-              ...payments.map((e) {
-                return ListTile(
-                  contentPadding: EdgeInsets.zero,
-                  onTap: () => _showPaymentDetails(e),
-                  leading: CircleAvatar(
-                    backgroundColor: Colors.green,
-                    child: Icon(FeatherIcons.dollarSign, color: Colors.white),
-                  ),
-                  title:
-                      DesignText('\$${e.transaction.amount.toStringAsFixed(2)}', fontWeight: FontWeight.bold),
-                  subtitle: DesignText(DesignUtils.dateShortWithHour(e.createdAt)),
-                );
-              }),
-            ],
+          child: SingleChildScrollView(
+            physics: BouncingScrollPhysics(),
+            child: Column(
+              crossAxisAlignment: CrossAxisAlignment.start,
+              mainAxisSize: MainAxisSize.min,
+              children: [
+                DesignText('Historial de pagos', fontWeight: FontWeight.bold),
+                ...payments.map((e) {
+                  return ListTile(
+                    contentPadding: EdgeInsets.zero,
+                    onTap: () => _showPaymentDetails(e),
+                    leading: CircleAvatar(
+                      backgroundColor: Colors.green,
+                      child: Icon(FeatherIcons.dollarSign, color: Colors.white),
+                    ),
+                    title: DesignText('\$${e.transaction.amount.toStringAsFixed(2)}', fontWeight: FontWeight.bold),
+                    subtitle: DesignText(DesignUtils.dateShortWithHour(e.createdAt)),
+                  );
+                }),
+              ],
+            ),
           ),
         ),
       );
@@ -262,11 +258,19 @@ _showPaymentDetails(PaymentsModel payment) {
               SizedBox(height: 10),
               DesignText('Ubicación', fontSize: 12, color: Colors.black54),
               SizedBox(height: 5),
-              DesignText(
-                payment.location,
-                fontWeight: FontWeight.bold,
-                fontSize: 20,
+              DesignTextButton(
+                width: 100,
+                height: 40,
+                child: DesignText('Ver ubicación'),
+                color: DesignColors.green,
+                primary: Colors.white,
+                onPressed: () => Get.to(() => MapView(model: payment)),
               ),
+              // DesignText(
+              //   payment.location,
+              //   fontWeight: FontWeight.bold,
+              //   fontSize: 20,
+              // ),
             ],
           ),
         ),

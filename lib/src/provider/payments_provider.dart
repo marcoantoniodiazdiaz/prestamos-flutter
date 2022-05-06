@@ -1,6 +1,7 @@
 import 'package:flutter/widgets.dart';
 import 'package:get/get.dart';
 import 'package:prestamos/src/database/database.dart';
+import 'package:prestamos/src/functions/geolocator_functions.dart';
 import 'package:prestamos/src/provider/providers.dart';
 import 'package:prestamos/src/utils/snackbars_utils.dart';
 
@@ -11,11 +12,13 @@ class PaymentsProvider extends ChangeNotifier {
     try {
       double amount = double.parse(amountField.text);
 
+      final position = await GeolocatorFunctions.best();
+
       Map<String, dynamic> data = {
         'accountId': 1,
         'amount': amount,
         'loanId': loan.id,
-        'location': '90.12,-101.80',
+        'location': '${position.latitude},${position.longitude}',
         'userId': 1,
       };
 

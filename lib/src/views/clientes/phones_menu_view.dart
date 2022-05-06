@@ -1,10 +1,13 @@
 import 'package:feather_icons/feather_icons.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
-import 'package:get/get.dart';
+import 'package:url_launcher/url_launcher.dart';
+import 'package:whatsapp_unilink/whatsapp_unilink.dart';
+import 'package:modal_bottom_sheet/modal_bottom_sheet.dart';
 import 'package:prestamos/src/database/database.dart';
 import 'package:prestamos/src/design/designs.dart';
 import 'package:prestamos/src/provider/providers.dart';
+import 'package:flutter_phone_direct_caller/flutter_phone_direct_caller.dart';
 
 class PhonesView extends StatelessWidget {
   final ClientsModel model;
@@ -86,9 +89,9 @@ class _PhoneList extends StatelessWidget {
             physics: BouncingScrollPhysics(),
             itemBuilder: (_, i) {
               return ListTile(
-                onLongPress: () {},
+                onTap: () => _actionPhone(context, phones[i]),
                 title: DesignText(phones[i].value),
-                subtitle: DesignText('Pulsa para llamar'),
+                subtitle: DesignText('Pulsa para ver opciones'),
                 leading: CircleAvatar(
                   radius: 23,
                   child: Icon(FeatherIcons.phone, color: Colors.white),
@@ -102,4 +105,49 @@ class _PhoneList extends StatelessWidget {
       }),
     );
   }
+}
+
+_actionPhone(BuildContext context, PhonesModel phone) {
+  return showCupertinoModalBottomSheet(
+    context: context,
+    builder: (_) {
+      return Material(
+        child: Container(
+          padding: EdgeInsets.all(10),
+          child: Column(
+            mainAxisSize: MainAxisSize.min,
+            children: [
+              ListTile(
+                leading: CircleAvatar(
+                  radius: 25,
+                  backgroundColor: DesignColors.pink,
+                  child: Icon(FeatherIcons.phoneCall, color: Colors.white),
+                ),
+                title: DesignText('Llamar ahora'),
+                onTap: () async {
+                  await FlutterPhoneDirectCaller.callNumber(phone.value);
+                },
+              ),
+              ListTile(
+                leading: CircleAvatar(
+                  radius: 25,
+                  backgroundColor: Colors.green,
+                  child: Icon(Icons.whatsapp, color: Colors.white),
+                ),
+                title: DesignText('Enviar Whatsapp'),
+                onTap: () async {
+                  final link = WhatsAppUnilink(
+                    phoneNumber: '+52-${phone.value}',
+                    text: "",
+                  );
+                  // ignore: deprecated_member_use
+                  await launch('$link');
+                },
+              ),
+            ],
+          ),
+        ),
+      );
+    },
+  );
 }

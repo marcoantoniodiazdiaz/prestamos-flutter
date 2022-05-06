@@ -24,6 +24,7 @@ class InventarioView extends StatelessWidget {
       body: Container(
         padding: EdgeInsets.all(15),
         child: ListView.builder(
+          physics: BouncingScrollPhysics(),
           itemBuilder: (_, index) {
             final product = productsProvider.products[index];
             return _ProductItem(product: product);

@@ -34,7 +34,8 @@ class MyApp extends StatelessWidget {
       child: GetMaterialApp(
         debugShowCheckedModeBanner: false,
         title: 'Material App',
-        theme: ThemeData(textTheme: GoogleFonts.montserratTextTheme()),
+
+        theme: ThemeData(textTheme: GoogleFonts.aBeeZeeTextTheme()),
         home: HomeView(),
         // home: LoginView(),
         defaultTransition: Transition.cupertino,
