@@ -13,6 +13,7 @@ import 'package:prestamos/src/provider/prestamos_provider.dart';
 import 'package:prestamos/src/provider/providers.dart';
 import 'package:prestamos/src/provider/transactions_provider.dart';
 import 'package:prestamos/src/provider/users_provider.dart';
+import 'package:prestamos/src/views/auth/login_view.dart';
 import 'package:prestamos/src/views/home_view.dart';
 import 'package:provider/provider.dart';
 import 'package:provider/single_child_widget.dart';
@@ -37,11 +38,19 @@ class MyApp extends StatelessWidget {
         title: 'Material App',
 
         theme: ThemeData(textTheme: GoogleFonts.aBeeZeeTextTheme()),
-        home: HomeView(),
+        home: whatPage(),
         // home: LoginView(),
         defaultTransition: Transition.cupertino,
       ),
     );
+  }
+}
+
+Widget whatPage() {
+  if (UserPreferences.token != null || UserPreferences.token != '') {
+    return LoginView();
+  } else {
+    return HomeView();
   }
 }
 

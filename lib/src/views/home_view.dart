@@ -1,15 +1,20 @@
 import 'package:feather_icons/feather_icons.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
+import 'package:get/get.dart';
 import 'package:prestamos/src/database/preferences.dart';
-import 'package:prestamos/src/design/buttons_design.dart';
-import 'package:prestamos/src/design/drawers.dart';
-import 'package:prestamos/src/design/texts.dart';
+import 'package:prestamos/src/design/designs.dart';
 import 'package:prestamos/src/pipes/image_pipe.dart';
-import 'package:prestamos/src/provider/transactions_provider.dart';
-import 'package:prestamos/src/utils/date_utils.dart';
 import 'package:prestamos/src/utils/parsers_utils.dart';
-import 'package:provider/provider.dart';
+import 'package:prestamos/src/views/ajustes/ajustes_view.dart';
+import 'package:prestamos/src/views/atrasos/atrasos_view.dart';
+import 'package:prestamos/src/views/auth/login_view.dart';
+import 'package:prestamos/src/views/clientes/clientes_menu.dart';
+import 'package:prestamos/src/views/clientes/nuevo_cliente_view.dart';
+import 'package:prestamos/src/views/cuentas/cuentas_view.dart';
+import 'package:prestamos/src/views/empleados/empleados_menu.dart';
+import 'package:prestamos/src/views/gastos/gastos_menu.dart';
+import 'package:prestamos/src/views/prestamos/prestamos_menu.dart';
 
 class HomeView extends StatelessWidget {
   @override
@@ -17,7 +22,6 @@ class HomeView extends StatelessWidget {
     return AnnotatedRegion<SystemUiOverlayStyle>(
       value: SystemUiOverlayStyle(statusBarIconBrightness: Brightness.dark),
       child: Scaffold(
-        drawer: DrawerDesign(),
         body: SafeArea(
           child: SingleChildScrollView(
             physics: BouncingScrollPhysics(),
@@ -30,19 +34,6 @@ class HomeView extends StatelessWidget {
                   children: [
                     Row(
                       children: [
-                        Column(
-                          children: [
-                            Builder(builder: (context) {
-                              return IconButton(
-                                onPressed: () {
-                                  Scaffold.of(context).openDrawer();
-                                },
-                                icon: Icon(FeatherIcons.menu),
-                              );
-                            }),
-                            SizedBox(height: 5),
-                          ],
-                        ),
                         DesignText(
                           'Hola ${ParsersUtils.capitalize(UserPreferences.name).split(' ')[0]}',
                           fontWeight: FontWeight.bold,
@@ -57,11 +48,98 @@ class HomeView extends StatelessWidget {
                   ],
                 ),
                 SizedBox(height: 15),
-                _Balance(),
-                SizedBox(height: 15),
-                DesignText('Ultima actividad', fontWeight: FontWeight.bold, fontSize: 20),
+                DesignText('Menu de acciones', fontWeight: FontWeight.bold, fontSize: 20),
                 SizedBox(height: 10),
-                _Transactions(),
+                GridView.count(
+                  physics: NeverScrollableScrollPhysics(),
+                  crossAxisCount: 2,
+                  shrinkWrap: true,
+                  mainAxisSpacing: 10,
+                  crossAxisSpacing: 10,
+                  children: [
+                    _MenuItem(
+                      title: 'Prestamos',
+                      subtitle: 'Crear, registrar prestamos',
+                      icon: FeatherIcons.dollarSign,
+                      onPress: () {
+                        Get.to(() => PrestamosMenu());
+                      },
+                    ),
+                    _MenuItem(
+                      title: 'Clientes',
+                      subtitle: 'Crear y ver información de clientes',
+                      icon: FeatherIcons.user,
+                      onPress: () {
+                        // Get.to(() => NuevoClienteView());
+                        Get.to(() => ClientesMenu());
+                      },
+                    ),
+                    _MenuItem(
+                      title: 'Consultas',
+                      subtitle: 'Mostrar información filtrada por campos',
+                      icon: FeatherIcons.sliders,
+                      onPress: () {
+                        Get.to(() => NuevoClienteView());
+                      },
+                    ),
+                    _MenuItem(
+                      title: 'Cuentas',
+                      subtitle: 'Crear y ver cuentas generadas',
+                      icon: FeatherIcons.inbox,
+                      onPress: () {
+                        Get.to(() => CuentasView());
+                      },
+                    ),
+                    _MenuItem(
+                      title: 'Atrasos',
+                      subtitle: 'Revisar pagos tardios y retrasados',
+                      icon: FeatherIcons.skipBack,
+                      onPress: () {
+                        Get.to(() => AtrasosView());
+                      },
+                    ),
+                    _MenuItem(
+                      title: 'Cartera',
+                      subtitle: 'Mostrar todas las entradas/salidas de dinero',
+                      icon: FeatherIcons.creditCard,
+                      onPress: () {
+                        Get.to(() => NuevoClienteView());
+                      },
+                    ),
+                    _MenuItem(
+                      title: 'Gastos',
+                      subtitle: 'Mostrar gastos realizados',
+                      icon: FeatherIcons.arrowDown,
+                      onPress: () {
+                        Get.to(() => GastosMenu());
+                      },
+                    ),
+                    _MenuItem(
+                      title: 'Empleados',
+                      subtitle: 'Crear y ver información de empleados',
+                      icon: FeatherIcons.users,
+                      onPress: () {
+                        Get.to(() => EmpleadosMenuView());
+                      },
+                    ),
+                    _MenuItem(
+                      title: 'Ajustes',
+                      subtitle: 'Edita los ajustes de la app',
+                      icon: FeatherIcons.settings,
+                      onPress: () {
+                        Get.to(() => AjustesView());
+                      },
+                    ),
+                    _MenuItem(
+                      title: 'Cerrar sesión',
+                      subtitle: 'Cambiar de perfil',
+                      icon: FeatherIcons.logOut,
+                      onPress: () {
+                        Get.offAll(() => LoginView());
+                      },
+                    ),
+                  ],
+                ),
               ],
             ),
           ),
@@ -71,107 +149,42 @@ class HomeView extends StatelessWidget {
   }
 }
 
-class _Transactions extends StatelessWidget {
-  @override
-  Widget build(BuildContext context) {
-    final transactionsProvider = Provider.of<TransactionsProvider>(context);
-    return ListView.builder(
-      physics: NeverScrollableScrollPhysics(),
-      itemCount: transactionsProvider.transactions.length,
-      shrinkWrap: true,
-      itemBuilder: (BuildContext context, int index) {
-        final positive = transactionsProvider.transactions[index].amount >= 0;
+class _MenuItem extends StatelessWidget {
+  final String title;
+  final String subtitle;
+  final IconData icon;
+  final void Function() onPress;
 
-        return ListTile(
-          contentPadding: EdgeInsets.zero,
-          dense: true,
-          leading: CircleAvatar(
-            radius: 20,
-            backgroundColor: positive ? Colors.green : Colors.red,
-            child: Icon(positive ? FeatherIcons.arrowUp : FeatherIcons.arrowDown, color: Colors.white),
-          ),
-          trailing: DesignText(
-            '\$${transactionsProvider.transactions[index].amount.toStringAsFixed(2)}',
-            fontWeight: FontWeight.bold,
-          ),
-          title: DesignText(
-            '${positive ? 'Ingreso' : 'Retiro'} a cuenta ${transactionsProvider.transactions[index].account.name}',
-            fontSize: 14,
-          ),
-          subtitle: DesignText(
-            DesignUtils.dateShortWithHour(transactionsProvider.transactions[index].createdAt),
-            fontSize: 12,
-          ),
-        );
-      },
-    );
-  }
-}
+  const _MenuItem({required this.title, required this.subtitle, required this.icon, required this.onPress});
 
-class _Balance extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Container(
-      padding: EdgeInsets.all(20),
-      width: double.infinity,
+      height: 300,
       decoration: BoxDecoration(
-        color: Color(0xffAA32FF),
-        borderRadius: BorderRadius.circular(15),
+        borderRadius: BorderRadius.circular(10),
+        color: Colors.black.withOpacity(0.2),
       ),
-      child: Column(
-        crossAxisAlignment: CrossAxisAlignment.start,
-        children: [
-          DesignText(
-            'Tu balance',
-            color: Colors.white,
-            fontWeight: FontWeight.bold,
-            fontSize: 15,
-          ),
-          SizedBox(height: 25),
-          Row(
+      child: InkWell(
+        borderRadius: BorderRadius.circular(10),
+        onTap: onPress,
+        child: Padding(
+          padding: const EdgeInsets.all(10),
+          child: Column(
+            mainAxisAlignment: MainAxisAlignment.center,
             children: [
-              DesignText(
-                '\$20,000.00',
-                color: Colors.white,
-                fontWeight: FontWeight.bold,
-                fontSize: 30,
+              CircleAvatar(
+                backgroundColor: Colors.purple,
+                radius: 25,
+                child: Icon(icon, color: Colors.white, size: 30),
               ),
-              SizedBox(width: 5),
-              DesignText(
-                'MXN',
-                color: Colors.white,
-                fontWeight: FontWeight.bold,
-                fontSize: 10,
-              ),
+              SizedBox(height: 10),
+              DesignText(title, fontWeight: FontWeight.bold, fontSize: 20),
+              SizedBox(height: 10),
+              DesignText(subtitle, fontSize: 15, textAlign: TextAlign.center),
             ],
           ),
-          SizedBox(height: 20),
-          Row(
-            children: [
-              Flexible(
-                child: DesignTextButton(
-                  width: double.infinity,
-                  height: 45,
-                  child: DesignText('Movimientos'),
-                  color: Colors.white,
-                  primary: Color(0xffAA32FF),
-                  onPressed: () {},
-                ),
-              ),
-              SizedBox(width: 5),
-              Flexible(
-                child: DesignTextButton(
-                  width: double.infinity,
-                  height: 45,
-                  child: DesignText('Clientes'),
-                  color: Colors.white,
-                  primary: Color(0xffAA32FF),
-                  onPressed: () {},
-                ),
-              ),
-            ],
-          ),
-        ],
+        ),
       ),
     );
   }
