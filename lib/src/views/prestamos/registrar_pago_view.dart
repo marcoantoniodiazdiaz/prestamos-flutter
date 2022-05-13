@@ -17,8 +17,8 @@ class RegistrarPagoView extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final paymentsProvider = Provider.of<PaymentsProvider>(context);
-    final prestamosProvider = Provider.of<PrestamosProvider>(context);
-    final size = MediaQuery.of(context).size;
+    final loansProvider = Provider.of<PrestamosProvider>(context);
+    final payments = loansProvider.loans.firstWhere((e) => e.id == model.id).payments;
     return Scaffold(
       appBar: AppBar(
         backgroundColor: Colors.transparent,
@@ -33,81 +33,7 @@ class RegistrarPagoView extends StatelessWidget {
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
-            Container(
-              padding: EdgeInsets.all(15),
-              width: double.infinity,
-              decoration: BoxDecoration(
-                color: Colors.white,
-                borderRadius: BorderRadius.circular(10),
-                border: Border.all(width: 2, color: Color(0xffECEFF4)),
-              ),
-              child: Column(
-                children: [
-                  Row(
-                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                    children: [
-                      Column(
-                        crossAxisAlignment: CrossAxisAlignment.start,
-                        children: [
-                          DesignText('Cantidad', color: Colors.black54),
-                          SizedBox(height: 7),
-                          DesignText('\$${model.amount.toStringAsFixed(2)}', fontWeight: FontWeight.bold, fontSize: 20),
-                        ],
-                      ),
-                      Column(
-                        crossAxisAlignment: CrossAxisAlignment.end,
-                        children: [
-                          DesignText('Restante', color: Colors.black54),
-                          SizedBox(height: 7),
-                          DesignText('\$${StructuresUtils.sum(model.payments.map((e) => e.transaction.amount))}',
-                              fontWeight: FontWeight.bold, fontSize: 20),
-                        ],
-                      ),
-                    ],
-                  ),
-                  SizedBox(height: 20),
-                  Row(
-                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                    children: [
-                      DesignText('% de pagos', color: Colors.black54),
-                      DesignText('55%', color: Colors.black54),
-                    ],
-                  ),
-                  SizedBox(height: 10),
-                  Center(
-                    child: Stack(
-                      children: [
-                        Container(
-                          width: size.width * 0.82,
-                          height: 8,
-                          decoration: BoxDecoration(
-                            color: Colors.black12,
-                            borderRadius: BorderRadius.circular(10),
-                          ),
-                        ),
-                        Container(
-                          width: size.width *
-                              0.82 *
-                              ParsersUtils.getPercent(
-                                model.amount,
-                                StructuresUtils.sum(
-                                  model.payments.map((e) => e.transaction.amount),
-                                ),
-                              ),
-                          height: 8,
-                          decoration: BoxDecoration(
-                            gradient: LinearGradient(
-                              colors: [Color(0xff0DD1BA), Color(0xff8CEB77)],
-                            ),
-                            borderRadius: BorderRadius.circular(10),
-                          ),
-                        ),
-                      ],
-                    ),
-                  ),
-                ],
-              ),
-            ),
+            _Information(model: model),
             SizedBox(height: 10),
             DesignInput(hintText: 'Monto a pagar', textInputType: TextInputType.number, controller: paymentsProvider.amountField),
             SizedBox(height: 10),
@@ -123,7 +49,7 @@ class RegistrarPagoView extends StatelessWidget {
             ),
             SizedBox(height: 30),
             DesignText('Historial de pagos', fontSize: 20, fontWeight: FontWeight.bold),
-            ...model.payments.map((e) {
+            ...payments.map((e) {
               return ListTile(
                 contentPadding: EdgeInsets.zero,
                 leading: CircleAvatar(
@@ -136,6 +62,91 @@ class RegistrarPagoView extends StatelessWidget {
             }),
           ],
         ),
+      ),
+    );
+  }
+}
+
+class _Information extends StatelessWidget {
+  const _Information({required this.model});
+
+  final LoansModel model;
+
+  @override
+  Widget build(BuildContext context) {
+    final size = MediaQuery.of(context).size;
+    return Container(
+      padding: EdgeInsets.all(15),
+      width: double.infinity,
+      decoration: BoxDecoration(
+        color: Colors.white,
+        borderRadius: BorderRadius.circular(10),
+        border: Border.all(width: 2, color: Color(0xffECEFF4)),
+      ),
+      child: Column(
+        children: [
+          Row(
+            mainAxisAlignment: MainAxisAlignment.spaceBetween,
+            children: [
+              Column(
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: [
+                  DesignText('Cantidad', color: Colors.black54),
+                  SizedBox(height: 7),
+                  DesignText('\$${model.amount.toStringAsFixed(2)}', fontWeight: FontWeight.bold, fontSize: 20),
+                ],
+              ),
+              Column(
+                crossAxisAlignment: CrossAxisAlignment.end,
+                children: [
+                  DesignText('Restante', color: Colors.black54),
+                  SizedBox(height: 7),
+                  DesignText('\$${StructuresUtils.sum(model.payments.map((e) => e.transaction.amount))}', fontWeight: FontWeight.bold, fontSize: 20),
+                ],
+              ),
+            ],
+          ),
+          SizedBox(height: 20),
+          Row(
+            mainAxisAlignment: MainAxisAlignment.spaceBetween,
+            children: [
+              DesignText('% de pagos', color: Colors.black54),
+              DesignText('55%', color: Colors.black54),
+            ],
+          ),
+          SizedBox(height: 10),
+          Center(
+            child: Stack(
+              children: [
+                Container(
+                  width: size.width * 0.82,
+                  height: 8,
+                  decoration: BoxDecoration(
+                    color: Colors.black12,
+                    borderRadius: BorderRadius.circular(10),
+                  ),
+                ),
+                Container(
+                  width: size.width *
+                      0.82 *
+                      ParsersUtils.getPercent(
+                        model.amount,
+                        StructuresUtils.sum(
+                          model.payments.map((e) => e.transaction.amount),
+                        ),
+                      ),
+                  height: 8,
+                  decoration: BoxDecoration(
+                    gradient: LinearGradient(
+                      colors: [Color(0xff0DD1BA), Color(0xff8CEB77)],
+                    ),
+                    borderRadius: BorderRadius.circular(10),
+                  ),
+                ),
+              ],
+            ),
+          ),
+        ],
       ),
     );
   }

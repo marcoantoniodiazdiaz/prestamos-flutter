@@ -4,6 +4,7 @@ import 'package:get/get.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:prestamos/src/database/preferences.dart';
 import 'package:prestamos/src/provider/accounts_provider.dart';
+import 'package:prestamos/src/provider/actions_provider.dart';
 import 'package:prestamos/src/provider/auth_provider.dart';
 import 'package:prestamos/src/provider/clientes_provider.dart';
 import 'package:prestamos/src/provider/expenses_provider.dart';
@@ -46,6 +47,7 @@ class MyApp extends StatelessWidget {
 
 List<SingleChildWidget> _providers() {
   return [
+    ChangeNotifierProvider(create: (_) => ActionsProvider(), lazy: false),
     ChangeNotifierProvider(create: (_) => PrestamosProvider()),
     ChangeNotifierProvider(create: (_) => AccountsProvider()),
     ChangeNotifierProvider(create: (_) => ClientesProvider()),

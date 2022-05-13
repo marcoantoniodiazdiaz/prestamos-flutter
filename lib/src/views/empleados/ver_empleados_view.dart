@@ -5,16 +5,17 @@ import 'package:modal_bottom_sheet/modal_bottom_sheet.dart';
 import 'package:prestamos/src/database/database.dart';
 import 'package:prestamos/src/design/designs.dart';
 import 'package:prestamos/src/pipes/image_pipe.dart';
+import 'package:prestamos/src/provider/actions_provider.dart';
 import 'package:prestamos/src/provider/providers.dart';
 import 'package:prestamos/src/provider/users_provider.dart';
 import 'package:prestamos/src/utils/date_utils.dart';
-import 'package:prestamos/src/utils/loading_utils.dart';
 import 'package:prestamos/src/views/empleados/permisos_view.dart';
 
 class VerEmpleadosView extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final usersProvider = Provider.of<UsersProvider>(context);
+    final actionsProvider = Provider.of<ActionsProvider>(context);
     return Scaffold(
       appBar: AppBar(
         backgroundColor: Colors.transparent,
@@ -43,9 +44,15 @@ class VerEmpleadosView extends StatelessWidget {
               child: DesignText('Permisos'),
               color: DesignColors.green,
               primary: Colors.white,
-              onPressed: () {
-                LoadingUtils.showLoading();
-                // Get.to(() => PermisosView(username: 'Marco Diaz'));
+              onPressed: () async {
+                // LoadingUtils.showLoading();
+                int id = usersProvider.users[index].id;
+                await actionsProvider.loadPermissionsById(id);
+                Get.to(
+                  () => PermisosView(
+                    model: usersProvider.users[index],
+                  ),
+                );
               },
             ),
           );

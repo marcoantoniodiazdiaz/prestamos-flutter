@@ -62,7 +62,7 @@ class DioInstance {
     return null;
   }
 
-  static Future<Response<dynamic>?> post(String url, Map<String, dynamic> data, {required String onSuccess}) async {
+  static Future<Response<dynamic>?> post(String url, Map<String, dynamic> data, {String? onSuccess}) async {
     try {
       LoadingUtils.showLoading();
       final resp = await DioInstance.dio.post(url, data: data);
@@ -73,7 +73,9 @@ class DioInstance {
           SnackBarUtils.snackBarError(resp.data['err']);
         }
       } else {
-        SnackBarUtils.snackBarSuccess(onSuccess);
+        if (onSuccess != null) {
+          SnackBarUtils.snackBarSuccess(onSuccess);
+        }
       }
 
       return resp;

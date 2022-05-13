@@ -1,14 +1,21 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
+import 'package:prestamos/src/database/database.dart';
+import 'package:prestamos/src/database/preferences.dart';
 import 'package:prestamos/src/design/designs.dart';
+import 'package:prestamos/src/models/permissions_model.dart';
+import 'package:prestamos/src/pipes/image_pipe.dart';
+import 'package:prestamos/src/provider/actions_provider.dart';
+import 'package:prestamos/src/provider/providers.dart';
 
 class PermisosView extends StatelessWidget {
-  final String username;
+  final UsersModel model;
 
-  const PermisosView({required this.username});
+  const PermisosView({required this.model});
 
   @override
   Widget build(BuildContext context) {
+    final actionsProvider = Provider.of<ActionsProvider>(context);
     return Scaffold(
       appBar: AppBar(
         backgroundColor: Colors.transparent,
@@ -24,42 +31,36 @@ class PermisosView extends StatelessWidget {
           ListTile(
             leading: CircleAvatar(
               radius: 23,
+              backgroundImage: ImagePipes.assetOrNetwork(url: model.image),
             ),
-            title: DesignText('Permisos de $username'),
+            title: DesignText('Permisos de ${model.name}'),
           ),
-          ListTile(
-            title: DesignText('Administrativos'),
-            trailing: Switch.adaptive(value: true, onChanged: (v) {}, activeColor: Color(0xff3A664A)),
-          ),
-          ListTile(
-            title: DesignText('Consultar'),
-            trailing: Switch.adaptive(value: false, onChanged: (v) {}, activeColor: Color(0xff3A664A)),
-          ),
-          ListTile(
-            title: DesignText('Agregar/Editar clientes'),
-            trailing: Switch.adaptive(value: false, onChanged: (v) {}, activeColor: Color(0xff3A664A)),
-          ),
-          ListTile(
-            title: DesignText('Borrar pagos'),
-            trailing: Switch.adaptive(value: false, onChanged: (v) {}, activeColor: Color(0xff3A664A)),
-          ),
-          ListTile(
-            title: DesignText('Crear pagos'),
-            trailing: Switch.adaptive(value: true, onChanged: (v) {}, activeColor: Color(0xff3A664A)),
-          ),
-          ListTile(
-            title: DesignText('Gastos'),
-            trailing: Switch.adaptive(value: true, onChanged: (v) {}, activeColor: Color(0xff3A664A)),
-          ),
-          ListTile(
-            title: DesignText('Atrasos'),
-            trailing: Switch.adaptive(value: true, onChanged: (v) {}, activeColor: Color(0xff3A664A)),
-          ),
-          ListTile(
-            title: DesignText('Contabilidad'),
-            trailing: Switch.adaptive(value: true, onChanged: (v) {}, activeColor: Color(0xff3A664A)),
-          ),
+          ...actionsProvider.actions.map((e) {
+            return _Action(user: model, permission: e);
+          }),
         ],
+      ),
+    );
+  }
+}
+
+class _Action extends StatelessWidget {
+  final PermissionsModel permission;
+  final UsersModel user;
+
+  const _Action({required this.permission, required this.user});
+
+  @override
+  Widget build(BuildContext context) {
+    final actionsProvider = Provider.of<ActionsProvider>(context);
+    return ListTile(
+      title: DesignText(permission.action.name),
+      trailing: Switch.adaptive(
+        value: permission.has,
+        onChanged: (v) {
+          actionsProvider.changeStatusPermission(user, permission);
+        },
+        activeColor: Color(0xff3A664A),
       ),
     );
   }

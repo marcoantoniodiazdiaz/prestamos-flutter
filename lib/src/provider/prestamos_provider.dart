@@ -85,7 +85,10 @@ class PrestamosProvider extends ChangeNotifier {
       'clientId': clientId,
     };
 
-    await LoansDatabase.post(data);
+    final resp = await LoansDatabase.post(data);
+    if (resp) {
+      init();
+    }
   }
 }
 

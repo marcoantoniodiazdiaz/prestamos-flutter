@@ -4,6 +4,7 @@ import 'package:flutter/services.dart';
 import 'package:get/get.dart';
 import 'package:modal_bottom_sheet/modal_bottom_sheet.dart';
 import 'package:prestamos/src/design/designs.dart';
+import 'package:prestamos/src/middlewares/go_page.dart';
 import 'package:prestamos/src/views/empenos/empeno_menu.dart';
 import 'package:prestamos/src/views/prestamos/inventario_view.dart';
 import 'package:prestamos/src/views/prestamos/nuevo_prestamo_view.dart';
@@ -27,7 +28,7 @@ class PrestamosMenu extends StatelessWidget {
         padding: EdgeInsets.all(15),
         children: [
           _FlatItem(
-            onTap: () => Get.to(() => VerPrestamosView()),
+            onTap: () => GoToMiddleware.goTo(VerPrestamosView(), 1),
             title: 'Ver prestamos',
             subtitle: 'Administra y visualiza tus prestamos',
             icon: FeatherIcons.dollarSign,

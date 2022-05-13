@@ -70,4 +70,17 @@ class UserPreferences {
   static void setFCM(String fcm) {
     _prefs?.setString('fcm', fcm);
   }
+
+  static get permissions {
+    return _prefs?.getStringList('permissions') ?? [];
+  }
+
+  static getIntPermissions() {
+    if (_prefs?.getStringList('permissions') == null) return [];
+    return _prefs?.getStringList('permissions')?.map((e) => int.parse(e)) ?? [];
+  }
+
+  static void setPermissions(List<String> permissions) {
+    _prefs?.setStringList('permissions', permissions);
+  }
 }

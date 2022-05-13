@@ -84,13 +84,13 @@ class _Item extends StatelessWidget {
                 child: Column(
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
-                    DesignText('Cantidad', color: Colors.black54),
+                    DesignText('Prestamo', color: Colors.black54),
                     SizedBox(height: 7),
                     DesignText('\$${model.amount.toStringAsFixed(2)}', fontWeight: FontWeight.bold, fontSize: 20),
                     SizedBox(height: 20),
-                    DesignText('Interes', color: Colors.black54),
+                    DesignText('A recibir', color: Colors.black54),
                     SizedBox(height: 7),
-                    DesignText('${model.interest.toStringAsFixed(2)}%', fontWeight: FontWeight.bold, fontSize: 20),
+                    DesignText('\$${model.fee.toStringAsFixed(2)}', fontWeight: FontWeight.bold, fontSize: 20),
                   ],
                 ),
               ),
@@ -100,7 +100,7 @@ class _Item extends StatelessWidget {
                   children: [
                     DesignText('Pago mensual', color: Colors.black54),
                     SizedBox(height: 7),
-                    DesignText('\$${model.fee.toStringAsFixed(2)}', fontWeight: FontWeight.bold, fontSize: 20),
+                    DesignText('\$${model.fee / model.duration}', fontWeight: FontWeight.bold, fontSize: 20),
                     SizedBox(height: 20),
                     DesignText('Periodo', color: Colors.black54),
                     SizedBox(height: 7),
