@@ -23,8 +23,8 @@ class PermissionsDatabase {
   }
 
   static Future<bool> update(Map<String, dynamic> data) async {
-    final resp = await DioInstance.post('${DioInstance.server}/actions/update', data);
-
+    final resp = await DioInstance.post('${DioInstance.server}/actions/update', data,
+        onSuccess: 'El permiso fue actualizado');
     if (resp == null) return false;
     final decodedResp = resp.data;
 

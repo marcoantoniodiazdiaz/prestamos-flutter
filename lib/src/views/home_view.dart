@@ -174,7 +174,7 @@ class _MenuItem extends StatelessWidget {
             mainAxisAlignment: MainAxisAlignment.center,
             children: [
               CircleAvatar(
-                backgroundColor: Colors.purple,
+                backgroundColor: DesignColors.green,
                 radius: 25,
                 child: Icon(icon, color: Colors.white, size: 30),
               ),

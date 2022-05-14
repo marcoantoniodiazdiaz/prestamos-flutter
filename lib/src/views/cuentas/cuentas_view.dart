@@ -63,7 +63,7 @@ class _FlatItem extends StatelessWidget {
         padding: EdgeInsets.all(10),
         child: Row(
           children: [
-            Icon(icon),
+            CircleAvatar(child: Icon(icon, color: Colors.white), backgroundColor: DesignColors.green),
             SizedBox(width: 15),
             Expanded(
               child: Column(

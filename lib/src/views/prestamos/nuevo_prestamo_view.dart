@@ -47,13 +47,16 @@ class NuevoPrestamoView extends StatelessWidget {
                       backgroundImage: ImagePipes.assetOrNetwork(url: client.image),
                     ),
                     SizedBox(width: 10),
-                    Column(
-                      crossAxisAlignment: CrossAxisAlignment.start,
-                      children: [
-                        DesignText(client.name, fontWeight: FontWeight.bold, fontSize: 18),
-                        SizedBox(height: 2.5),
-                        DesignText('Desde: ${DesignUtils.dateShort(client.createdAt)}', fontStyle: FontStyle.italic),
-                      ],
+                    Flexible(
+                      child: Column(
+                        crossAxisAlignment: CrossAxisAlignment.start,
+                        children: [
+                          DesignText(client.name, fontWeight: FontWeight.bold, fontSize: 18),
+                          SizedBox(height: 2.5),
+                          DesignText('Desde: ${DesignUtils.dateShort(client.createdAt)}',
+                              fontStyle: FontStyle.italic),
+                        ],
+                      ),
                     )
                   ],
                 ),

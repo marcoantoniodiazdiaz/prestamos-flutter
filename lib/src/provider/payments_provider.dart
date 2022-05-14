@@ -11,11 +11,9 @@ import 'package:url_launcher/url_launcher.dart';
 import 'package:whatsapp_unilink/whatsapp_unilink.dart';
 
 class PaymentsProvider extends ChangeNotifier {
-  TextEditingController amountField = TextEditingController();
-
   Future<bool> makePay({required LoansModel loan}) async {
     try {
-      double amount = double.parse(amountField.text);
+      final amount = loan.fee / loan.duration;
 
       final position = await GeolocatorFunctions.best();
 

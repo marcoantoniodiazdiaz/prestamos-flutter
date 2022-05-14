@@ -1,4 +1,5 @@
 import 'package:feather_icons/feather_icons.dart';
+import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:get/get.dart';
@@ -6,6 +7,9 @@ import 'package:prestamos/src/database/database.dart';
 import 'package:prestamos/src/design/designs.dart';
 import 'package:prestamos/src/pipes/image_pipe.dart';
 import 'package:prestamos/src/provider/clientes_provider.dart';
+import 'package:prestamos/src/utils/structures.dart';
+import 'package:prestamos/src/views/atrasos/atrasos_view.dart';
+import 'package:prestamos/src/views/clientes/clientes_vermas_view.dart';
 import 'package:prestamos/src/views/clientes/phones_menu_view.dart';
 import 'package:provider/provider.dart';
 
@@ -26,7 +30,9 @@ class VerClientesView extends StatelessWidget {
         physics: BouncingScrollPhysics(),
         itemBuilder: (_, i) {
           return ListTile(
-            onLongPress: () {},
+            onTap: () {
+              Get.to(() => ClientesVerMasView(model: clientsProvider.clients[i]));
+            },
             title: DesignText(clientsProvider.clients[i].name.toUpperCase()),
             subtitle: DesignText('Pulsa para ver opciones'),
             leading: CircleAvatar(
