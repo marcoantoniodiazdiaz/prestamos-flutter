@@ -11,6 +11,7 @@ import 'package:prestamos/src/views/atrasos/atrasos_view.dart';
 import 'package:prestamos/src/views/auth/login_view.dart';
 import 'package:prestamos/src/views/clientes/clientes_menu.dart';
 import 'package:prestamos/src/views/clientes/nuevo_cliente_view.dart';
+import 'package:prestamos/src/views/consultas/queries_view.dart';
 import 'package:prestamos/src/views/cuentas/cuentas_view.dart';
 import 'package:prestamos/src/views/empleados/empleados_menu.dart';
 import 'package:prestamos/src/views/gastos/gastos_menu.dart';
@@ -79,7 +80,7 @@ class HomeView extends StatelessWidget {
                       subtitle: 'Mostrar información filtrada por campos',
                       icon: FeatherIcons.sliders,
                       onPress: () {
-                        Get.to(() => NuevoClienteView());
+                        Get.to(() => QueriesView());
                       },
                     ),
                     _MenuItem(

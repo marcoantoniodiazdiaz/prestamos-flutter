@@ -54,8 +54,7 @@ class RegistrarPagoView extends StatelessWidget {
                   backgroundColor: Colors.green,
                   child: Icon(FeatherIcons.dollarSign, color: Colors.white),
                 ),
-                title:
-                    DesignText('\$${e.transaction.amount.toStringAsFixed(2)}', fontWeight: FontWeight.bold),
+                title: DesignText('\$${e.transaction.amount.toStringAsFixed(2)}', fontWeight: FontWeight.bold),
                 subtitle: DesignText(DesignUtils.dateShortWithHour(e.createdAt)),
               );
             }),
@@ -92,8 +91,7 @@ class _Information extends StatelessWidget {
                 children: [
                   DesignText('Cantidad', color: Colors.black54),
                   SizedBox(height: 7),
-                  DesignText('\$${model.amount.toStringAsFixed(2)}',
-                      fontWeight: FontWeight.bold, fontSize: 20),
+                  DesignText('\$${model.amount.toStringAsFixed(2)}', fontWeight: FontWeight.bold, fontSize: 20),
                 ],
               ),
               Column(
@@ -101,8 +99,7 @@ class _Information extends StatelessWidget {
                 children: [
                   DesignText('Restante', color: Colors.black54),
                   SizedBox(height: 7),
-                  DesignText('\$${StructuresUtils.sum(model.payments.map((e) => e.transaction.amount))}',
-                      fontWeight: FontWeight.bold, fontSize: 20),
+                  DesignText('\$${StructuresUtils.sum(model.payments.map((e) => e.transaction.amount))}', fontWeight: FontWeight.bold, fontSize: 20),
                 ],
               ),
             ],

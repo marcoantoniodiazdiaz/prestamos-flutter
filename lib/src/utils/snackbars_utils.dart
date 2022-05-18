@@ -49,7 +49,7 @@ class SnackBarUtils {
       boxShadows: [BoxShadow(blurRadius: 5, color: Colors.black.withOpacity(0.08), spreadRadius: 5)],
       snackPosition: SnackPosition.BOTTOM,
       backgroundColor: Colors.black.withOpacity(0.9),
-      icon: Icon(FeatherIcons.x, color: Colors.green),
+      icon: Icon(FeatherIcons.check, color: Colors.green),
       leftBarIndicatorColor: Colors.green,
       colorText: Colors.white,
       shouldIconPulse: false,

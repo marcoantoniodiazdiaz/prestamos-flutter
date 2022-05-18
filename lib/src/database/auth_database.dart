@@ -8,6 +8,8 @@ class AuthDatabase {
     try {
       final resp = await DioInstance.dio.post('${DioInstance.server}/users/login', data: data);
 
+      print(UserPreferences.token);
+
       final decodedResp = resp.data;
       if (decodedResp == null) return false;
 

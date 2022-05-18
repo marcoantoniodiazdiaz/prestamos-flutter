@@ -18,8 +18,10 @@ class ActionsProvider with ChangeNotifier {
   }
 
   reload() async {
-    final myPermissions = await PermissionsDatabase.get(UserPreferences.id);
-    UserPreferences.setPermissions(myPermissions.where((e) => e.has).map((e) => '${e.action.code}').toList());
+    if (UserPreferences.id != '') {
+      final myPermissions = await PermissionsDatabase.get(UserPreferences.id);
+      UserPreferences.setPermissions(myPermissions.where((e) => e.has).map((e) => '${e.action.code}').toList());
+    }
     notifyListeners();
   }
 

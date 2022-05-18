@@ -88,21 +88,34 @@ class _PhoneList extends StatelessWidget {
             padding: EdgeInsets.symmetric(vertical: 10),
             physics: BouncingScrollPhysics(),
             itemBuilder: (_, i) {
-              return ListTile(
-                onTap: () => _actionPhone(context, phones[i]),
-                title: DesignText(phones[i].value),
-                subtitle: DesignText('Pulsa para ver opciones'),
-                leading: CircleAvatar(
-                  radius: 23,
-                  child: Icon(FeatherIcons.phone, color: Colors.white),
-                  backgroundColor: DesignColors.pink,
-                ),
-              );
+              return _PhoneItem(model: phones[i]);
             },
             itemCount: phones.length,
           );
         }
       }),
+    );
+  }
+}
+
+class _PhoneItem extends StatelessWidget {
+  const _PhoneItem({
+    required this.model,
+  });
+
+  final PhonesModel model;
+
+  @override
+  Widget build(BuildContext context) {
+    return ListTile(
+      onTap: () => _actionPhone(context, model),
+      title: DesignText(model.value),
+      subtitle: DesignText('Pulsa para ver opciones'),
+      leading: CircleAvatar(
+        radius: 23,
+        child: Icon(model.type == 0 ? FeatherIcons.phone : Icons.whatsapp, color: Colors.white),
+        backgroundColor: model.type == 0 ? DesignColors.pink : Colors.green,
+      ),
     );
   }
 }
@@ -128,22 +141,23 @@ _actionPhone(BuildContext context, PhonesModel phone) {
                   await FlutterPhoneDirectCaller.callNumber(phone.value);
                 },
               ),
-              ListTile(
-                leading: CircleAvatar(
-                  radius: 25,
-                  backgroundColor: Colors.green,
-                  child: Icon(Icons.whatsapp, color: Colors.white),
+              if (phone.type == 1)
+                ListTile(
+                  leading: CircleAvatar(
+                    radius: 25,
+                    backgroundColor: Colors.green,
+                    child: Icon(Icons.whatsapp, color: Colors.white),
+                  ),
+                  title: DesignText('Enviar Whatsapp'),
+                  onTap: () async {
+                    final link = WhatsAppUnilink(
+                      phoneNumber: '+52-${phone.value}',
+                      text: "",
+                    );
+                    // ignore: deprecated_member_use
+                    await launch('$link');
+                  },
                 ),
-                title: DesignText('Enviar Whatsapp'),
-                onTap: () async {
-                  final link = WhatsAppUnilink(
-                    phoneNumber: '+52-${phone.value}',
-                    text: "",
-                  );
-                  // ignore: deprecated_member_use
-                  await launch('$link');
-                },
-              ),
             ],
           ),
         ),
