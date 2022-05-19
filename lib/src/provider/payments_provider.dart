@@ -29,27 +29,6 @@ class PaymentsProvider extends ChangeNotifier {
       if (resp) {
         final prestamosProvider = Provider.of<PrestamosProvider>(Get.context!, listen: false);
         await prestamosProvider.init();
-
-        final currentLoan = prestamosProvider.loans.firstWhere((e) => e.id == loan.id);
-
-        final paid = StructuresUtils.sum(currentLoan.payments.map((e) => e.transaction.amount));
-
-        final link = WhatsAppUnilink(
-          phoneNumber: '+52-3315856646',
-          text: """${UserPreferences.name} a recibido tu pago de \$${amount.toStringAsFixed(2)}
-
-*DATOS DE PRESTAMO*
-Cantidad prestada: ${currentLoan.amount}
-Cantidad a pagar: ${currentLoan.fee}
-Cantidad pagada: $paid
-Cantidad restante: ${currentLoan.fee - (paid + amount)}
-
-*PAGOS*
-${currentLoan.payments.map((e) => "${e.transaction.amount} -> ${DesignUtils.dateShortWithHour(e.createdAt)}").join('\n')}
-""",
-        );
-        // ignore: deprecated_member_use
-        await launch('$link');
       }
 
       return true;

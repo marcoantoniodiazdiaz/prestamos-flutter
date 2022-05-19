@@ -28,8 +28,8 @@ class DioInstance {
     ),
   );
 
-  static const String server = "http://192.168.0.19:7001/api";
-  static const String sockets = "http://192.168.0.19:7001";
+  static const String server = "http://192.168.0.15:7001/api";
+  static const String sockets = "http://192.168.0.15:7001";
   // static final String server = "https://crowncleanapi.host/api";
   // static final String sockets = "http://45.80.152.52:8000/";
 
@@ -43,6 +43,8 @@ class DioInstance {
           SnackBarUtils.snackBarError('Tiempo de conexión agotado');
         } else if (e.type == DioErrorType.receiveTimeout) {
           SnackBarUtils.snackBarError('Tiempo de espera de petición agotado');
+        } else if (e.type == DioErrorType.other) {
+          SnackBarUtils.snackBarError('Verifica tu conexión de internet');
         } else if (e.type == DioErrorType.response) {
           if (e.response != null) {
             if (e.response?.statusCode == 404) {
@@ -62,7 +64,8 @@ class DioInstance {
     return null;
   }
 
-  static Future<Response<dynamic>?> post(String url, Map<String, dynamic> data, {required String onSuccess}) async {
+  static Future<Response<dynamic>?> post(String url, Map<String, dynamic> data,
+      {required String onSuccess}) async {
     try {
       LoadingUtils.showLoading();
       final resp = await DioInstance.dio.post(url, data: data);
@@ -73,9 +76,7 @@ class DioInstance {
           SnackBarUtils.snackBarError(resp.data['err']);
         }
       } else {
-        if (onSuccess != null) {
-          SnackBarUtils.snackBarSuccess(onSuccess);
-        }
+        SnackBarUtils.snackBarSuccess(onSuccess);
       }
 
       return resp;

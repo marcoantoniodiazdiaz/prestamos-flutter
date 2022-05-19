@@ -47,31 +47,31 @@ class UserPreferences {
     _prefs?.setString('phone', phone);
   }
 
-  static get token {
-    return _prefs?.get('token') ?? '';
+  static String get token {
+    return _prefs?.getString('token') ?? '';
   }
 
   static void setToken(String token) {
     _prefs?.setString('token', token);
   }
 
-  static get id {
-    return _prefs?.get('id') ?? '';
+  static int get id {
+    return _prefs?.getInt('id') ?? -1;
   }
 
   static void setId(int id) {
     _prefs?.setInt('id', id);
   }
 
-  static get fcm {
-    return _prefs?.get('fcm') ?? '';
+  static String get fcm {
+    return _prefs?.getString('fcm') ?? '';
   }
 
   static void setFCM(String fcm) {
     _prefs?.setString('fcm', fcm);
   }
 
-  static get permissions {
+  static List<String> get permissions {
     return _prefs?.getStringList('permissions') ?? [];
   }
 

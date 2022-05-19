@@ -11,6 +11,7 @@ import 'package:prestamos/src/provider/expenses_provider.dart';
 import 'package:prestamos/src/provider/payments_provider.dart';
 import 'package:prestamos/src/provider/prestamos_provider.dart';
 import 'package:prestamos/src/provider/providers.dart';
+import 'package:prestamos/src/provider/settings_provider.dart';
 import 'package:prestamos/src/provider/stadistics_provider.dart';
 import 'package:prestamos/src/provider/transactions_provider.dart';
 import 'package:prestamos/src/provider/users_provider.dart';
@@ -48,7 +49,7 @@ class MyApp extends StatelessWidget {
 }
 
 Widget whatPage() {
-  if (UserPreferences.token == '') {
+  if (UserPreferences.token.isEmpty) {
     return LoginView();
   } else {
     return HomeView();
@@ -66,6 +67,7 @@ List<SingleChildWidget> _providers() {
     ChangeNotifierProvider(create: (_) => AuthProvider()),
     ChangeNotifierProvider(create: (_) => EmpenosProvider()),
     ChangeNotifierProvider(create: (_) => ExpensesProvider()),
+    ChangeNotifierProvider(create: (_) => SettingsProvider()),
     ChangeNotifierProvider(create: (_) => StadisticsProvider()),
     ChangeNotifierProvider(create: (_) => TransactionsProvider()),
     ChangeNotifierProvider(create: (_) => PaymentsProvider()),

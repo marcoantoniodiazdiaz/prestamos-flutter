@@ -1,7 +1,9 @@
 import 'package:feather_icons/feather_icons.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
+import 'package:get/get.dart';
 import 'package:prestamos/src/design/designs.dart';
+import 'package:prestamos/src/views/ajustes/mora_view.dart';
 
 class AjustesView extends StatelessWidget {
   @override
@@ -24,7 +26,7 @@ class AjustesView extends StatelessWidget {
               title: 'Porcentaje de mora',
               subtitle: 'Determina el porcentaje de comisión por pagos tardios',
               icon: FeatherIcons.percent,
-              onTap: () {},
+              onTap: () => Get.to(() => MoraView()),
             ),
             _FlatItem(
               title: 'Mi información',
