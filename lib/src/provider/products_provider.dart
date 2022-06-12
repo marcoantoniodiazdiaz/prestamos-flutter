@@ -78,4 +78,12 @@ class ProductsProvider with ChangeNotifier {
       reload();
     }
   }
+
+  delete(ProductsModel model) async {
+    final resp = await ProductsDatabase.delete(model.id);
+
+    if (resp) {
+      reload();
+    }
+  }
 }

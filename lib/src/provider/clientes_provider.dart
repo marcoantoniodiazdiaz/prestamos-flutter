@@ -1,12 +1,17 @@
 import 'dart:io';
 
-import 'package:feather_icons/feather_icons.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:modal_bottom_sheet/modal_bottom_sheet.dart';
 import 'package:prestamos/src/database/clients_database.dart';
+import 'package:prestamos/src/database/files_database.dart';
+import 'package:path_provider/path_provider.dart';
 import 'package:prestamos/src/design/designs.dart';
 import 'package:prestamos/src/models/clients_model.dart';
+import 'package:prestamos/src/utils/loading_utils.dart';
+import 'package:path/path.dart';
+import 'package:prestamos/src/views/clientes/nuevo_cliente_view.dart';
+import 'package:http/http.dart' as http;
 
 class ClientesProvider extends ChangeNotifier {
   ClientesProvider() {
@@ -15,7 +20,11 @@ class ClientesProvider extends ChangeNotifier {
 
   final formKey = GlobalKey<FormState>();
   final phoneFormKey = GlobalKey<FormState>();
-  late String name, direction, city, email, comment;
+  TextEditingController name = TextEditingController();
+  TextEditingController direction = TextEditingController();
+  TextEditingController city = TextEditingController();
+  TextEditingController email = TextEditingController();
+  TextEditingController comment = TextEditingController();
   late String value;
 
   List<ClientsModel> _clients = [];
@@ -24,12 +33,15 @@ class ClientesProvider extends ChangeNotifier {
   List<ClientsModel> _filtered = [];
   List<ClientsModel> get filtered => _filtered;
 
-  late File _profileSelected;
-  File get profileSelected => _profileSelected;
-  set profileSelected(File i) {
+  File? _profileSelected;
+  File? get profileSelected => _profileSelected;
+  set profileSelected(File? i) {
     _profileSelected = i;
     notifyListeners();
   }
+
+  ClientsModel? _editing;
+  ClientsModel? get editing => _editing;
 
   reload() async {
     _clients = await ClientsDatabase.get();
@@ -38,7 +50,10 @@ class ClientesProvider extends ChangeNotifier {
   }
 
   findClient(String v) {
-    if (v.isEmpty) return _filtered = _clients;
+    if (v.isEmpty) {
+      _filtered = _clients;
+      return notifyListeners();
+    }
 
     _filtered = _clients.where((e) {
       return e.name.toLowerCase().contains(v.toLowerCase());
@@ -50,19 +65,63 @@ class ClientesProvider extends ChangeNotifier {
     return key.currentState?.validate() ?? false;
   }
 
+  setEditing(ClientsModel model) async {
+    name.text = model.name;
+    email.text = model.email;
+    comment.text = model.comment ?? '';
+
+    if (model.image.isNotEmpty) {
+      LoadingUtils.showLoading();
+      final response = await http.get(Uri.parse(model.image));
+      Get.back();
+      final documentDirectory = await getTemporaryDirectory();
+      final file = File(join(documentDirectory.path, '${model.id}.jpg'));
+      file.writeAsBytesSync(response.bodyBytes);
+
+      _profileSelected = file;
+    }
+
+    _editing = model;
+    notifyListeners();
+
+    Get.to(() => NuevoClienteView());
+  }
+
+  clean() {
+    name.text = '';
+    email.text = '';
+    comment.text = '';
+    _profileSelected = null;
+    _editing = null;
+    notifyListeners();
+  }
+
   post() async {
     if (!isValidForm(formKey)) return false;
 
+    String? url;
+    if (profileSelected != null) {
+      LoadingUtils.showLoading();
+      final cloudinary = await FilesDatabase.upload(profileSelected!);
+      url = cloudinary;
+      Get.back();
+    }
+
     final Map<String, dynamic> data = {
-      'name': name,
-      'direction': direction,
-      'city': city,
-      'email': email,
-      'comment': comment,
-      'image': '',
+      'name': name.text,
+      'direction': 'x',
+      'city': 'x',
+      'email': email.text,
+      'comment': comment.text,
+      'image': url ?? '',
     };
 
-    final resp = await ClientsDatabase.post(data);
+    bool resp;
+    if (_editing == null) {
+      resp = await ClientsDatabase.post(data);
+    } else {
+      resp = await ClientsDatabase.put(data, editing!.id);
+    }
 
     if (resp) {
       reload();
@@ -85,7 +144,7 @@ class ClientesProvider extends ChangeNotifier {
                     width: double.infinity,
                     height: 45,
                     child: DesignText('Telefono/Fijo'),
-                    color: DesignColors.green,
+                    color: DesignColors.orange,
                     primary: Colors.white,
                     elevation: 2,
                     onPressed: () => _sendValueOfPhone(clientId, 0),

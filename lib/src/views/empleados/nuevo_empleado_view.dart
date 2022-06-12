@@ -24,7 +24,6 @@ class NuevoEmpleadoView extends StatelessWidget {
       body: Container(
         padding: EdgeInsets.all(15),
         child: SingleChildScrollView(
-          physics: BouncingScrollPhysics(),
           child: _Form(),
         ),
       ),
@@ -106,7 +105,7 @@ class _Form extends StatelessWidget {
             width: double.infinity,
             height: 50,
             child: DesignText('Guardar'),
-            color: DesignColors.blue,
+            color: DesignColors.orange,
             primary: Colors.white,
             onPressed: () => usersProvider.add(),
           ),

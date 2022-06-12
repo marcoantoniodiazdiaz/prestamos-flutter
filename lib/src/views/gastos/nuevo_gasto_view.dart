@@ -21,7 +21,6 @@ class NuevoGastoView extends StatelessWidget {
         elevation: 0,
       ),
       body: SingleChildScrollView(
-        physics: BouncingScrollPhysics(),
         padding: EdgeInsets.all(15),
         child: Form(
           autovalidateMode: AutovalidateMode.onUserInteraction,

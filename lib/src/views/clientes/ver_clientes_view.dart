@@ -27,7 +27,6 @@ class VerClientesView extends StatelessWidget {
       ),
       body: ListView.builder(
         padding: EdgeInsets.symmetric(vertical: 10),
-        physics: BouncingScrollPhysics(),
         itemBuilder: (_, i) {
           return ListTile(
             onTap: () {

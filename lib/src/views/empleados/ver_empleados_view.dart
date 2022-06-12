@@ -4,6 +4,7 @@ import 'package:get/get.dart';
 import 'package:modal_bottom_sheet/modal_bottom_sheet.dart';
 import 'package:prestamos/src/database/database.dart';
 import 'package:prestamos/src/design/designs.dart';
+import 'package:prestamos/src/middlewares/go_page.dart';
 import 'package:prestamos/src/pipes/image_pipe.dart';
 import 'package:prestamos/src/provider/actions_provider.dart';
 import 'package:prestamos/src/provider/providers.dart';
@@ -26,7 +27,6 @@ class VerEmpleadosView extends StatelessWidget {
       ),
       body: ListView.builder(
         padding: EdgeInsets.symmetric(vertical: 10),
-        physics: BouncingScrollPhysics(),
         itemBuilder: (_, index) {
           return ListTile(
             title: DesignText(usersProvider.users[index].name.toUpperCase()),
@@ -37,15 +37,17 @@ class VerEmpleadosView extends StatelessWidget {
             onTap: () {
               _showWorkerInformation(usersProvider.users[index]);
             },
-            subtitle: DesignText('Manten pulsado para editar'),
+            subtitle: DesignText('Pulsa para ver más información'),
             trailing: DesignTextButton(
               width: 80,
               height: 35,
               child: DesignText('Permisos'),
-              color: DesignColors.green,
+              color: DesignColors.orange,
               primary: Colors.white,
               onPressed: () async {
                 // LoadingUtils.showLoading();
+                if (!GoToMiddleware.next(17)) return;
+
                 int id = usersProvider.users[index].id;
                 await actionsProvider.loadPermissionsById(id);
                 Get.to(

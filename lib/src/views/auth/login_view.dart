@@ -32,7 +32,6 @@ class LoginView extends StatelessWidget {
                 child: Container(
                   padding: EdgeInsets.all(20),
                   child: SingleChildScrollView(
-                    physics: BouncingScrollPhysics(),
                     child: Column(
                       children: [
                         DesignText('Bienvenido', fontSize: 30, fontWeight: FontWeight.bold),

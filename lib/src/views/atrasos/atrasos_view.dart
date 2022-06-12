@@ -1,19 +1,16 @@
-import 'package:flutter/cupertino.dart';
-import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
-import 'package:prestamos/src/database/database.dart';
 import 'package:prestamos/src/design/designs.dart';
+import 'package:prestamos/src/models/arrears_model.dart';
 import 'package:prestamos/src/pipes/image_pipe.dart';
+import 'package:prestamos/src/provider/arrears_provider.dart';
 import 'package:prestamos/src/provider/providers.dart';
 import 'package:prestamos/src/utils/structures.dart';
 
 class AtrasosView extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
-    final atrasosProvider = Provider.of<AtrasosProvider>(context);
-    final prestamosProvider = Provider.of<PrestamosProvider>(context);
-    final atrasos = atrasosProvider.getAtrasos(prestamosProvider.loans).where((e) => e.delayed).toList();
+    final arrearsProvider = Provider.of<ArrearsProvider>(context);
     return Scaffold(
       backgroundColor: Colors.white.withOpacity(0.97),
       appBar: AppBar(
@@ -24,34 +21,24 @@ class AtrasosView extends StatelessWidget {
         elevation: 0,
       ),
       body: ListView.builder(
-        physics: BouncingScrollPhysics(),
         padding: EdgeInsets.all(15),
         itemBuilder: (_, index) {
-          return _Item(loan: atrasos[index].loan);
+          return _Item(arrearsModel: arrearsProvider.arrears[index]);
         },
-        itemCount: atrasos.length,
+        itemCount: arrearsProvider.arrears.length,
       ),
-      // body: SingleChildScrollView(
-      //   padding: EdgeInsets.all(15),
-      //   physics: BouncingScrollPhysics(),
-      //   child: Column(
-      //     children: [
-      //       _Item(),
-      //     ],
-      //   ),
-      // ),
     );
   }
 }
 
 class _Item extends StatelessWidget {
-  final LoansModel loan;
+  final ArrearsModel arrearsModel;
 
-  const _Item({required this.loan});
+  const _Item({required this.arrearsModel});
 
   @override
   Widget build(BuildContext context) {
-    final restant = StructuresUtils.sum(loan.payments.map((e) => e.transaction.amount));
+    final restant = StructuresUtils.sum(arrearsModel.loan.payments.map((e) => e.transaction.amount));
     return Container(
       margin: EdgeInsets.only(bottom: 10),
       decoration: BoxDecoration(
@@ -66,25 +53,25 @@ class _Item extends StatelessWidget {
           Row(
             children: [
               CircleAvatar(
-                backgroundImage: ImagePipes.assetOrNetwork(url: loan.client.image),
+                backgroundImage: ImagePipes.assetOrNetwork(url: arrearsModel.loan.client.image),
               ),
               SizedBox(width: 10),
               Flexible(
                 child: Column(
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
-                    DesignText(loan.client.name.toUpperCase(), fontSize: 16, fontWeight: FontWeight.bold),
+                    DesignText(arrearsModel.loan.client.name.toUpperCase(), fontSize: 16, fontWeight: FontWeight.bold),
                     SizedBox(height: 5),
-                    DesignText('Prestamo por: \$${loan.amount + loan.fee} (${loan.interest}%)', fontSize: 14),
+                    DesignText('Prestamo por: \$${arrearsModel.loan.amount + arrearsModel.loan.fee} (${arrearsModel.loan.interest}%)', fontSize: 14),
                   ],
                 ),
               ),
             ],
           ),
           SizedBox(height: 10),
-          DesignText('Retraso', fontSize: 13, color: Colors.black54),
-          SizedBox(height: 2.5),
-          DesignText('10 dias, 8 horas y 10 minutos', fontSize: 14),
+          // DesignText('Retraso', fontSize: 13, color: Colors.black54),
+          // SizedBox(height: 2.5),
+          // DesignText(DurationsUtils.dhm(arrearsModel.delay), fontSize: 14),
           Divider(),
           Row(
             mainAxisAlignment: MainAxisAlignment.spaceBetween,
@@ -105,68 +92,16 @@ class _Item extends StatelessWidget {
                   children: [
                     DesignText('Cantidad restante', fontSize: 13, color: Colors.black54),
                     SizedBox(height: 2.5),
-                    DesignText('\$${loan.fee.toStringAsFixed(2)}', fontSize: 17),
+                    DesignText('\$${arrearsModel.loan.fee.toStringAsFixed(2)}', fontSize: 17),
                   ],
                 ),
               ),
             ],
           ),
           SizedBox(height: 15),
-          _Progress(percent: restant / loan.fee),
+          _Progress(percent: restant / arrearsModel.loan.fee),
           SizedBox(height: 7.5),
-          Center(child: DesignText('${(restant / loan.fee * 100).toStringAsFixed(2)}%', fontSize: 13, color: Colors.black54)),
-          SizedBox(height: 10),
-          DesignText('Mapa diario', fontSize: 13, color: Colors.black54),
-          SizedBox(height: 5),
-          FutureBuilder(
-            future: getDayList(loan),
-            builder: (BuildContext context, AsyncSnapshot snapshot) {
-              if (!snapshot.hasData) {
-                return SizedBox(height: 60, child: CupertinoActivityIndicator());
-              } else {
-                return SizedBox(
-                  height: 60,
-                  child: ListView(
-                    physics: BouncingScrollPhysics(),
-                    children: snapshot.data,
-                    scrollDirection: Axis.horizontal,
-                  ),
-                );
-              }
-            },
-          ),
-          SizedBox(height: 10),
-        ],
-      ),
-    );
-  }
-}
-
-class _Day extends StatelessWidget {
-  final DateTime date;
-  final bool cutDay;
-  final double daily;
-  final bool today;
-  final bool covered;
-
-  const _Day({required this.date, required this.cutDay, required this.daily, required this.today, required this.covered});
-
-  @override
-  Widget build(BuildContext context) {
-    return Container(
-      margin: EdgeInsets.only(right: 5),
-      padding: EdgeInsets.symmetric(horizontal: 10),
-      decoration: BoxDecoration(
-        color: _getDayBackgroundColor(cutDay, today, covered),
-        borderRadius: BorderRadius.circular(5),
-      ),
-      child: Column(
-        mainAxisAlignment: MainAxisAlignment.center,
-        children: [
-          DesignText(date.day.toString(), color: cutDay || today || covered ? Colors.white : Colors.black),
-          DesignText('ABRIL', fontSize: 11, color: cutDay || today || covered ? Colors.white : Colors.black),
-          SizedBox(height: 2.5),
-          DesignText('\$${daily.toStringAsFixed(2)}', color: cutDay || today || covered ? Colors.white : Colors.black),
+          Center(child: DesignText('${(restant / arrearsModel.loan.fee * 100).toStringAsFixed(2)}%', fontSize: 13, color: Colors.black54)),
         ],
       ),
     );
@@ -207,78 +142,4 @@ class _Progress extends StatelessWidget {
       ),
     );
   }
-}
-
-Future<List<_Day>> getDayList(LoansModel loan) async {
-  var start = loan.createdAt;
-  final daysToAdd = (loan.duration * 7) + 1; // Añadir 7 por x semanas
-  final end = start.add(Duration(days: daysToAdd));
-
-  List<DateTime> cutDays = [];
-
-  var date = start;
-  for (var i = 0; i < loan.duration; i++) {
-    date = date.add(Duration(days: 7 * (i + 1)));
-    cutDays.add(DateTime(date.year, date.month, date.day));
-    date = start;
-  }
-
-  List<_Day> list = [];
-
-  var paid = StructuresUtils.sum(loan.payments.map((e) => e.transaction.amount));
-  bool continueCovered = true;
-
-  final diff = end.difference(start).inDays.abs();
-  for (var i = 0; i < diff; i++) {
-    bool today = false;
-    final dateToAdd = DateTime(start.year, start.month, start.day);
-
-    if (_compareDates(dateToAdd, DateTime.now())) today = true;
-    if (paid <= 0) continueCovered = false;
-
-    list.add(
-      _Day(
-        date: dateToAdd,
-        cutDay: _containsDate(dateToAdd, cutDays),
-        daily: loan.fee / diff,
-        today: today,
-        covered: continueCovered,
-      ),
-    );
-
-    today = false;
-    paid -= loan.fee / diff;
-    start = start.add(Duration(days: 1));
-  }
-
-  return list;
-}
-
-bool _containsDate(DateTime first, List<DateTime> list) {
-  // return first.day == second.day && first.month == second.month && first.year == second.year;
-  for (final date in list) {
-    if (_compareDates(first, date)) {
-      return true;
-    }
-  }
-
-  return false;
-}
-
-bool _compareDates(DateTime first, DateTime second) {
-  return first.day == second.day && first.month == second.month && first.year == second.year;
-}
-
-Color _getDayBackgroundColor(bool cutDay, bool today, bool covered) {
-  if (cutDay || today || covered) {
-    if (cutDay) {
-      return DesignColors.pink;
-    } else if (today) {
-      return DesignColors.blue;
-    }
-
-    return Colors.lightGreen;
-  }
-
-  return Colors.black.withOpacity(0.08);
 }

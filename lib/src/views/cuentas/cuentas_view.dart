@@ -3,6 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:get/get.dart';
 import 'package:prestamos/src/design/designs.dart';
+import 'package:prestamos/src/middlewares/go_page.dart';
 import 'package:prestamos/src/views/cuentas/nueva_cuenta_view.dart';
 import 'package:prestamos/src/views/cuentas/ver_cuentas_view.dart';
 
@@ -21,19 +22,18 @@ class CuentasView extends StatelessWidget {
       ),
       body: ListView(
         padding: EdgeInsets.all(15),
-        physics: BouncingScrollPhysics(),
         children: [
           _FlatItem(
-            onTap: () => Get.to(() => VerCuentasView()),
             title: 'Ver cuentas',
             subtitle: 'Administra tus cuentas registrados',
             icon: FeatherIcons.eye,
+            onTap: () => GoToMiddleware.goTo(VerCuentasView(), 5),
           ),
           _FlatItem(
-            onTap: () => Get.to(() => NuevaCuentaView()),
             title: 'Nueva cuenta',
             subtitle: 'Registrar una nueva cuenta',
             icon: FeatherIcons.plusCircle,
+            onTap: () => GoToMiddleware.goTo(NuevaCuentaView(), 6),
           ),
         ],
       ),
@@ -63,7 +63,7 @@ class _FlatItem extends StatelessWidget {
         padding: EdgeInsets.all(10),
         child: Row(
           children: [
-            CircleAvatar(child: Icon(icon, color: Colors.white), backgroundColor: DesignColors.green),
+            CircleAvatar(child: Icon(icon, color: Colors.white), backgroundColor: DesignColors.orange),
             SizedBox(width: 15),
             Expanded(
               child: Column(

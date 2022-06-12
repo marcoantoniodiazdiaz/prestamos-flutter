@@ -7,4 +7,5 @@ class DesignColors {
   static const Color green = Color(0xff3A664A);
   static const Color yellow = Color(0xffFFCB66);
   static const Color blue = Color(0xff1400FF);
+  static const Color orange = Color(0xffEF612D);
 }

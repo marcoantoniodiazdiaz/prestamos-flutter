@@ -1,7 +1,9 @@
 import 'package:flutter/widgets.dart';
 import 'package:get/get.dart';
 import 'package:prestamos/src/database/auth_database.dart';
-import 'package:prestamos/src/utils/snackbars_utils.dart';
+import 'package:prestamos/src/database/preferences.dart';
+import 'package:prestamos/src/provider/actions_provider.dart';
+import 'package:prestamos/src/provider/providers.dart';
 import 'package:prestamos/src/views/home_view.dart';
 
 class AuthProvider extends ChangeNotifier {
@@ -23,6 +25,8 @@ class AuthProvider extends ChangeNotifier {
     final resp = await AuthDatabase.login(data);
 
     if (resp) {
+      final actionsProvider = Provider.of<ActionsProvider>(Get.context!, listen: false);
+      actionsProvider.loadPermissionsById(UserPreferences.id);
       Get.to(() => HomeView());
     }
 

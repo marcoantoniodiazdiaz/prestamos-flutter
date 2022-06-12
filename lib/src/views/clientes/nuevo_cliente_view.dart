@@ -11,19 +11,25 @@ import 'package:prestamos/src/utils/picker_utils.dart';
 class NuevoClienteView extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-      appBar: AppBar(
-        backgroundColor: Colors.transparent,
-        title: DesignText('Nuevo cliente', fontWeight: FontWeight.bold),
-        systemOverlayStyle: SystemUiOverlayStyle.dark,
-        foregroundColor: Colors.black,
-        elevation: 0,
-      ),
-      body: Container(
-        padding: EdgeInsets.all(15),
-        child: SingleChildScrollView(
-          physics: BouncingScrollPhysics(),
-          child: _Form(),
+    final clientesProvider = Provider.of<ClientesProvider>(context);
+    return WillPopScope(
+      onWillPop: () async {
+        clientesProvider.clean();
+        return true;
+      },
+      child: Scaffold(
+        appBar: AppBar(
+          backgroundColor: Colors.transparent,
+          title: DesignText(clientesProvider.editing != null ? 'Editar cliente' : 'Nuevo cliente', fontWeight: FontWeight.bold),
+          systemOverlayStyle: SystemUiOverlayStyle.dark,
+          foregroundColor: Colors.black,
+          elevation: 0,
+        ),
+        body: Container(
+          padding: EdgeInsets.all(15),
+          child: SingleChildScrollView(
+            child: _Form(),
+          ),
         ),
       ),
     );
@@ -55,6 +61,12 @@ class _Form extends StatelessWidget {
                   decoration: BoxDecoration(
                     shape: BoxShape.circle,
                     color: DesignColors.dark.withOpacity(0.5),
+                    image: clientesProvider.profileSelected != null
+                        ? DecorationImage(
+                            fit: BoxFit.cover,
+                            image: FileImage(clientesProvider.profileSelected!),
+                          )
+                        : null,
                   ),
                   child: Center(
                     child: Icon(FeatherIcons.camera, color: Colors.white),
@@ -65,7 +77,7 @@ class _Form extends StatelessWidget {
               Flexible(
                 child: DesignInput(
                   hintText: 'Nombre completo',
-                  onChanged: (String v) => clientesProvider.name = v,
+                  controller: clientesProvider.name,
                   validator: (String? v) {
                     if (v!.length < 5) return 'Nombre invalido';
                     return null;
@@ -78,41 +90,8 @@ class _Form extends StatelessWidget {
           ),
           SizedBox(height: 20),
           DesignInput(
-            hintText: 'Dirección',
-            textInputType: TextInputType.streetAddress,
-            validator: (String? v) {
-              if (v!.isEmpty) return 'Campo vacio';
-              return null;
-            },
-            onChanged: (String v) => clientesProvider.direction = v,
-            textCapitalization: TextCapitalization.characters,
-          ),
-          SizedBox(height: 7.5),
-          DesignInput(
-            hintText: 'Ciudad',
-            textInputType: TextInputType.text,
-            textCapitalization: TextCapitalization.characters,
-            validator: (String? v) {
-              if (v!.isEmpty) return 'Campo vacio';
-              return null;
-            },
-            onChanged: (String v) => clientesProvider.city = v,
-          ),
-          // SizedBox(height: 7.5),
-          // DesignInput(
-          //   hintText: 'Telefono',
-          //   onChanged: (String v) =>  = v,
-          //   textInputType: TextInputType.phone,
-          // ),
-          // SizedBox(height: 7.5),
-          // DesignInput(
-          //   hintText: 'Celular',
-          //   textInputType: TextInputType.phone,
-          // ),
-          SizedBox(height: 7.5),
-          DesignInput(
             hintText: 'Correo electronico',
-            onChanged: (String v) => clientesProvider.email = v,
+            controller: clientesProvider.email,
             textInputType: TextInputType.emailAddress,
             validator: (String? v) {
               if (v!.isEmpty) return 'Campo vacio';
@@ -124,7 +103,7 @@ class _Form extends StatelessWidget {
           DesignInput(
             hintText: 'Comentario',
             textInputType: TextInputType.text,
-            onChanged: (String v) => clientesProvider.comment = v,
+            controller: clientesProvider.comment,
             textCapitalization: TextCapitalization.characters,
             validator: (String? v) {
               if (v!.isEmpty) return 'Campo vacio';
@@ -137,7 +116,7 @@ class _Form extends StatelessWidget {
             width: double.infinity,
             height: 50,
             child: DesignText('Guardar'),
-            color: DesignColors.dark,
+            color: DesignColors.orange,
             primary: Colors.white,
             onPressed: () => clientesProvider.post(),
           ),

@@ -67,7 +67,7 @@ class _Graphs extends StatelessWidget {
                 SizedBox(height: 5),
                 Row(
                   children: [
-                    DesignText('${stadistics.crecimiento}x', color: Colors.white, fontSize: 30, fontWeight: FontWeight.bold),
+                    DesignText('${stadistics.crecimiento.toStringAsFixed(2)}x', color: Colors.white, fontSize: 30, fontWeight: FontWeight.bold),
                     SizedBox(width: 20),
                     Transform.translate(offset: Offset(0, -3), child: Icon(FeatherIcons.arrowUp, color: Colors.white54, size: 40)),
                   ],

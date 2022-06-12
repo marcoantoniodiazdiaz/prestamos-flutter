@@ -25,7 +25,7 @@ class ClientsModel {
   String direction;
   String city;
   String email;
-  dynamic comment;
+  String? comment;
   String image;
   DateTime createdAt;
   DateTime updatedAt;

@@ -1,8 +1,6 @@
 import 'package:flutter/widgets.dart';
-import 'package:get/get.dart';
 import 'package:prestamos/src/database/database.dart';
 import 'package:prestamos/src/database/preferences.dart';
-import 'package:prestamos/src/utils/loading_utils.dart';
 
 class ActionsProvider with ChangeNotifier {
   ActionsProvider() {
@@ -13,15 +11,18 @@ class ActionsProvider with ChangeNotifier {
   List<PermissionsModel> get actions => _actions;
 
   loadPermissionsById(int id) async {
+    _actions = [];
     _actions = await PermissionsDatabase.get(id);
+    if (UserPreferences.id == id) {
+      reload();
+    }
     notifyListeners();
   }
 
   reload() async {
-    if (UserPreferences.id != '') {
-      final myPermissions = await PermissionsDatabase.get(UserPreferences.id);
-      UserPreferences.setPermissions(myPermissions.where((e) => e.has).map((e) => '${e.action.code}').toList());
-    }
+    final myPermissions = await PermissionsDatabase.get(UserPreferences.id);
+    UserPreferences.setPermissions(myPermissions.where((e) => e.has).map((e) => '${e.action.code}').toList());
+
     notifyListeners();
   }
 

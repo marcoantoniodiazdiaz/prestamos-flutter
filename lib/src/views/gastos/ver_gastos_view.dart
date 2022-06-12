@@ -23,7 +23,6 @@ class VerGastosView extends StatelessWidget {
       ),
       body: ListView.builder(
         padding: EdgeInsets.symmetric(vertical: 10),
-        physics: BouncingScrollPhysics(),
         itemBuilder: (_, index) {
           return ListTile(
             title: DesignText(expensesProvider.expenses[index].name),

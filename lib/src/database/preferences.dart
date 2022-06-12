@@ -83,4 +83,8 @@ class UserPreferences {
   static void setPermissions(List<String> permissions) {
     _prefs?.setStringList('permissions', permissions);
   }
+
+  static void clear() {
+    _prefs!.clear();
+  }
 }

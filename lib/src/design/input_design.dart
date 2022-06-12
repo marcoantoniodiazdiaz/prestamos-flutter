@@ -58,11 +58,11 @@ class DesignInput extends StatelessWidget {
       cursorWidth: 3,
       decoration: InputDecoration(
         filled: true,
-        labelStyle: TextStyle(color: DesignColors.dark),
-        fillColor: fillColor ?? DesignColors.dark.withOpacity(0.06),
+        labelStyle: const TextStyle(color: Colors.black54),
+        fillColor: fillColor ?? Colors.black54.withOpacity(0.06),
         hintText: hintText,
-        icon: icon,
         labelText: hintText,
+        icon: icon,
         border: OutlineInputBorder(
           borderRadius: BorderRadius.circular(10),
           borderSide: BorderSide.none,

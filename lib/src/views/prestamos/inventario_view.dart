@@ -24,7 +24,6 @@ class InventarioView extends StatelessWidget {
       body: Container(
         padding: EdgeInsets.all(15),
         child: ListView.builder(
-          physics: BouncingScrollPhysics(),
           itemBuilder: (_, index) {
             final product = productsProvider.products[index];
             return _ProductItem(product: product);
@@ -43,68 +42,76 @@ class _ProductItem extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Container(
-      padding: EdgeInsets.all(15),
-      margin: EdgeInsets.only(bottom: 10),
-      width: double.infinity,
-      decoration: BoxDecoration(
-        color: Colors.white,
-        borderRadius: BorderRadius.circular(10),
-        border: Border.all(width: 2, color: Color(0xffECEFF4)),
-      ),
-      child: Column(
-        children: [
-          Row(
-            mainAxisAlignment: MainAxisAlignment.spaceBetween,
-            children: [
-              Column(
-                crossAxisAlignment: CrossAxisAlignment.start,
-                children: [
-                  DesignText(product.name, fontSize: 20, fontWeight: FontWeight.bold),
-                  SizedBox(height: 2.5),
-                  DesignText(
-                    'Añadido: ${DesignUtils.dateShortWithHour(product.createdAt)}',
-                    color: Colors.black54,
-                  ),
-                  SizedBox(height: 7),
-                  DesignText('${product.images.length} imagenes', fontWeight: FontWeight.bold),
-                ],
-              ),
-              CircleAvatar(
-                radius: 30,
-                backgroundColor: Colors.grey,
-                backgroundImage: ImagePipes.assetOrNetwork(url: product.images[0].url),
-              ),
-            ],
-          ),
-          SizedBox(height: 10),
-          SizedBox(
-            height: 80,
-            child: ListView.builder(
-              scrollDirection: Axis.horizontal,
-              itemCount: product.images.length,
-              itemBuilder: (_, i) {
-                return InkWell(
-                  onTap: () {
-                    Get.to(() => _Viewer(url: product.images[i].url));
-                  },
-                  child: Container(
-                    margin: EdgeInsets.only(right: 5),
-                    height: 80,
-                    width: 80,
-                    decoration: BoxDecoration(
-                      borderRadius: BorderRadius.circular(5),
-                      image: DecorationImage(
-                        fit: BoxFit.cover,
-                        image: NetworkImage(product.images[i].url),
+    final productsProvider = Provider.of<ProductsProvider>(context);
+    return Dismissible(
+      key: UniqueKey(),
+      onDismissed: (direction) {
+        productsProvider.delete(product);
+      },
+      background: Container(color: Colors.red, child: Center(child: DesignText('Eliminar', color: Colors.white))),
+      child: Container(
+        padding: EdgeInsets.all(15),
+        margin: EdgeInsets.only(bottom: 10),
+        width: double.infinity,
+        decoration: BoxDecoration(
+          color: Colors.white,
+          borderRadius: BorderRadius.circular(10),
+          border: Border.all(width: 2, color: Color(0xffECEFF4)),
+        ),
+        child: Column(
+          children: [
+            Row(
+              mainAxisAlignment: MainAxisAlignment.spaceBetween,
+              children: [
+                Column(
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: [
+                    DesignText(product.name, fontSize: 20, fontWeight: FontWeight.bold),
+                    SizedBox(height: 2.5),
+                    DesignText(
+                      'Añadido: ${DesignUtils.dateShortWithHour(product.createdAt)}',
+                      color: Colors.black54,
+                    ),
+                    SizedBox(height: 7),
+                    DesignText('${product.images.length} imagenes', fontWeight: FontWeight.bold),
+                  ],
+                ),
+                CircleAvatar(
+                  radius: 30,
+                  backgroundColor: Colors.grey,
+                  backgroundImage: ImagePipes.assetOrNetwork(url: product.images[0].url),
+                ),
+              ],
+            ),
+            SizedBox(height: 10),
+            SizedBox(
+              height: 80,
+              child: ListView.builder(
+                scrollDirection: Axis.horizontal,
+                itemCount: product.images.length,
+                itemBuilder: (_, i) {
+                  return InkWell(
+                    onTap: () {
+                      Get.to(() => _Viewer(url: product.images[i].url));
+                    },
+                    child: Container(
+                      margin: EdgeInsets.only(right: 5),
+                      height: 80,
+                      width: 80,
+                      decoration: BoxDecoration(
+                        borderRadius: BorderRadius.circular(5),
+                        image: DecorationImage(
+                          fit: BoxFit.cover,
+                          image: NetworkImage(product.images[i].url),
+                        ),
                       ),
                     ),
-                  ),
-                );
-              },
+                  );
+                },
+              ),
             ),
-          ),
-        ],
+          ],
+        ),
       ),
     );
   }

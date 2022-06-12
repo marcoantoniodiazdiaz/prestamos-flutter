@@ -19,7 +19,7 @@ class AuthDatabase {
         UserPreferences.setId(credentials.user.id);
         UserPreferences.setName(credentials.user.name);
         UserPreferences.setEmail(credentials.user.email);
-        UserPreferences.setPhoto(credentials.user.image);
+        UserPreferences.setPhoto(credentials.user.image ?? '');
         UserPreferences.setToken(credentials.token);
       }
 

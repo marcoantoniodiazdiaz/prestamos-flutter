@@ -3,6 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:get/get.dart';
 import 'package:prestamos/src/design/designs.dart';
+import 'package:prestamos/src/middlewares/go_page.dart';
 import 'package:prestamos/src/views/gastos/nuevo_gasto_view.dart';
 import 'package:prestamos/src/views/gastos/ver_gastos_view.dart';
 
@@ -18,20 +19,19 @@ class GastosMenu extends StatelessWidget {
         elevation: 0,
       ),
       body: ListView(
-        physics: BouncingScrollPhysics(),
         padding: EdgeInsets.all(15),
         children: [
           _FlatItem(
-            onTap: () => Get.to(() => VerGastosView()),
             title: 'Ver gastos',
             subtitle: 'Administra tus gastos registrados',
             icon: FeatherIcons.users,
+            onTap: () => GoToMiddleware.goTo(VerGastosView(), 9),
           ),
           _FlatItem(
-            onTap: () => Get.to(() => NuevoGastoView()),
             title: 'Nuevo gasto',
             subtitle: 'Registrar nuevo gasto',
             icon: FeatherIcons.userPlus,
+            onTap: () => GoToMiddleware.goTo(NuevoGastoView(), 10),
           ),
         ],
       ),
@@ -61,7 +61,7 @@ class _FlatItem extends StatelessWidget {
         padding: EdgeInsets.all(10),
         child: Row(
           children: [
-            CircleAvatar(child: Icon(icon, color: Colors.white), backgroundColor: DesignColors.green),
+            CircleAvatar(child: Icon(icon, color: Colors.white), backgroundColor: DesignColors.orange),
             SizedBox(width: 15),
             Expanded(
               child: Column(

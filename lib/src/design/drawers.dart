@@ -79,8 +79,8 @@ class DrawerDesign extends StatelessWidget {
               },
             ),
             _ListTile(
-              title: 'Cartera',
-              subtitle: 'Mostrar todas las entradas/salidas de dinero',
+              title: 'Moras',
+              subtitle: 'Mostrar todas las moras recibidas',
               icon: FeatherIcons.creditCard,
               onPress: () {
                 Get.back();

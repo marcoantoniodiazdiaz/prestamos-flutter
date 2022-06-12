@@ -25,7 +25,6 @@ class NuevoProductoView extends StatelessWidget {
         body: Container(
           padding: EdgeInsets.all(15),
           child: SingleChildScrollView(
-            physics: BouncingScrollPhysics(),
             child: Form(
               autovalidateMode: AutovalidateMode.onUserInteraction,
               key: productsProvider.formKey,

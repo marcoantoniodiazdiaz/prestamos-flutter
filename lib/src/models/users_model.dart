@@ -11,7 +11,7 @@ class UsersModel {
   int id;
   String name;
   String email;
-  String image;
+  String? image;
   DateTime createdAt;
   DateTime updatedAt;
 

@@ -1,7 +1,10 @@
 import 'package:feather_icons/feather_icons.dart';
+import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
+import 'package:prestamos/src/database/database.dart';
 import 'package:prestamos/src/design/designs.dart';
+import 'package:prestamos/src/models/amount_pay_model.dart';
 import 'package:prestamos/src/models/loans_model.dart';
 import 'package:prestamos/src/provider/payments_provider.dart';
 import 'package:prestamos/src/provider/providers.dart';
@@ -28,21 +31,41 @@ class RegistrarPagoView extends StatelessWidget {
         elevation: 0,
       ),
       body: SingleChildScrollView(
-        physics: BouncingScrollPhysics(),
         padding: EdgeInsets.all(15),
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
             _Information(model: model),
             SizedBox(height: 10),
-            DesignTextButton(
-              width: double.infinity,
-              height: 45,
-              child: DesignText('Registrar pago de \$${(model.fee / model.duration).toStringAsFixed(2)}'),
-              color: Color(0xff1400FF),
-              primary: Colors.white,
-              onPressed: () async {
-                await paymentsProvider.makePay(loan: model);
+            FutureBuilder(
+              future: PaymentsDatabase.amountToPay(model.id),
+              builder: (BuildContext context, AsyncSnapshot snapshot) {
+                if (!snapshot.hasData) {
+                  return Center(child: CupertinoActivityIndicator());
+                } else {
+                  final AmountToPayModel amountToPay = snapshot.data;
+                  return DesignTextButton(
+                    width: double.infinity,
+                    height: 110,
+                    child: Column(
+                      mainAxisAlignment: MainAxisAlignment.center,
+                      children: [
+                        DesignText('Mora definida: \$${(amountToPay.mora).toStringAsFixed(2)}'),
+                        SizedBox(height: 5),
+                        DesignText('Retraso de: ${(amountToPay.delay)} dias'),
+                        SizedBox(height: 5),
+                        DesignText('Pago: \$${(amountToPay.organico).toStringAsFixed(2)}'),
+                        SizedBox(height: 5),
+                        DesignText('Registrar pago de: \$${(amountToPay.total).toStringAsFixed(2)}', fontWeight: FontWeight.bold),
+                      ],
+                    ),
+                    color: Color(0xff1400FF),
+                    primary: Colors.white,
+                    onPressed: () async {
+                      await paymentsProvider.makePay(loan: model, amount: amountToPay.organico, mora: amountToPay.moraAplicada);
+                    },
+                  );
+                }
               },
             ),
             SizedBox(height: 30),
@@ -72,6 +95,7 @@ class _Information extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final paid = StructuresUtils.sum(model.payments.map((e) => e.transaction.amount));
     final size = MediaQuery.of(context).size;
     return Container(
       padding: EdgeInsets.all(15),
@@ -91,7 +115,7 @@ class _Information extends StatelessWidget {
                 children: [
                   DesignText('Cantidad', color: Colors.black54),
                   SizedBox(height: 7),
-                  DesignText('\$${model.amount.toStringAsFixed(2)}', fontWeight: FontWeight.bold, fontSize: 20),
+                  DesignText('\$${model.fee.toStringAsFixed(2)}', fontWeight: FontWeight.bold, fontSize: 20),
                 ],
               ),
               Column(
@@ -99,7 +123,11 @@ class _Information extends StatelessWidget {
                 children: [
                   DesignText('Restante', color: Colors.black54),
                   SizedBox(height: 7),
-                  DesignText('\$${StructuresUtils.sum(model.payments.map((e) => e.transaction.amount))}', fontWeight: FontWeight.bold, fontSize: 20),
+                  DesignText(
+                    '\$${model.fee - paid}',
+                    fontWeight: FontWeight.bold,
+                    fontSize: 20,
+                  ),
                 ],
               ),
             ],
@@ -109,7 +137,7 @@ class _Information extends StatelessWidget {
             mainAxisAlignment: MainAxisAlignment.spaceBetween,
             children: [
               DesignText('% de pagos', color: Colors.black54),
-              DesignText('55%', color: Colors.black54),
+              DesignText('\$$paid', color: Colors.black54),
             ],
           ),
           SizedBox(height: 10),

@@ -17,7 +17,6 @@ class AjustesView extends StatelessWidget {
         elevation: 0,
       ),
       body: SingleChildScrollView(
-        physics: BouncingScrollPhysics(),
         padding: EdgeInsets.all(15),
         child: Column(
           children: [
@@ -75,7 +74,7 @@ class _FlatItem extends StatelessWidget {
         padding: EdgeInsets.all(10),
         child: Row(
           children: [
-            CircleAvatar(child: Icon(icon, color: Colors.white), backgroundColor: DesignColors.green),
+            CircleAvatar(child: Icon(icon, color: Colors.white), backgroundColor: DesignColors.orange),
             SizedBox(width: 15),
             Expanded(
               child: Column(

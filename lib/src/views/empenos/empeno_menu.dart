@@ -26,7 +26,7 @@ class EmpenoMenu extends StatelessWidget {
                       DesignText('Producto existente'),
                     ],
                   ),
-                  color: DesignColors.green,
+                  color: DesignColors.orange,
                   primary: Colors.white,
                   onPressed: () {
                     Get.back();

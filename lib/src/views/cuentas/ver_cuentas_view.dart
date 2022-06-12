@@ -20,11 +20,10 @@ class VerCuentasView extends StatelessWidget {
       ),
       body: ListView.builder(
         padding: EdgeInsets.symmetric(vertical: 10),
-        physics: BouncingScrollPhysics(),
         itemBuilder: (_, index) {
           return ListTile(
             title: DesignText(accountsProvider.accounts[index].name),
-            leading: MiscWidgets.avatarWithLetter(accountsProvider.accounts[index].name[0], 25, DesignColors.green),
+            leading: MiscWidgets.avatarWithLetter(accountsProvider.accounts[index].name[0], 25, DesignColors.orange),
             onTap: () {},
             subtitle: DesignText('Manten pulsado para editar'),
           );

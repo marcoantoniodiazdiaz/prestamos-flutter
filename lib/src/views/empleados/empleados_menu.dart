@@ -3,7 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:get/get.dart';
 import 'package:prestamos/src/design/designs.dart';
-import 'package:prestamos/src/views/clientes/nuevo_cliente_view.dart';
+import 'package:prestamos/src/middlewares/go_page.dart';
 import 'package:prestamos/src/views/empleados/nuevo_empleado_view.dart';
 import 'package:prestamos/src/views/empleados/ver_empleados_view.dart';
 
@@ -21,20 +21,19 @@ class EmpleadosMenuView extends StatelessWidget {
         elevation: 0,
       ),
       body: ListView(
-        physics: BouncingScrollPhysics(),
         padding: EdgeInsets.all(15),
         children: [
           _FlatItem(
-            onTap: () => Get.to(() => VerEmpleadosView()),
             title: 'Ver empleados',
             subtitle: 'Administra tus empleados registrados',
             icon: FeatherIcons.users,
+            onTap: () => GoToMiddleware.goTo(VerEmpleadosView(), 11),
           ),
           _FlatItem(
-            onTap: () => Get.to(() => NuevoEmpleadoView()),
             title: 'Nuevo empleado',
             subtitle: 'Registrar nuevo cliente',
             icon: FeatherIcons.userPlus,
+            onTap: () => GoToMiddleware.goTo(NuevoEmpleadoView(), 12),
           ),
         ],
       ),
@@ -64,7 +63,7 @@ class _FlatItem extends StatelessWidget {
         padding: EdgeInsets.all(10),
         child: Row(
           children: [
-            CircleAvatar(child: Icon(icon, color: Colors.white), backgroundColor: DesignColors.green),
+            CircleAvatar(child: Icon(icon, color: Colors.white), backgroundColor: DesignColors.orange),
             SizedBox(width: 15),
             Expanded(
               child: Column(

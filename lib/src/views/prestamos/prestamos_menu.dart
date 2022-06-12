@@ -24,25 +24,23 @@ class PrestamosMenu extends StatelessWidget {
         elevation: 0,
       ),
       body: ListView(
-        physics: BouncingScrollPhysics(),
         padding: EdgeInsets.all(15),
         children: [
           _FlatItem(
-            onTap: () => GoToMiddleware.goTo(VerPrestamosView(), 1),
+            onTap: () => GoToMiddleware.goTo(VerPrestamosView(), 0),
             title: 'Ver prestamos',
             subtitle: 'Administra y visualiza tus prestamos',
             icon: FeatherIcons.dollarSign,
           ),
           _FlatItem(
-            onTap: () {
-              Get.to(() => SelectUserForNewLoan());
-            },
+            onTap: () => GoToMiddleware.goTo(SelectUserForNewLoan(), 1),
             title: 'Nuevo prestamo',
             subtitle: 'Registra un nuevo prestamo realizado',
             icon: FeatherIcons.plus,
           ),
           _FlatItem(
             onTap: () {
+              if (!GoToMiddleware.next(14)) return;
               showCupertinoModalBottomSheet(
                 context: context,
                 builder: (context) {
@@ -55,7 +53,7 @@ class PrestamosMenu extends StatelessWidget {
             icon: FeatherIcons.plusSquare,
           ),
           _FlatItem(
-            onTap: () => Get.to(() => InventarioView()),
+            onTap: () => GoToMiddleware.goTo(InventarioView(), 2),
             title: 'Inventario',
             subtitle: 'Administra y visualiza tus productos',
             icon: FeatherIcons.box,
@@ -88,7 +86,7 @@ class _FlatItem extends StatelessWidget {
         padding: EdgeInsets.all(10),
         child: Row(
           children: [
-            CircleAvatar(child: Icon(icon, color: Colors.white), backgroundColor: DesignColors.green),
+            CircleAvatar(child: Icon(icon, color: Colors.white), backgroundColor: DesignColors.orange),
             SizedBox(width: 15),
             Expanded(
               child: Column(

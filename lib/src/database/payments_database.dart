@@ -1,4 +1,5 @@
 import 'package:prestamos/src/database/dio_database.dart';
+import 'package:prestamos/src/models/amount_pay_model.dart';
 import 'package:prestamos/src/models/payments_model.dart';
 
 class PaymentsDatabase {
@@ -31,6 +32,19 @@ class PaymentsDatabase {
     if (decodedResp['data'] == null) return null;
 
     return PaymentsModel.fromJson(decodedResp['data']);
+  }
+
+  static Future<AmountToPayModel?> amountToPay(int loanId) async {
+    final resp = await DioInstance.get(
+      '${DioInstance.server}/loans/get-payment/$loanId',
+    );
+
+    if (resp == null) return null;
+    final decodedResp = resp.data;
+
+    if (decodedResp['data'] == null) return null;
+
+    return AmountToPayModel.fromJson(decodedResp['data']);
   }
 
   static Future<bool> post(Map<String, dynamic> data) async {

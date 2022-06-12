@@ -34,8 +34,16 @@ class ClientsDatabase {
   }
 
   static Future<bool> post(Map<String, dynamic> data) async {
-    final resp = await DioInstance.post('${DioInstance.server}/clients', data,
-        onSuccess: 'Cliente añadido de forma satistactoria');
+    final resp = await DioInstance.post('${DioInstance.server}/clients', data, onSuccess: 'Cliente añadido de forma satistactoria');
+
+    final decodedResp = resp?.data;
+    if (decodedResp == null) return false;
+
+    return decodedResp['ok'];
+  }
+
+  static Future<bool> put(Map<String, dynamic> data, int id) async {
+    final resp = await DioInstance.put('${DioInstance.server}/clients/$id', data, onSuccess: 'Cliente actualizado de forma satistactoria');
 
     final decodedResp = resp?.data;
     if (decodedResp == null) return false;
@@ -52,14 +60,6 @@ class ClientsDatabase {
 
     final decodedResp = resp?.data;
     if (decodedResp == null) return false;
-
-    return decodedResp['ok'];
-  }
-
-  static Future<bool> put(Map<String, dynamic> data) async {
-    final resp = await DioInstance.dio.put('${DioInstance.server}/clients', data: data);
-
-    final decodedResp = resp.data;
 
     return decodedResp['ok'];
   }

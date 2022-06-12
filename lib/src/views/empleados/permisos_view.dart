@@ -25,7 +25,6 @@ class PermisosView extends StatelessWidget {
         elevation: 0,
       ),
       body: ListView(
-        physics: BouncingScrollPhysics(),
         children: [
           SizedBox(height: 10),
           ListTile(
@@ -60,7 +59,7 @@ class _Action extends StatelessWidget {
         onChanged: (v) {
           actionsProvider.changeStatusPermission(user, permission);
         },
-        activeColor: Color(0xff3A664A),
+        activeColor: DesignColors.orange,
       ),
     );
   }

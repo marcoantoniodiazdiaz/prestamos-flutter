@@ -70,10 +70,11 @@ class ProductsDatabase {
   }
 
   static Future<bool> delete(int id) async {
-    final resp = await DioInstance.dio.delete('${DioInstance.server}/products/$id');
+    final resp = await DioInstance.delete('${DioInstance.server}/products/$id', onSuccess: 'Producto eliminado con exito');
 
-    final decodedResp = resp.data;
+    final decodedResp = resp?.data;
+    if (decodedResp == null) return false;
 
-    return decodedResp;
+    return decodedResp['ok'];
   }
 }

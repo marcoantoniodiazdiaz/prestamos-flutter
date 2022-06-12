@@ -53,7 +53,7 @@ class PhonesView extends StatelessWidget {
                     width: 80,
                     height: 58,
                     child: Icon(FeatherIcons.save),
-                    color: DesignColors.green,
+                    color: DesignColors.orange,
                     primary: Colors.white,
                     onPressed: () async {
                       await clientsProvider.addPhone(clientId: model.id);
@@ -86,7 +86,6 @@ class _PhoneList extends StatelessWidget {
         } else {
           return ListView.builder(
             padding: EdgeInsets.symmetric(vertical: 10),
-            physics: BouncingScrollPhysics(),
             itemBuilder: (_, i) {
               return _PhoneItem(model: phones[i]);
             },

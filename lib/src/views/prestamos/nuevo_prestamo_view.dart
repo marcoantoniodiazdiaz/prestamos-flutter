@@ -22,8 +22,8 @@ class NuevoPrestamoView extends StatelessWidget {
       onTap: (() => FocusScope.of(context).unfocus()),
       child: Scaffold(
         floatingActionButton: FloatingActionButton(
-          onPressed: () => prestamosProvider.execute(),
-          backgroundColor: DesignColors.green,
+          onPressed: () => prestamosProvider.loadPreview(),
+          backgroundColor: DesignColors.orange,
           child: Icon(FeatherIcons.check),
         ),
         appBar: AppBar(
@@ -36,7 +36,6 @@ class NuevoPrestamoView extends StatelessWidget {
         body: Container(
           padding: EdgeInsets.all(15),
           child: SingleChildScrollView(
-            physics: BouncingScrollPhysics(),
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
@@ -53,8 +52,7 @@ class NuevoPrestamoView extends StatelessWidget {
                         children: [
                           DesignText(client.name, fontWeight: FontWeight.bold, fontSize: 18),
                           SizedBox(height: 2.5),
-                          DesignText('Desde: ${DesignUtils.dateShort(client.createdAt)}',
-                              fontStyle: FontStyle.italic),
+                          DesignText('Desde: ${DesignUtils.dateShort(client.createdAt)}', fontStyle: FontStyle.italic),
                         ],
                       ),
                     )
@@ -69,8 +67,10 @@ class NuevoPrestamoView extends StatelessWidget {
                   ),
                   child: DropdownButton<int>(
                     items: const [
-                      DropdownMenuItem(child: DesignText('Quincenal'), value: 0),
-                      DropdownMenuItem(child: DesignText('Semanal'), value: 1),
+                      DropdownMenuItem(child: DesignText('Diario'), value: 0),
+                      DropdownMenuItem(child: DesignText('Semanalmente'), value: 1),
+                      DropdownMenuItem(child: DesignText('Quincenal'), value: 2),
+                      DropdownMenuItem(child: DesignText('Mensual'), value: 3),
                     ],
                     underline: SizedBox(),
                     onChanged: (int? v) {
@@ -84,40 +84,46 @@ class NuevoPrestamoView extends StatelessWidget {
                 DesignInput(
                   hintText: 'Duración',
                   textInputType: TextInputType.numberWithOptions(decimal: false, signed: false),
-                  controller: prestamosProvider.duracionController,
+                  onChanged: (v) => prestamosProvider.duracion = v,
                 ),
                 SizedBox(height: 10),
                 DesignInput(
                   hintText: 'Monto',
                   textInputType: TextInputType.numberWithOptions(decimal: false, signed: false),
-                  controller: prestamosProvider.montoController,
+                  onChanged: (v) => prestamosProvider.monto = v,
                 ),
                 SizedBox(height: 10),
                 DesignInput(
                   hintText: '% Interes',
                   textInputType: TextInputType.number,
-                  controller: prestamosProvider.interesController,
+                  onChanged: (v) => prestamosProvider.interes = v,
                 ),
                 SizedBox(height: 10),
-                DesignInput(
-                  hintText: 'Cuota',
-                  textInputType: TextInputType.numberWithOptions(decimal: false, signed: false),
-                  controller: prestamosProvider.cuotaController,
-                  enabled: false,
+                Row(
+                  children: [
+                    DesignText('Mostrar solo dias de pago'),
+                    Switch.adaptive(
+                      value: prestamosProvider.showOnlyDayPays,
+                      onChanged: (v) {
+                        prestamosProvider.changeShowOnlyDayPays(v);
+                      },
+                    ),
+                  ],
                 ),
                 SizedBox(height: 10),
                 _Tabla(),
                 SizedBox(height: 10),
-                DesignTextButton(
-                  width: double.infinity,
-                  height: 50,
-                  child: DesignText('Guardar prestamo'),
-                  color: DesignColors.dark,
-                  primary: Colors.white,
-                  onPressed: () {
-                    prestamosProvider.createLoan(client.id);
-                  },
-                ),
+                if (prestamosProvider.days != -1)
+                  DesignTextButton(
+                    width: double.infinity,
+                    height: 50,
+                    child: DesignText('Guardar prestamo'),
+                    color: DesignColors.dark,
+                    primary: Colors.white,
+                    onPressed: () {
+                      prestamosProvider.createLoan(client.id);
+                    },
+                  ),
                 SizedBox(height: 100),
               ],
             ),
@@ -134,7 +140,6 @@ class _Tabla extends StatelessWidget {
     final prestamosProvider = Provider.of<PrestamosProvider>(context);
     return LayoutBuilder(builder: (context, constraints) {
       return SingleChildScrollView(
-        physics: BouncingScrollPhysics(),
         scrollDirection: Axis.horizontal,
         child: ConstrainedBox(
           constraints: BoxConstraints(minWidth: constraints.minWidth),
@@ -147,7 +152,8 @@ class _Tabla extends StatelessWidget {
             ],
             rows: prestamosProvider.rows.map((e) {
               return DataRow(
-                selected: true,
+                selected: false,
+                color: e.payDay ? MaterialStateProperty.all(Colors.green.withOpacity(0.3)) : MaterialStateProperty.all(Colors.transparent),
                 cells: [
                   DataCell(DesignText(DesignUtils.dateShort(e.date))),
                   DataCell(DesignText(ParsersUtils.money(e.capital))),
@@ -176,7 +182,6 @@ class SelectUserForNewLoan extends StatelessWidget {
         elevation: 0,
       ),
       body: SingleChildScrollView(
-        physics: BouncingScrollPhysics(),
         padding: EdgeInsets.all(20),
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.start,

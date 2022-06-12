@@ -4,12 +4,14 @@ import 'package:flutter/services.dart';
 import 'package:get/get.dart';
 import 'package:modal_bottom_sheet/modal_bottom_sheet.dart';
 import 'package:prestamos/src/design/designs.dart';
+import 'package:prestamos/src/middlewares/go_page.dart';
 import 'package:prestamos/src/models/models.dart';
 import 'package:prestamos/src/pipes/image_pipe.dart';
 import 'package:prestamos/src/provider/providers.dart';
 import 'package:prestamos/src/utils/date_utils.dart';
 import 'package:prestamos/src/utils/parsers_utils.dart';
 import 'package:prestamos/src/utils/structures.dart';
+import 'package:prestamos/src/views/consultas/daily_map_view.dart';
 import 'package:prestamos/src/views/prestamos/mapa_view.dart';
 import 'package:prestamos/src/views/prestamos/registrar_pago_view.dart';
 
@@ -28,7 +30,6 @@ class VerPrestamosView extends StatelessWidget {
       ),
       body: ListView.builder(
         padding: EdgeInsets.all(10),
-        physics: BouncingScrollPhysics(),
         itemBuilder: (_, i) {
           return _Item(model: prestamosProvider.loans[i]);
         },
@@ -53,7 +54,7 @@ class _Item extends StatelessWidget {
       decoration: BoxDecoration(
         color: Colors.white,
         borderRadius: BorderRadius.circular(10),
-        border: Border.all(width: 2, color: Color(0xffECEFF4)),
+        border: Border.all(width: 2, color: Colors.black.withOpacity(0.15)),
       ),
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
@@ -98,13 +99,13 @@ class _Item extends StatelessWidget {
                 child: Column(
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
-                    DesignText('Pago mensual', color: Colors.black54),
+                    DesignText('Pagos individuales de', color: Colors.black54),
                     SizedBox(height: 7),
                     DesignText('\$${model.fee / model.duration}', fontWeight: FontWeight.bold, fontSize: 20),
                     SizedBox(height: 20),
                     DesignText('Periodo', color: Colors.black54),
                     SizedBox(height: 7),
-                    DesignText('${model.duration} meses', fontWeight: FontWeight.bold, fontSize: 20),
+                    DesignText('${model.duration} ${_getPeriod(model.concurrency)}', fontWeight: FontWeight.bold, fontSize: 20),
                   ],
                 ),
               ),
@@ -153,9 +154,23 @@ class _Item extends StatelessWidget {
                   width: double.infinity,
                   height: 45,
                   child: DesignText('Registrar pago'),
-                  color: Color(0xff1400FF),
+                  color: DesignColors.orange,
                   primary: Colors.white,
-                  onPressed: () => Get.to(() => RegistrarPagoView(model: model)),
+                  onPressed: () => GoToMiddleware.goTo(RegistrarPagoView(model: model), 19),
+                ),
+              ),
+              SizedBox(width: 5),
+              Flexible(
+                flex: 2,
+                child: DesignTextButton(
+                  width: double.infinity,
+                  height: 45,
+                  child: Icon(FeatherIcons.calendar),
+                  color: DesignColors.dark,
+                  primary: Colors.white,
+                  onPressed: () {
+                    Get.to(() => DailyMapView(loan: model.id));
+                  },
                 ),
               ),
               SizedBox(width: 5),
@@ -188,7 +203,6 @@ _showPayments(List<PaymentsModel> payments) {
         child: Container(
           padding: EdgeInsets.all(20),
           child: SingleChildScrollView(
-            physics: BouncingScrollPhysics(),
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.start,
               mainAxisSize: MainAxisSize.min,
@@ -213,6 +227,13 @@ _showPayments(List<PaymentsModel> payments) {
       );
     },
   );
+}
+
+_getPeriod(int concurrency) {
+  if (concurrency == 0) return 'dias';
+  if (concurrency == 1) return 'semanas';
+  if (concurrency == 2) return 'quincenas';
+  if (concurrency == 3) return 'meses';
 }
 
 _showPaymentDetails(PaymentsModel payment) {
@@ -262,7 +283,7 @@ _showPaymentDetails(PaymentsModel payment) {
                 width: 100,
                 height: 40,
                 child: DesignText('Ver ubicación'),
-                color: DesignColors.green,
+                color: DesignColors.orange,
                 primary: Colors.white,
                 onPressed: () => Get.to(() => MapView(model: payment)),
               ),

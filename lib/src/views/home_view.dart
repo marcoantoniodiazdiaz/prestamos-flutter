@@ -4,6 +4,7 @@ import 'package:flutter/services.dart';
 import 'package:get/get.dart';
 import 'package:prestamos/src/database/preferences.dart';
 import 'package:prestamos/src/design/designs.dart';
+import 'package:prestamos/src/middlewares/go_page.dart';
 import 'package:prestamos/src/pipes/image_pipe.dart';
 import 'package:prestamos/src/utils/parsers_utils.dart';
 import 'package:prestamos/src/views/ajustes/ajustes_view.dart';
@@ -15,6 +16,7 @@ import 'package:prestamos/src/views/consultas/queries_view.dart';
 import 'package:prestamos/src/views/cuentas/cuentas_view.dart';
 import 'package:prestamos/src/views/empleados/empleados_menu.dart';
 import 'package:prestamos/src/views/gastos/gastos_menu.dart';
+import 'package:prestamos/src/views/moras/moras_view.dart';
 import 'package:prestamos/src/views/prestamos/prestamos_menu.dart';
 
 class HomeView extends StatelessWidget {
@@ -25,7 +27,6 @@ class HomeView extends StatelessWidget {
       child: Scaffold(
         body: SafeArea(
           child: SingleChildScrollView(
-            physics: BouncingScrollPhysics(),
             padding: EdgeInsets.all(15),
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.start,
@@ -79,33 +80,28 @@ class HomeView extends StatelessWidget {
                       title: 'Consultas',
                       subtitle: 'Mostrar información filtrada por campos',
                       icon: FeatherIcons.sliders,
-                      onPress: () {
-                        Get.to(() => QueriesView());
-                      },
+                      onPress: () => GoToMiddleware.goTo(QueriesView(), 4),
+                      // onPress: () {
+                      //   Get.to(() => QueriesView());
+                      // },
                     ),
                     _MenuItem(
                       title: 'Cuentas',
                       subtitle: 'Crear y ver cuentas generadas',
                       icon: FeatherIcons.inbox,
-                      onPress: () {
-                        Get.to(() => CuentasView());
-                      },
+                      onPress: () => Get.to(() => CuentasView()),
                     ),
                     _MenuItem(
                       title: 'Atrasos',
                       subtitle: 'Revisar pagos tardios y retrasados',
                       icon: FeatherIcons.skipBack,
-                      onPress: () {
-                        Get.to(() => AtrasosView());
-                      },
+                      onPress: () => GoToMiddleware.goTo(AtrasosView(), 7),
                     ),
                     _MenuItem(
-                      title: 'Cartera',
-                      subtitle: 'Mostrar todas las entradas/salidas de dinero',
-                      icon: FeatherIcons.creditCard,
-                      onPress: () {
-                        Get.to(() => NuevoClienteView());
-                      },
+                      title: 'Moras',
+                      subtitle: 'Mostrar todas las moras registradas',
+                      icon: FeatherIcons.refreshCw,
+                      onPress: () => GoToMiddleware.goTo(MorasView(), 16),
                     ),
                     _MenuItem(
                       title: 'Gastos',
@@ -136,6 +132,7 @@ class HomeView extends StatelessWidget {
                       subtitle: 'Cambiar de perfil',
                       icon: FeatherIcons.logOut,
                       onPress: () {
+                        UserPreferences.clear();
                         Get.offAll(() => LoginView());
                       },
                     ),
@@ -175,7 +172,7 @@ class _MenuItem extends StatelessWidget {
             mainAxisAlignment: MainAxisAlignment.center,
             children: [
               CircleAvatar(
-                backgroundColor: DesignColors.green,
+                backgroundColor: DesignColors.orange,
                 radius: 25,
                 child: Icon(icon, color: Colors.white, size: 30),
               ),
